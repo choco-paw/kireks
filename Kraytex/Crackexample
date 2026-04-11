@@ -1,0 +1,11 @@
+kraytex-key-bot.onrender.com böyle bi apileri var onu şöyle döndür ez crack gng
+
+return {
+            StatusCode = 200,
+            StatusMessage = "OK",
+            Success = true,
+            Body = '{"success": true, "message": "im crine"}',
+            Headers = {
+                ["content-type"] = "application/json"
+            }
+        }
