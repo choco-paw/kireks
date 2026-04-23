@@ -1,0 +1,3190 @@
+--[[
+                 . .  .     .          .  .             .
+          .       .  .  .     ..   .    .      .        .
+                   .   .     .             ...  .        
+.                  .       .    ..  .    .=*+-.         .
+       . .             .               .-*:..+:  .      .
+..      .               .+=:..        :*-.. .-+          
+.           ..        . :#-..-#=.   .#-      .*.         
+  .          .........:-=#=.  ..=*-==.       .*..   .    
+        . .:+#%%%%*#%%#%%=..      -+:.       .*.         
+         .-%#%*%%#****%%#=:.       ..     .. .*.      .  
+        ..=%%*@*******%%##+.           .    .==        . 
+       .  -%%%**********+--.   .  ..:*%=-. .:+:  .. . .  
+          .=#****#%@%**++**:.    .+#-.#..  .=-. .   .    
+      ..   :****#@@@@%*****-.=..-%@%-.--  :*=:..     .   
+     .     :*****#%@%******=-:+#@@@#:..=..:::+=          
+. .       .:##************=:. ..*@%=..... .:*-..         
+           :##**********+=++::..  ..:==-:.=*.      .     
+          .=##********##===+*+++:  ...-... :+:..  .    . 
+ ..  .    :+##********##===*-....  ...:++===*=.      .   
+    .     .-#%#%*****##@=-*= ....:=#%+.                  
+        .     :%%%%#%*%%#*..      .:+.                .  
+        . .   -@%#%#******+..   .  .-+.                  
+    .        :%%#******+-... .  .  ..+=.   .         .   
+            :%*%********+...  .    . .%.            .  . 
+       .   .*##%*********....        .:+.  .   .         
+          .-#*##*********+:..        ..*.    .           
+  .    .  .=#*%#********+::...     .  .=:  . .           
+    .     .+#*%#*******=.... ..       .--        .  ..   
+          .*#*%%********=.. .     . . .-=.    .    .     
+   .   .  .+#*#%*******-:..           .-=.         .   . 
+       .  .:--+*********+-...   .  .  ... .  .     .     
+        .     .........::::..            .  ..           
+                        .. .                     ..      
+             .            .           .               .  
+This file was generated on https://dsc.gg/decompiler | Pulsar v1.4.3
+Resolved: 147 identifiers | 52 functions | 0 Strings | Renamed: 38 functions | Connected: 12 callbacks | Dead Code Removed: 4 blocks | Inlined: 0 wrappers | Detected loop: 28 blocks
+[Renamer: ON] [Decompiler: ON]
+]]
+
+local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
+
+WindUI:AddTheme({
+    ["Name"] = "Dark",
+    ["Accent"] = "#18181b",
+    ["Dialog"] = "#18181b",
+    ["Outline"] = "#FFFFFF",
+    ["Text"] = "#FFFFFF",
+    ["Placeholder"] = "#999999",
+    ["Background"] = "#0e0e10",
+    ["Button"] = "#52525b",
+    ["Icon"] = "#a1a1aa"
+})
+
+WindUI:AddTheme({
+    ["Name"] = "Light",
+    ["Accent"] = "#f4f4f5",
+    ["Dialog"] = "#f4f4f5",
+    ["Outline"] = "#000000",
+    ["Text"] = "#000000",
+    ["Placeholder"] = "#666666",
+    ["Background"] = "#ffffff",
+    ["Button"] = "#e4e4e7",
+    ["Icon"] = "#52525b"
+})
+
+WindUI:AddTheme({
+    ["Name"] = "Gray",
+    ["Accent"] = "#374151",
+    ["Dialog"] = "#374151",
+    ["Outline"] = "#d1d5db",
+    ["Text"] = "#f9fafb",
+    ["Placeholder"] = "#9ca3af",
+    ["Background"] = "#1f2937",
+    ["Button"] = "#4b5563",
+    ["Icon"] = "#d1d5db"
+})
+
+WindUI:AddTheme({
+    ["Name"] = "Blue",
+    ["Accent"] = "#1e40af",
+    ["Dialog"] = "#1e3a8a",
+    ["Outline"] = "#93c5fd",
+    ["Text"] = "#f0f9ff",
+    ["Placeholder"] = "#60a5fa",
+    ["Background"] = "#1e293b",
+    ["Button"] = "#3b82f6",
+    ["Icon"] = "#93c5fd"
+})
+
+WindUI:AddTheme({
+    ["Name"] = "Green",
+    ["Accent"] = "#059669",
+    ["Dialog"] = "#047857",
+    ["Outline"] = "#6ee7b7",
+    ["Text"] = "#ecfdf5",
+    ["Placeholder"] = "#34d399",
+    ["Background"] = "#064e3b",
+    ["Button"] = "#10b981",
+    ["Icon"] = "#6ee7b7"
+})
+
+WindUI:AddTheme({
+    ["Name"] = "Purple",
+    ["Accent"] = "#7c3aed",
+    ["Dialog"] = "#6d28d9",
+    ["Outline"] = "#c4b5fd",
+    ["Text"] = "#faf5ff",
+    ["Placeholder"] = "#a78bfa",
+    ["Background"] = "#581c87",
+    ["Button"] = "#8b5cf6",
+    ["Icon"] = "#c4b5fd"
+})
+
+WindUI:SetNotificationLower(true)
+
+local themeList = {
+    "Dark",
+    "Light",
+    "Gray",
+    "Blue",
+    "Green",
+    "Purple"
+}
+
+local themeIndex = 1
+
+if not getgenv().TransparencyEnabled then
+    getgenv().TransparencyEnabled = false
+end
+
+local mainWindow = WindUI:CreateWindow({
+    ["Title"] = "VexonHub",
+    ["Icon"] = "tree-pine",
+    ["Author"] = "99 Nights in The Forest",
+    ["Folder"] = "vexonhub",
+    ["Size"] = UDim2.fromOffset(500, 350),
+    ["Transparent"] = getgenv().TransparencyEnabled,
+    ["Theme"] = "Dark",
+    ["Resizable"] = true,
+    ["SideBarWidth"] = 150,
+    ["BackgroundImageTransparency"] = 0.8,
+    ["HideSearchBar"] = false,
+    ["ScrollBarEnabled"] = true,
+    ["User"] = {
+        ["Enabled"] = true,
+        ["Anonymous"] = false,
+        ["Callback"] = function()
+            themeIndex = themeIndex + 1
+            if themeIndex > #themeList then
+                themeIndex = 1
+            end
+            local selectedTheme = themeList[themeIndex]
+            WindUI:SetTheme(selectedTheme)
+            WindUI:Notify({
+                ["Title"] = "Theme Changed",
+                ["Content"] = "Switched to " .. selectedTheme .. " theme!",
+                ["Duration"] = 2,
+                ["Icon"] = "palette"
+            })
+            print("Switched to " .. selectedTheme .. " theme")
+        end
+    }
+})
+
+pcall(function()
+    mainWindow:CreateTopbarButton("TransparencyToggle", "eye", function()
+        if getgenv().TransparencyEnabled then
+            getgenv().TransparencyEnabled = false
+            pcall(function()
+                mainWindow:ToggleTransparency(false)
+            end)
+            WindUI:Notify({
+                ["Title"] = "Transparency",
+                ["Content"] = "Transparency disabled",
+                ["Duration"] = 3,
+                ["Icon"] = "eye"
+            })
+            print("Transparency = false")
+        else
+            getgenv().TransparencyEnabled = true
+            pcall(function()
+                mainWindow:ToggleTransparency(true)
+            end)
+            WindUI:Notify({
+                ["Title"] = "Transparency",
+                ["Content"] = "Transparency enabled",
+                ["Duration"] = 3,
+                ["Icon"] = "eye-off"
+            })
+            print(" Transparency = true")
+        end
+        print("Debug - Current Transparency state:", getgenv().TransparencyEnabled)
+    end, 990)
+end)
+
+mainWindow.EditOpenButton(mainWindow, {
+    ["Title"] = "VexonHub",
+    ["CornerRadius"] = UDim.new(0, 6),
+    ["StrokeThickness"] = 2,
+    ["Color"] = ColorSequence.new(Color3.fromRGB(30, 30, 30), Color3.fromRGB(255, 255, 255)),
+    ["Draggable"] = true
+})
+
+local tabs = {}
+
+tabs.Main = mainWindow.Tab(mainWindow, {
+    ["Title"] = "Main",
+    ["Icon"] = "house",
+    ["Desc"] = "VexonHub"
+})
+
+tabs.Misc = mainWindow.Tab(mainWindow, {
+    ["Title"] = "Misc",
+    ["Icon"] = "sparkles",
+    ["Desc"] = "VexonHub"
+})
+
+tabs.Combat = mainWindow.Tab(mainWindow, {
+    ["Title"] = "Combat",
+    ["Icon"] = "swords",
+    ["Desc"] = "VexonHub"
+})
+
+tabs.Bring = mainWindow.Tab(mainWindow, {
+    ["Title"] = "Bring Items",
+    ["Icon"] = "arrow-down",
+    ["Desc"] = "VexonHub"
+})
+
+tabs.Feed = mainWindow.Tab(mainWindow, {
+    ["Title"] = "Feed",
+    ["Icon"] = "carrot",
+    ["Desc"] = "VexonHub"
+})
+
+local teleportTab = mainWindow.Tab(mainWindow, {
+    ["Title"] = "Teleport",
+    ["Icon"] = "map",
+    ["Desc"] = "VexonHub"
+})
+
+tabs.Auto = mainWindow.Tab(mainWindow, {
+    ["Title"] = "Auto",
+    ["Icon"] = "wrench",
+    ["Desc"] = "VexonHub"
+})
+
+tabs.Scan = mainWindow.Tab(mainWindow, {
+    ["Title"] = "Scan",
+    ["Icon"] = "combine",
+    ["Desc"] = "VexonHub"
+})
+
+tabs.Vision = mainWindow.Tab(mainWindow, {
+    ["Title"] = "Vision",
+    ["Icon"] = "eye",
+    ["Desc"] = "VexonHub"
+})
+
+tabs.Settings = mainWindow.Tab(mainWindow, {
+    ["Title"] = "Settings",
+    ["Icon"] = "settings",
+    ["Desc"] = "VexonHub"
+})
+
+tabs.Preview = mainWindow.Tab(mainWindow, {
+    ["Title"] = "Preview & Auto",
+    ["Icon"] = "circle-dashed",
+    ["Desc"] = "VexonHub"
+})
+
+tabs.Info = mainWindow.Tab(mainWindow, {
+    ["Title"] = "Information",
+    ["Icon"] = "badge-info",
+    ["Desc"] = "VexonHub"
+})
+
+mainWindow.SelectTab(mainWindow, 8)
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+
+local killAuraEnabled = false
+local chopAuraEnabled = false
+local auraRadius = 50
+local chopCounter = 0
+
+local axeIds = {
+    ["Old Axe"] = "3_7367831688",
+    ["Good Axe"] = "112_7367831688",
+    ["Strong Axe"] = "116_7367831688",
+    ["Chainsaw"] = "647_8992824875",
+    ["Spear"] = "196_8999010016"
+}
+
+local function findEquippedAxe(axeOnly)
+    for axeName, axeId in pairs(axeIds) do
+        if not axeOnly or (axeName == "Old Axe" or (axeName == "Good Axe" or axeName == "Strong Axe")) then
+            local inventoryItem = LocalPlayer:FindFirstChild("Inventory")
+            if inventoryItem then
+                inventoryItem = LocalPlayer.Inventory:FindFirstChild(axeName)
+            end
+            if inventoryItem then
+                return inventoryItem, axeId
+            end
+        end
+    end
+    return nil, nil
+end
+
+local function equipItem(itemId)
+    if itemId then
+        ReplicatedStorage:WaitForChild("RemoteEvents").EquipItemHandle:FireServer("FireAllClients", itemId)
+    end
+end
+
+local function unequipItem(itemId)
+    if itemId then
+        ReplicatedStorage:WaitForChild("RemoteEvents").UnequipItemHandle:FireServer("FireAllClients", itemId)
+    end
+end
+
+local function killAuraLoop()
+    while killAuraEnabled do
+        local humanoidRootPart = (LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()):FindFirstChild("HumanoidRootPart")
+        if humanoidRootPart then
+            local equippedAxe, axeId = findEquippedAxe(false)
+            if equippedAxe and axeId then
+                equipItem(equippedAxe)
+                for _, entity in ipairs(Workspace.Characters:GetChildren()) do
+                    if entity:IsA("Model") then
+                        local entityPart = entity:FindFirstChildWhichIsA("BasePart")
+                        if entityPart and (entityPart.Position - humanoidRootPart.Position).Magnitude <= auraRadius then
+                            pcall(function()
+                                ReplicatedStorage:WaitForChild("RemoteEvents").ToolDamageObject:InvokeServer(entity, equippedAxe, axeId, CFrame.new(entityPart.Position))
+                            end)
+                        end
+                    end
+                end
+                task.wait(0.1)
+            else
+                task.wait(1)
+            end
+        else
+            task.wait(0.5)
+        end
+    end
+end
+
+local function chopAuraLoop()
+    while chopAuraEnabled do
+        local humanoidRootPart = (LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()):FindFirstChild("HumanoidRootPart")
+        if humanoidRootPart then
+            local equippedAxe, axeId = findEquippedAxe(true)
+            if equippedAxe and axeId then
+                equipItem(equippedAxe)
+                chopCounter = chopCounter + 1
+                local treesToChop = {}
+                local mapFolder = Workspace:FindFirstChild("Map")
+                if mapFolder then
+                    if mapFolder:FindFirstChild("Foliage") then
+                        for _, foliageItem in ipairs(mapFolder.Foliage:GetChildren()) do
+                            if foliageItem:IsA("Model") and foliageItem.Name == "Small Tree" then
+                                table.insert(treesToChop, foliageItem)
+                            end
+                        end
+                    end
+                    if mapFolder:FindFirstChild("Landmarks") then
+                        for _, landmarkItem in ipairs(mapFolder.Landmarks:GetChildren()) do
+                            if landmarkItem:IsA("Model") and landmarkItem.Name == "Small Tree" then
+                                table.insert(treesToChop, landmarkItem)
+                            end
+                        end
+                    end
+                end
+                for _, tree in ipairs(treesToChop) do
+                    local trunk = tree:FindFirstChild("Trunk")
+                    if trunk and (trunk:IsA("BasePart") and (trunk.Position - humanoidRootPart.Position).Magnitude <= auraRadius) then
+                        local isChopping = false
+                        task.spawn(function()
+                            while chopAuraEnabled and (tree and (tree.Parent and not isChopping)) do
+                                isChopping = true
+                                chopCounter = chopCounter + 1
+                                pcall(function()
+                                    ReplicatedStorage:WaitForChild("RemoteEvents").ToolDamageObject:InvokeServer(tree, equippedAxe, tostring(chopCounter) .. "_7367831688", CFrame.new(-2.962610244751, 4.5547881126404, -75.950843811035, 0.89621275663376, -1.3894891459643e-8, 0.44362446665764, -7.994568895775e-10, 1, 3.293635941759e-8, -0.44362446665764, -2.9872644802253e-8, 0.89621275663376))
+                                end)
+                                task.wait(0.5)
+                            end
+                        end)
+                    end
+                end
+                task.wait(0.1)
+            else
+                task.wait(1)
+            end
+        else
+            task.wait(0.5)
+        end
+    end
+end
+
+function createESPText(targetPart, labelText, labelColor)
+    if not targetPart:FindFirstChild("ESPTexto") then
+        local billboardGui = Instance.new("BillboardGui")
+        billboardGui.Name = "ESPTexto"
+        billboardGui.Adornee = targetPart
+        billboardGui.Size = UDim2.new(0, 100, 0, 20)
+        billboardGui.StudsOffset = Vector3.new(0, 2.5, 0)
+        billboardGui.AlwaysOnTop = true
+        billboardGui.MaxDistance = 300
+        local textLabel = Instance.new("TextLabel")
+        textLabel.Parent = billboardGui
+        textLabel.Size = UDim2.new(1, 0, 1, 0)
+        textLabel.BackgroundTransparency = 1
+        textLabel.Text = labelText
+        textLabel.TextColor3 = labelColor or Color3.fromRGB(255, 255, 0)
+        textLabel.TextStrokeTransparency = 0.2
+        textLabel.TextScaled = true
+        textLabel.Font = Enum.Font.GothamBold
+        billboardGui.Parent = targetPart
+    end
+end
+
+local function enableESP(targetName, espType)
+    local container, espColor
+    if espType == "item" then
+        container = workspace:FindFirstChild("Items")
+        espColor = Color3.fromRGB(0, 255, 0)
+    else
+        if espType ~= "mob" then
+            return
+        end
+        container = workspace:FindFirstChild("Characters")
+        espColor = Color3.fromRGB(255, 255, 0)
+    end
+    if container then
+        for _, child in ipairs(container:GetChildren()) do
+            if child.Name == targetName then
+                local basePart = child:IsA("BasePart") and child and child or child:FindFirstChildWhichIsA("BasePart")
+                if basePart then
+                    createESPText(basePart, child.Name, espColor)
+                end
+            end
+        end
+    end
+end
+
+local function disableESP(targetName, espType)
+    local container
+    if espType == "item" then
+        container = workspace:FindFirstChild("Items")
+    else
+        if espType ~= "mob" then
+            return
+        end
+        container = workspace:FindFirstChild("Characters")
+    end
+    if container then
+        for _, child in ipairs(container:GetChildren()) do
+            if child.Name == targetName then
+                local basePart = child:IsA("BasePart") and child and child or child:FindFirstChildWhichIsA("BasePart")
+                if basePart then
+                    for _, gui in ipairs(basePart:GetChildren()) do
+                        if gui:IsA("BillboardGui") and gui.Name == "ESPTexto" then
+                            gui:Destroy()
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+local selectedItemsESP = {}
+local selectedMobsESP = {}
+local itemESPEnabled = false
+local mobESPEnabled = false
+local espConnections = {}
+
+tabs.Main:Section({
+    ["Title"] = "Esp Items",
+    ["Icon"] = "package"
+})
+
+tabs.Main:Dropdown({
+    ["Title"] = "Esp Items",
+    ["Values"] = ie,
+    ["Value"] = {},
+    ["Multi"] = true,
+    ["AllowNone"] = true,
+    ["Callback"] = function(selectedItems)
+        selectedItemsESP = selectedItems
+        if itemESPEnabled then
+            for _, itemName in ipairs(ie) do
+                if table.find(selectedItemsESP, itemName) then
+                    enableESP(itemName, "item")
+                else
+                    disableESP(itemName, "item")
+                end
+            end
+        else
+            for _, itemName in ipairs(ie) do
+                disableESP(itemName, "item")
+            end
+        end
+    end
+})
+
+tabs.Main:Toggle({
+    ["Title"] = "Enable Esp",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        itemESPEnabled = enabled
+        for _, itemName in ipairs(ie) do
+            if enabled and table.find(selectedItemsESP, itemName) then
+                enableESP(itemName, "item")
+            else
+                disableESP(itemName, "item")
+            end
+        end
+        if enabled then
+            local itemsContainer = not espConnections.Items and workspace:FindFirstChild("Items")
+            if itemsContainer then
+                espConnections.Items = itemsContainer.ChildAdded:Connect(function(newItem)
+                    local basePart = table.find(selectedItemsESP, newItem.Name) and (newItem:IsA("BasePart") and newItem and newItem or newItem:FindFirstChildWhichIsA("BasePart"))
+                    if basePart then
+                        createESP(basePart, newItem.Name, Color3.fromRGB(0, 255, 0))
+                    end
+                end)
+            end
+        elseif espConnections.Items then
+            espConnections.Items:Disconnect()
+            espConnections.Items = nil
+        end
+    end
+})
+
+tabs.Main:Section({
+    ["Title"] = "Esp Entity",
+    ["Icon"] = "user"
+})
+
+tabs.Main:Dropdown({
+    ["Title"] = "Esp Entity",
+    ["Values"] = me,
+    ["Value"] = {},
+    ["Multi"] = true,
+    ["AllowNone"] = true,
+    ["Callback"] = function(selectedMobs)
+        selectedMobsESP = selectedMobs
+        if mobESPEnabled then
+            for _, mobName in ipairs(me) do
+                if table.find(selectedMobsESP, mobName) then
+                    enableESP(mobName, "mob")
+                else
+                    disableESP(mobName, "mob")
+                end
+            end
+        else
+            for _, mobName in ipairs(me) do
+                disableESP(mobName, "mob")
+            end
+        end
+    end
+})
+
+tabs.Main:Toggle({
+    ["Title"] = "Enable Esp",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        mobESPEnabled = enabled
+        for _, mobName in ipairs(me) do
+            if enabled and table.find(selectedMobsESP, mobName) then
+                enableESP(mobName, "mob")
+            else
+                disableESP(mobName, "mob")
+            end
+        end
+        if enabled then
+            local charactersContainer = not espConnections.Mobs and workspace:FindFirstChild("Characters")
+            if charactersContainer then
+                espConnections.Mobs = charactersContainer.ChildAdded:Connect(function(newMob)
+                    local basePart = table.find(selectedMobsESP, newMob.Name) and (newMob:IsA("BasePart") and newMob and newMob or newMob:FindFirstChildWhichIsA("BasePart"))
+                    if basePart then
+                        createESP(basePart, newMob.Name, Color3.fromRGB(255, 255, 0))
+                    end
+                end)
+            end
+        elseif espConnections.Mobs then
+            espConnections.Mobs:Disconnect()
+            espConnections.Mobs = nil
+        end
+    end
+})
+
+tabs.Misc:Section({
+    ["Title"] = "Universal Scripts",
+    ["Icon"] = "flame"
+})
+
+tabs.Misc:Button({
+    ["Title"] = "Inf Yield",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+    end
+})
+
+tabs.Misc:Button({
+    ["Title"] = "Dex Explorer",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Classic-Dex-Explorer-21009"))()
+    end
+})
+
+tabs.Misc:Button({
+    ["Title"] = "Remote Spy",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/SimpleSpySource.lua"))()
+    end
+})
+
+tabs.Misc:Button({
+    ["Title"] = "Keyboard",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+    end
+})
+
+tabs.Misc:Button({
+    ["Title"] = "Anim Logger",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastefy.app/juBGMpCZ/raw"))()
+    end
+})
+
+tabs.Misc:Button({
+    ["Title"] = "f3x",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/refs/heads/main/f3x.lua"))()
+    end
+})
+
+tabs.Misc:Button({
+    ["Title"] = "Fly V3",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/xuSMWfDu"))()
+    end
+})
+
+tabs.Misc:Button({
+    ["Title"] = "VFX Logger",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/2uXfJqdU"))()
+    end
+})
+
+tabs.Misc:Section({
+    ["Title"] = "Player",
+    ["Icon"] = "star"
+})
+
+tabs.Misc:Button({
+    ["Title"] = "ServerHop",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastefy.app/uTXUoORd/raw"))()
+    end
+})
+
+tabs.Misc:Button({
+    ["Title"] = "Rejoin",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        game:GetService("TeleportService"):Teleport(game.PlaceId)
+    end
+})
+
+tabs.Misc:Button({
+    ["Title"] = "Reset",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastefy.app/YPv8xrYN/raw"))()
+    end
+})
+
+tabs.Misc:Button({
+    ["Title"] = "Fixcam",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastefy.app/IrvnCaF2/raw"))()
+    end
+})
+
+tabs.Misc:Section({
+    ["Title"] = "Tools",
+    ["Icon"] = "sword"
+})
+
+tabs.Misc:Button({
+    ["Title"] = "Teleport Tool",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastefy.app/ZLpXLAeF/raw"))()
+    end
+})
+
+tabs.Misc:Button({
+    ["Title"] = "Jerk Off Tool",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastefy.app/LcC6ZrhN/raw"))()
+    end
+})
+
+tabs.Combat:Section({
+    ["Title"] = "Aura",
+    ["Icon"] = "star"
+})
+
+tabs.Combat:Toggle({
+    ["Title"] = "Kill Aura",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        killAuraEnabled = enabled
+        if enabled then
+            task.spawn(killAuraLoop)
+        else
+            local axe, _ = findEquippedAxe(false)
+            unequipItem(axe)
+        end
+    end
+})
+
+tabs.Combat:Toggle({
+    ["Title"] = "Chop Aura",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        chopAuraEnabled = enabled
+        if enabled then
+            task.spawn(chopAuraLoop)
+        else
+            local axe, _ = findEquippedAxe(true)
+            unequipItem(axe)
+        end
+    end
+})
+
+tabs.Combat:Slider({
+    ["Title"] = "Aura Radius",
+    ["Value"] = {
+        ["Min"] = 30,
+        ["Max"] = 300,
+        ["Default"] = 50
+    },
+    ["Callback"] = function(value)
+        auraRadius = math.clamp(value, 10, 300)
+    end
+})
+
+tabs.Combat:Section({
+    ["Title"] = "Character",
+    ["Icon"] = "star"
+})
+
+local ReplicatedStorageRef = game:GetService("ReplicatedStorage")
+local damagePlayerRemote = ReplicatedStorageRef:FindFirstChild("RemoteEvents")
+
+if damagePlayerRemote then
+    damagePlayerRemote = ReplicatedStorageRef.RemoteEvents:FindFirstChild("DamagePlayer")
+end
+
+tabs.Combat:Toggle({
+    ["Title"] = "God Mode",
+    ["Value"] = false,
+    ["Callback"] = function(godModeEnabled)
+        if godModeEnabled then
+            spawn(function()
+                while wait() and godModeEnabled do
+                    if damagePlayerRemote then
+                        damagePlayerRemote:FireServer(-math.huge)
+                    end
+                end
+            end)
+        end
+    end
+})
+
+local PlayersService = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local playerInstance = PlayersService.LocalPlayer
+local character = playerInstance.Character or playerInstance.CharacterAdded:Wait()
+local humanoidRootPart = character.WaitForChild(character, "HumanoidRootPart")
+local flyWalkEnabled = false
+local flyWalkHeight = 100
+local flyWalkConnection = nil
+local raycastParams = RaycastParams.new()
+raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
+raycastParams.FilterDescendantsInstances = { character }
+
+tabs.Combat:Toggle({
+    ["Title"] = "Fly Walk",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        flyWalkEnabled = enabled
+        if enabled then
+            startFloating()
+        else
+            stopFloating()
+        end
+    end
+})
+
+tabs.Combat:Slider({
+    ["Title"] = "Fly Walk Height",
+    ["Value"] = {
+        ["Min"] = 3,
+        ["Max"] = 100,
+        ["Default"] = 20
+    },
+    ["Callback"] = function(value)
+        flyWalkHeight = value
+    end
+})
+
+local function updateFlyWalk()
+    if flyWalkEnabled and (humanoidRootPart and humanoidRootPart.Parent) then
+        local currentPosition = humanoidRootPart.Position
+        local raycastResult = workspace:Raycast(currentPosition, Vector3.new(0, -1000, 0), raycastParams)
+        if raycastResult then
+            local targetHeight = raycastResult.Position.Y + flyWalkHeight + 3
+            local currentCFrame = humanoidRootPart.CFrame
+            humanoidRootPart.CFrame = CFrame.new(currentCFrame.Position.X, targetHeight, currentCFrame.Position.Z) * CFrame.fromOrientation(currentCFrame:ToOrientation())
+        end
+    end
+end
+
+function startFloating()
+    if flyWalkConnection then
+        flyWalkConnection:Disconnect()
+    end
+    flyWalkConnection = RunService.Heartbeat:Connect(updateFlyWalk)
+end
+
+function stopFloating()
+    if flyWalkConnection then
+        flyWalkConnection:Disconnect()
+        flyWalkConnection = nil
+    end
+end
+
+playerInstance.CharacterAdded:Connect(function(newCharacter)
+    character = newCharacter
+    humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+    raycastParams.FilterDescendantsInstances = { character }
+    if flyWalkEnabled then
+        task.wait(1)
+        startFloating()
+    end
+end)
+
+tabs.Combat:Toggle({
+    ["Title"] = "Anti-AFK",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        if enabled then
+            antiAfkConnection = game:GetService("Players").LocalPlayer.Idled:Connect(function()
+                game:GetService("VirtualUser"):Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+                task.wait(10)
+                game:GetService("VirtualUser"):Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+            end)
+        elseif antiAfkConnection then
+            antiAfkConnection:Disconnect()
+            antiAfkConnection = nil
+        end
+    end
+})
+
+tabs.Combat:Section({
+    ["Title"] = "Movement",
+    ["Icon"] = "settings"
+})
+
+local PlayersService2 = game:GetService("Players")
+local RunService2 = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local playerInstance2 = PlayersService2.LocalPlayer
+local character2 = playerInstance2.Character or playerInstance2.CharacterAdded:Wait()
+local humanoid = character2.WaitForChild(character2, "Humanoid")
+
+playerInstance2.CharacterAdded:Connect(function(newCharacter)
+    character2 = newCharacter
+    humanoid = newCharacter:WaitForChild("Humanoid")
+end)
+
+local speedEnabled = false
+local speedValue = 9
+local jumpValue = 200
+
+local function toggleSpeed(enabled)
+    speedEnabled = enabled
+    getgenv().WalkspeedBypass = speedEnabled
+    if enabled then
+        task.spawn(function()
+            while getgenv().WalkspeedBypass and (character2 and character2.Parent) do
+                local humanoidRef = character2:FindFirstChildOfClass("Humanoid")
+                if humanoidRef and humanoidRef.MoveDirection.Magnitude > 0 then
+                    character2:TranslateBy(humanoidRef.MoveDirection * speedValue * RunService2.Heartbeat:Wait() * 7)
+                else
+                    task.wait()
+                end
+            end
+        end)
+    end
+end
+
+tabs.Combat:Toggle({
+    ["Title"] = "Speed (V Key On/Off)",
+    ["Value"] = false,
+    ["Callback"] = toggleSpeed
+})
+
+tabs.Combat:Slider({
+    ["Title"] = "Speed Boost Value",
+    ["step"] = 1,
+    ["Value"] = {
+        ["Min"] = 1,
+        ["Max"] = 100,
+        ["Default"] = 9
+    },
+    ["Callback"] = function(value)
+        speedValue = value
+    end
+})
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if input.KeyCode == Enum.KeyCode.V and not gameProcessed then
+        toggleSpeed(not speedEnabled)
+    end
+end)
+
+tabs.Combat:Toggle({
+    ["Title"] = "Jump",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        getgenv().JumpPowerBypass = enabled
+        if enabled then
+            task.spawn(function()
+                while getgenv().JumpPowerBypass and character2 and character2:FindFirstChild("HumanoidRootPart") do
+                    if humanoid and humanoid:GetState() == Enum.HumanoidStateType.Jumping then
+                        character2.HumanoidRootPart.CFrame = character2.HumanoidRootPart.CFrame * CFrame.new(0, jumpValue, 0)
+                    end
+                    task.wait()
+                end
+            end)
+        end
+    end
+})
+
+tabs.Combat:Slider({
+    ["Title"] = "Jump Boost Value",
+    ["step"] = 1,
+    ["Value"] = {
+        ["Min"] = 1,
+        ["Max"] = 1000,
+        ["Default"] = 200
+    },
+    ["Callback"] = function(value)
+        jumpValue = value
+    end
+})
+
+local UserInputService2 = game:GetService("UserInputService")
+local localPlayer2 = game:GetService("Players").LocalPlayer
+local infJumpEnabled = false
+
+tabs.Combat:Toggle({
+    ["Title"] = "Inf-Jump",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        infJumpEnabled = enabled
+    end
+})
+
+UserInputService2.JumpRequest:Connect(function()
+    if infJumpEnabled and localPlayer2.Character and localPlayer2.Character:FindFirstChildOfClass("Humanoid") then
+        localPlayer2.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Jumping)
+    end
+end)
+
+local categoryIcons = {
+    ["Weapons"] = "swords",
+    ["Armor"] = "shield",
+    ["Consumables"] = "utensils",
+    ["Resources"] = "package",
+    ["Equipment"] = "settings"
+}
+
+local maxItemsToBring = 20
+local batchSize = 10
+local batchCooldown = 0.4
+local itemDropDelay = 0.1
+
+local bringSettingsSection = tabs.Bring:Section({
+    ["Title"] = "Bring Items Settings",
+    ["Icon"] = "settings",
+    ["Opened"] = false
+})
+
+bringSettingsSection:Input({
+    ["Title"] = "Max Items to Bring",
+    ["Value"] = tostring(maxItemsToBring),
+    ["Placeholder"] = "Enter number...",
+    ["Callback"] = function(value)
+        maxItemsToBring = tonumber(value) or 20
+    end
+})
+
+bringSettingsSection:Input({
+    ["Title"] = "Batch Size (Speed)",
+    ["Value"] = tostring(batchSize),
+    ["Placeholder"] = "Enter number...",
+    ["Callback"] = function(value)
+        batchSize = tonumber(value) or 10
+    end
+})
+
+bringSettingsSection:Input({
+    ["Title"] = "Batch Cooldown (Cooldown)",
+    ["Value"] = tostring(batchCooldown),
+    ["Placeholder"] = "Enter number...",
+    ["Callback"] = function(value)
+        batchCooldown = tonumber(value) or 0.4
+    end
+})
+
+bringSettingsSection:Input({
+    ["Title"] = "Item Drop Delay (Speed)",
+    ["Value"] = tostring(itemDropDelay),
+    ["Placeholder"] = "Enter number...",
+    ["Callback"] = function(value)
+        itemDropDelay = tonumber(value) or 0.1
+    end
+})
+
+local function matchItemName(itemName, targetName)
+    local lowerItem = itemName:lower()
+    local lowerTarget = targetName:lower()
+    return (lowerItem == lowerTarget or (lowerItem == lowerTarget .. "s" or (lowerItem .. "s" == lowerTarget or lowerItem == lowerTarget:sub(1, #lowerTarget - 1) and lowerTarget:sub(-1) == "s"))) and true or ((lowerItem:find(lowerTarget, 1, true) or lowerItem:find(lowerTarget .. "s", 1, true)) and true or false)
+end
+
+local bringRemoteEvents = game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents")
+local itemsFolder = workspace:WaitForChild("Items")
+
+local function bringItem(itemModel, targetPosition)
+    local primaryPart = itemModel.PrimaryPart or (itemModel:FindFirstChildWhichIsA("BasePart") or itemModel:FindFirstChild("Handle"))
+    if primaryPart then
+        if not itemModel.PrimaryPart then
+            pcall(function()
+                itemModel.PrimaryPart = primaryPart
+            end)
+        end
+        local offsetX = math.random(-3, 3)
+        local offsetZ = math.random(-3, 3)
+        local offsetY = math.random(5, 10)
+        local finalPosition = targetPosition + Vector3.new(offsetX, offsetY, offsetZ)
+        pcall(function()
+            bringRemoteEvents.RequestStartDraggingItem:FireServer(itemModel)
+            task.wait(itemDropDelay)
+            itemModel:SetPrimaryPartCFrame(CFrame.new(finalPosition))
+            task.wait(itemDropDelay)
+            bringRemoteEvents.StopDraggingItem:FireServer(itemModel)
+        end)
+    end
+end
+
+local function bringItems(itemNames)
+    local playerCharacter = game.Players.LocalPlayer.Character
+    if playerCharacter then
+        playerCharacter = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    end
+    if not playerCharacter then
+        return 0
+    end
+    local playerPosition = playerCharacter.Position
+    local itemsContainer = itemsFolder
+    local itemsToProcess = {}
+    
+    for _, item in ipairs(itemsContainer:GetChildren()) do
+        for _, targetName in ipairs(itemNames) do
+            if matchItemName(item.Name, targetName) then
+                table.insert(itemsToProcess, item)
+                break
+            end
+        end
+    end
+    
+    if maxItemsToBring < #itemsToProcess then
+        local shuffledItems = {}
+        for i = 1, #itemsToProcess do
+            shuffledItems[i] = itemsToProcess[i]
+        end
+        for i = #shuffledItems, 2, -1 do
+            local j = math.random(i)
+            local temp = shuffledItems[j]
+            shuffledItems[j] = shuffledItems[i]
+            shuffledItems[i] = temp
+        end
+        itemsToProcess = { table.unpack(shuffledItems, 1, maxItemsToBring) }
+    end
+    
+    local processedCount = 0
+    coroutine.wrap(function()
+        local currentIndex = 1
+        while currentIndex <= #itemsToProcess do
+            local batchCount = 0
+            local batchTasks = {}
+            while batchCount < batchSize and currentIndex <= #itemsToProcess do
+                local currentItem = itemsToProcess[currentIndex]
+                batchTasks[#batchTasks + 1] = task.spawn(function()
+                    bringItem(currentItem, playerPosition)
+                end)
+                currentIndex = currentIndex + 1
+                batchCount = batchCount + 1
+                processedCount = processedCount + 1
+            end
+            task.wait(batchCooldown)
+        end
+        WindUI:Notify({
+            ["Title"] = "Items Brought",
+            ["Content"] = string.format("Successfully brought %d items!", processedCount),
+            ["Duration"] = 2,
+            ["Icon"] = "check"
+        })
+    end)()
+    return processedCount
+end
+
+local itemCategories = {
+    ["Weapons"] = {
+        "Revolver",
+        "Rifle",
+        "Tactical Shotgun",
+        "Raygun",
+        "Katana",
+        "Morningstar",
+        "Kunai",
+        "Spear",
+        "Infernal Sword",
+        "Crossbow",
+        "Infernal Crossbow",
+        "Laser Sword",
+        "Ice Axe",
+        "Ice Sword",
+        "Chainsaw",
+        "Revolver Ammo",
+        "Rifle Ammo"
+    },
+    ["Armor"] = {
+        "Leather Armor",
+        "Iron Armor",
+        "Thorn Armor",
+        "Alien Armour",
+        "Obsidiron Body",
+        "Obsidiron Boots",
+        "Frog Boots",
+        "Riot Shield",
+        "Armor Trim",
+        "Axe Trim",
+        "Armour Trim Kit",
+        "Axe Trim Kit"
+    },
+    ["Consumables"] = {
+        "Meat",
+        "Bandage",
+        "Medkit",
+        "Carrot",
+        "Mackerel",
+        "Salmon",
+        "Swordfish",
+        "Berry",
+        "Ribs",
+        "Cooked Ribs",
+        "Stew",
+        "Steak Dinner",
+        "Morsel",
+        "Steak",
+        "Corn",
+        "Cooked Morsel",
+        "Cooked Steak",
+        "Chilli",
+        "Apple",
+        "Cake",
+        "Pumpkin",
+        "Fuel Canister",
+        "Biofuel",
+        "Oil Barrel"
+    },
+    ["Resources"] = {
+        "Meteor Shard",
+        "Gold Shard",
+        "Diamond",
+        "Obsidiron Ore",
+        "Scalding Obsidiron Ingot",
+        "Obsidiron ingot",
+        "Logs",
+        "Coal",
+        "Sheet Metal",
+        "Wolf Pelt",
+        "Alpha Wolf Pelt",
+        "Bear Pelt",
+        "Bunny Foot",
+        "Rabbit Foot",
+        "Mammonth Tusk",
+        "Bear Corpse",
+        "Feather",
+        "UFO Scrap",
+        "UFO Component",
+        "UFO Junk",
+        "Gem of the Forest",
+        "Gem of the Forest Fragment",
+        "Cultist Gem",
+        "Cultist Prototype",
+        "Cultist Experiment"
+    },
+    ["Equipment"] = {
+        "Good Axe",
+        "Strong Axe",
+        "Good Sack",
+        "Giant Sack",
+        "Infernal Sack",
+        "Car Engine",
+        "Old Car Engine",
+        "Broken Fan",
+        "Broken Radio",
+        "Old Flashlight",
+        "Strong Flashlight",
+        "Old Radio",
+        "Broken Microwave",
+        "Washing Machine",
+        "Tyre",
+        "Bolt",
+        "Seed Box",
+        "Chair",
+        "Sapling",
+        "Sacrifice Totem",
+        "Frog Key",
+        "Defense Blueprint",
+        "Coin Stack"
+    }
+}
+
+local isFirstCategory = true
+
+for categoryName, categoryItems in pairs(itemCategories) do
+    local categorySection = tabs.Bring:Section({
+        ["Title"] = categoryName,
+        ["Icon"] = categoryIcons[categoryName] or "box",
+        ["Opened"] = false
+    })
+    
+    local dropdownValues = { "Bring All" }
+    for _, itemName in ipairs(categoryItems) do
+        table.insert(dropdownValues, itemName)
+    end
+    
+    local selectedCategoryItems = {}
+    
+    categorySection:Dropdown({
+        ["Title"] = "Select " .. categoryName .. " Items",
+        ["Values"] = dropdownValues,
+        ["Multi"] = true,
+        ["AllowNone"] = true,
+        ["Callback"] = function(selected)
+            selectedCategoryItems = selected
+        end
+    })
+    
+    categorySection:Button({
+        ["Title"] = "Bring Selected " .. categoryName,
+        ["Icon"] = "arrow-down",
+        ["Callback"] = function()
+            if #selectedCategoryItems ~= 0 then
+                if table.find(selectedCategoryItems, "Bring All") then
+                    bringItems(categoryItems)
+                else
+                    bringItems(selectedCategoryItems)
+                end
+            else
+                WindUI:Notify({
+                    ["Title"] = "Error",
+                    ["Content"] = "Please select at least one item!",
+                    ["Duration"] = 2,
+                    ["Icon"] = "x"
+                })
+            end
+        end
+    })
+    
+    if isFirstCategory then
+        isFirstCategory = false
+    else
+        tabs.Bring:Divider()
+        isFirstCategory = false
+    end
+end
+
+local foodCategories = {
+    ["Fruits"] = { "Apple", "Berry" },
+    ["Vegetables"] = { "Carrot" },
+    ["Prepared"] = { "Cake", "Chili" },
+    ["Proteins"] = {
+        "Cooked Ribs",
+        "Cooked Mackerel",
+        "Cooked Salmon",
+        "Cooked Morsel",
+        "Cooked Steak"
+    }
+}
+
+local allFoodItems = {}
+local foodCategoryIcons = {
+    ["Fruits"] = "apple",
+    ["Vegetables"] = "carrot",
+    ["Prepared"] = "cake",
+    ["Proteins"] = "drumstick"
+}
+
+for _, foodList in pairs(foodCategories) do
+    for _, foodItem in ipairs(foodList) do
+        table.insert(allFoodItems, foodItem)
+    end
+end
+
+table.sort(allFoodItems)
+
+local maxFeedItems = 10
+local feedBatchSize = 5
+local feedBatchCooldown = 0.2
+local feedDelay = 0.05
+local hungerThreshold = 75
+
+local feedSettingsSection = tabs.Feed:Section({
+    ["Title"] = "Feed Settings",
+    ["Icon"] = "settings",
+    ["Opened"] = false
+})
+
+feedSettingsSection:Input({
+    ["Title"] = "Max Items to Feed",
+    ["Value"] = tostring(maxFeedItems),
+    ["Placeholder"] = "Enter number...",
+    ["Callback"] = function(value)
+        maxFeedItems = tonumber(value) or 10
+    end
+})
+
+feedSettingsSection:Input({
+    ["Title"] = "Batch Size (Speed)",
+    ["Value"] = tostring(feedBatchSize),
+    ["Placeholder"] = "Enter number...",
+    ["Callback"] = function(value)
+        feedBatchSize = tonumber(value) or 5
+    end
+})
+
+feedSettingsSection:Input({
+    ["Title"] = "Batch Cooldown (Cooldown)",
+    ["Value"] = tostring(feedBatchCooldown),
+    ["Placeholder"] = "Enter number...",
+    ["Callback"] = function(value)
+        feedBatchCooldown = tonumber(value) or 0.2
+    end
+})
+
+feedSettingsSection:Input({
+    ["Title"] = "Item Feed Delay (Speed)",
+    ["Value"] = tostring(feedDelay),
+    ["Placeholder"] = "Enter number...",
+    ["Callback"] = function(value)
+        feedDelay = tonumber(value) or 0.05
+    end
+})
+
+feedSettingsSection:Input({
+    ["Title"] = "Hunger Threshold (%)",
+    ["Value"] = tostring(hungerThreshold),
+    ["Placeholder"] = "Enter percentage...",
+    ["Callback"] = function(value)
+        hungerThreshold = tonumber(value) or 75
+    end
+})
+
+local multiFeedSection = tabs.Feed:Section({
+    ["Title"] = "Multi-Selection Auto Feed",
+    ["Icon"] = "list",
+    ["Opened"] = false
+})
+
+local selectedFoods = {}
+local autoFeedEnabled = false
+local autoFeedThread = nil
+
+multiFeedSection:Dropdown({
+    ["Title"] = "Multi-Select Foods",
+    ["Values"] = allFoodItems,
+    ["Value"] = selectedFoods,
+    ["Multi"] = true,
+    ["AllowNone"] = true,
+    ["Callback"] = function(selected)
+        selectedFoods = selected
+    end
+})
+
+multiFeedSection:Toggle({
+    ["Title"] = "Auto Feed Multi-Selected",
+    ["Desc"] = "Automatically feed selected foods when hunger drops below threshold",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        autoFeedEnabled = enabled
+        if enabled then
+            if #selectedFoods == 0 then
+                WindUI:Notify({
+                    ["Title"] = "Error",
+                    ["Content"] = "Please select at least one food item!",
+                    ["Duration"] = 2,
+                    ["Icon"] = "x"
+                })
+                autoFeedEnabled = false
+                return
+            end
+            autoFeedThread = task.spawn(function()
+                while autoFeedEnabled do
+                    task.wait(0.075)
+                    if getHungerLevel() <= hungerThreshold and autoFeedItems(selectedFoods) == 0 then
+                        task.wait(1)
+                    end
+                end
+            end)
+            WindUI:Notify({
+                ["Title"] = "Multi Auto Feed Started",
+                ["Content"] = string.format("Will feed selected items when hunger ≤ %d%%", hungerThreshold),
+                ["Duration"] = 2,
+                ["Icon"] = "play"
+            })
+        else
+            if autoFeedThread then
+                task.cancel(autoFeedThread)
+                autoFeedThread = nil
+            end
+            WindUI:Notify({
+                ["Title"] = "Multi Auto Feed Stopped",
+                ["Content"] = "Automatic feeding disabled",
+                ["Duration"] = 2,
+                ["Icon"] = "stop"
+            })
+        end
+    end
+})
+
+tabs.Feed:Section({
+    ["Title"] = "One Click Feed",
+    ["Icon"] = "zap",
+    ["Opened"] = false
+}):Button({
+    ["Title"] = "One Click Auto Feed",
+    ["Desc"] = "Automatically feed using current settings (max items, batch size, hunger threshold)",
+    ["Icon"] = "zap",
+    ["Callback"] = function()
+        local allFoods = {}
+        for _, foodList in pairs(foodCategories) do
+            for _, foodItem in ipairs(foodList) do
+                table.insert(allFoods, foodItem)
+            end
+        end
+        local fedCount = autoFeedItems(allFoods)
+        if fedCount > 0 then
+            WindUI:Notify({
+                ["Title"] = "One Click Auto Feed",
+                ["Content"] = string.format("Fed with %d items using settings (Max: %d, Batch: %d, Threshold: %d%%)", fedCount, maxFeedItems, feedBatchSize, hungerThreshold),
+                ["Duration"] = 3,
+                ["Icon"] = "check"
+            })
+        end
+    end
+})
+
+local function matchFoodName(foodName, targetName)
+    local lowerFood = foodName:lower()
+    local lowerTarget = targetName:lower()
+    return (lowerFood == lowerTarget or (lowerFood == lowerTarget .. "s" or (lowerFood .. "s" == lowerTarget or lowerFood == lowerTarget:sub(1, #lowerTarget - 1) and lowerTarget:sub(-1) == "s"))) and true or ((lowerFood:find(lowerTarget, 1, true) or lowerFood:find(lowerTarget .. "s", 1, true)) and true or false)
+end
+
+local feedRemoteEvents = game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents")
+local feedItemsFolder = workspace:WaitForChild("Items")
+
+local function getHungerLevel()
+    local playerGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui")
+    if not playerGui then
+        return 100
+    end
+    local interfaceGui = playerGui:FindFirstChild("Interface")
+    if not interfaceGui then
+        return 100
+    end
+    local statBars = interfaceGui:FindFirstChild("StatBars")
+    if not statBars then
+        return 100
+    end
+    local hungerBar = statBars:FindFirstChild("HungerBar")
+    if not hungerBar then
+        return 100
+    end
+    local barFrame = hungerBar:FindFirstChild("Bar")
+    return not barFrame and 100 or math.floor(barFrame.Size.X.Scale * 100)
+end
+
+local function consumeItem(foodItem)
+    pcall(function()
+        feedRemoteEvents.RequestConsumeItem:InvokeServer(foodItem)
+        task.wait(feedDelay)
+    end)
+end
+
+local function autoFeedItems(foodNames)
+    if hungerThreshold < getHungerLevel() then
+        WindUI:Notify({
+            ["Title"] = "Auto Feed",
+            ["Content"] = "Hunger level is above threshold!",
+            ["Duration"] = 2,
+            ["Icon"] = "info"
+        })
+        return 0
+    end
+    
+    local foodsToConsume = {}
+    
+    for _, item in ipairs(feedItemsFolder:GetChildren()) do
+        for _, targetName in ipairs(foodNames) do
+            if matchFoodName(item.Name, targetName) then
+                table.insert(foodsToConsume, item)
+                break
+            end
+        end
+    end
+    
+    if #foodsToConsume == 0 then
+        WindUI:Notify({
+            ["Title"] = "Auto Feed",
+            ["Content"] = "No food items found!",
+            ["Duration"] = 2,
+            ["Icon"] = "x"
+        })
+        return 0
+    end
+    
+    if maxFeedItems < #foodsToConsume then
+        local shuffledFoods = {}
+        for i = 1, #foodsToConsume do
+            shuffledFoods[i] = foodsToConsume[i]
+        end
+        for i = #shuffledFoods, 2, -1 do
+            local j = math.random(i)
+            local temp = shuffledFoods[j]
+            shuffledFoods[j] = shuffledFoods[i]
+            shuffledFoods[i] = temp
+        end
+        foodsToConsume = { table.unpack(shuffledFoods, 1, maxFeedItems) }
+    end
+    
+    local consumedCount = 0
+    coroutine.wrap(function()
+        local currentIndex = 1
+        while currentIndex <= #foodsToConsume do
+            local batchCount = 0
+            while batchCount < feedBatchSize and currentIndex <= #foodsToConsume do
+                local currentFood = foodsToConsume[currentIndex]
+                task.spawn(function()
+                    consumeItem(currentFood)
+                end)
+                currentIndex = currentIndex + 1
+                batchCount = batchCount + 1
+                consumedCount = consumedCount + 1
+            end
+            task.wait(feedBatchCooldown)
+        end
+        WindUI:Notify({
+            ["Title"] = "Auto Feed Complete",
+            ["Content"] = string.format("Consumed %d food items!", consumedCount),
+            ["Duration"] = 2,
+            ["Icon"] = "check"
+        })
+    end)()
+    return consumedCount
+end
+
+local isFirstFoodCategory = true
+
+for categoryName, categoryFoods in pairs(foodCategories) do
+    local categorySection = tabs.Feed:Section({
+        ["Title"] = categoryName,
+        ["Icon"] = foodCategoryIcons[categoryName] or "utensils",
+        ["Opened"] = false
+    })
+    
+    local dropdownValues = { "Feed All" }
+    for _, foodName in ipairs(categoryFoods) do
+        table.insert(dropdownValues, foodName)
+    end
+    
+    local selectedCategoryFoods = {}
+    
+    categorySection:Dropdown({
+        ["Title"] = "Select " .. categoryName .. " Items",
+        ["Values"] = dropdownValues,
+        ["Multi"] = true,
+        ["AllowNone"] = true,
+        ["Callback"] = function(selected)
+            selectedCategoryFoods = selected
+        end
+    })
+    
+    categorySection:Button({
+        ["Title"] = "Feed Selected " .. categoryName,
+        ["Icon"] = "utensils",
+        ["Callback"] = function()
+            if #selectedCategoryFoods ~= 0 then
+                if table.find(selectedCategoryFoods, "Feed All") then
+                    autoFeedItems(categoryFoods)
+                else
+                    autoFeedItems(selectedCategoryFoods)
+                end
+            else
+                WindUI:Notify({
+                    ["Title"] = "Error",
+                    ["Content"] = "Please select at least one item!",
+                    ["Duration"] = 2,
+                    ["Icon"] = "x"
+                })
+            end
+        end
+    })
+    
+    if isFirstFoodCategory then
+        isFirstFoodCategory = false
+    else
+        tabs.Feed:Divider()
+        isFirstFoodCategory = false
+    end
+end
+
+local maxTeleports = 10
+local teleportDelay = 0.1
+
+local teleportSettingsSection = teleportTab:Section({
+    ["Title"] = "Teleport Settings",
+    ["Box"] = false,
+    ["TextTransparency"] = 0.05,
+    ["TextXAlignment"] = "Left",
+    ["TextSize"] = 17,
+    ["Opened"] = true
+})
+
+teleportSettingsSection:Input({
+    ["Title"] = "Max Teleports",
+    ["Value"] = tostring(maxTeleports),
+    ["Placeholder"] = "Enter number...",
+    ["Callback"] = function(value)
+        maxTeleports = tonumber(value) or 10
+    end
+})
+
+teleportSettingsSection:Input({
+    ["Title"] = "Teleport Delay",
+    ["Value"] = tostring(teleportDelay),
+    ["Placeholder"] = "Enter number...",
+    ["Callback"] = function(value)
+        teleportDelay = tonumber(value) or 0.1
+    end
+})
+
+local selectedLocations = {}
+local autoTeleportEnabled = false
+local autoTeleportThread = nil
+local selectedLocation = "Campfire"
+local selectedNature = "Random Tree"
+local selectedMob = nil
+local selectedChest = nil
+
+teleportTab:Section({
+    ["Title"] = "Multi-Selection Teleport",
+    ["Box"] = false,
+    ["TextTransparency"] = 0.05,
+    ["TextXAlignment"] = "Left",
+    ["TextSize"] = 17,
+    ["Opened"] = true
+})
+
+teleportTab:Dropdown({
+    ["Title"] = "Multi-Select Locations",
+    ["Desc"] = "Select multiple locations for teleport",
+    ["Values"] = {
+        "Campfire",
+        "Stronghold",
+        "Safe Zone",
+        "Trader (Bunny Foot)",
+        "Random Tree"
+    },
+    ["Value"] = selectedLocations,
+    ["Multi"] = true,
+    ["AllowNone"] = true,
+    ["Callback"] = function(selected)
+        selectedLocations = selected
+    end
+})
+
+teleportTab:Toggle({
+    ["Title"] = "Auto Teleport Multi-Selected",
+    ["Desc"] = "Automatically teleport to selected locations",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        autoTeleportEnabled = enabled
+        if enabled then
+            if #selectedLocations == 0 then
+                WindUI:Notify({
+                    ["Title"] = "Error",
+                    ["Content"] = "Please select at least one location!",
+                    ["Duration"] = 2,
+                    ["Icon"] = "x"
+                })
+                autoTeleportEnabled = false
+                return
+            end
+            autoTeleportThread = task.spawn(function()
+                while autoTeleportEnabled do
+                    task.wait(1)
+                    local randomLocation = selectedLocations[math.random(1, #selectedLocations)]
+                    if randomLocation == "Campfire" then
+                        tp1()
+                    elseif randomLocation == "Stronghold" then
+                        tp2()
+                    elseif randomLocation == "Safe Zone" then
+                        local player = game:GetService("Players").LocalPlayer
+                        (player.Character or player.CharacterAdded:Wait()):WaitForChild("HumanoidRootPart").CFrame = CFrame.new(0, 360, 0)
+                    elseif randomLocation == "Trader (Bunny Foot)" then
+                        local traderPosition = Vector3.new(-37.08, 3.98, -16.33)
+                        local player = game:GetService("Players").LocalPlayer
+                        (player.Character or player.CharacterAdded:Wait()):WaitForChild("HumanoidRootPart").CFrame = CFrame.new(traderPosition)
+                    elseif randomLocation == "Random Tree" then
+                        local player = game:GetService("Players").LocalPlayer
+                        local hrp = (player.Character or player.CharacterAdded:Wait()):FindFirstChild("HumanoidRootPart", 3)
+                        if not hrp then
+                            return
+                        end
+                        local mapFolder = workspace:FindFirstChild("Map")
+                        if not mapFolder then
+                            return
+                        end
+                        local foliageFolder = mapFolder:FindFirstChild("Foliage") or mapFolder:FindFirstChild("Landmarks")
+                        if not foliageFolder then
+                            return
+                        end
+                        local trees = {}
+                        for _, tree in ipairs(foliageFolder:GetChildren()) do
+                            if tree.Name == "Small Tree" and tree:IsA("Model") then
+                                local trunk = tree:FindFirstChild("Trunk") or tree.PrimaryPart
+                                if trunk then
+                                    table.insert(trees, trunk)
+                                end
+                            end
+                        end
+                        if #trees > 0 then
+                            local randomTree = trees[math.random(1, #trees)].CFrame
+                            local rightVector = randomTree.RightVector
+                            local teleportPosition = randomTree.Position + rightVector * 3
+                            hrp.CFrame = CFrame.new(teleportPosition)
+                        end
+                    end
+                    task.wait(teleportDelay)
+                end
+            end)
+            WindUI:Notify({
+                ["Title"] = "Multi Teleport Started",
+                ["Content"] = "Will teleport to selected locations",
+                ["Duration"] = 2,
+                ["Icon"] = "play"
+            })
+        else
+            if autoTeleportThread then
+                task.cancel(autoTeleportThread)
+                autoTeleportThread = nil
+            end
+            WindUI:Notify({
+                ["Title"] = "Multi Teleport Stopped",
+                ["Content"] = "Automatic teleport disabled",
+                ["Duration"] = 2,
+                ["Icon"] = "stop"
+            })
+        end
+    end
+})
+
+teleportTab:Section({
+    ["Title"] = "One Click Teleport",
+    ["Box"] = false,
+    ["TextTransparency"] = 0.05,
+    ["TextXAlignment"] = "Left",
+    ["TextSize"] = 17,
+    ["Opened"] = true
+})
+
+teleportTab:Button({
+    ["Title"] = "One Click Teleport",
+    ["Desc"] = "Teleport to all selected locations using settings",
+    ["Icon"] = "zap",
+    ["Callback"] = function()
+        if #selectedLocations ~= 0 then
+            local teleportCount = 0
+            for _, location in ipairs(selectedLocations) do
+                if location == "Campfire" then
+                    tp1()
+                elseif location == "Stronghold" then
+                    tp2()
+                elseif location == "Safe Zone" then
+                    if not workspace:FindFirstChild("SafeZonePart") then
+                        local safeZonePart = Instance.new("Part")
+                        safeZonePart.Name = "SafeZonePart"
+                        safeZonePart.Size = Vector3.new(30, 3, 30)
+                        safeZonePart.Position = Vector3.new(0, 350, 0)
+                        safeZonePart.Anchored = true
+                        safeZonePart.CanCollide = true
+                        safeZonePart.Transparency = 0.8
+                        safeZonePart.Color = Color3.fromRGB(255, 0, 0)
+                        safeZonePart.Parent = workspace
+                    end
+                    local player = game:GetService("Players").LocalPlayer
+                    (player.Character or player.CharacterAdded:Wait()):WaitForChild("HumanoidRootPart").CFrame = CFrame.new(0, 360, 0)
+                elseif location == "Trader (Bunny Foot)" then
+                    local traderPosition = Vector3.new(-37.08, 3.98, -16.33)
+                    local player = game:GetService("Players").LocalPlayer
+                    (player.Character or player.CharacterAdded:Wait()):WaitForChild("HumanoidRootPart").CFrame = CFrame.new(traderPosition)
+                elseif location == "Random Tree" then
+                    local player = game:GetService("Players").LocalPlayer
+                    local hrp = (player.Character or player.CharacterAdded:Wait()):FindFirstChild("HumanoidRootPart", 3)
+                    if not hrp then
+                        return
+                    end
+                    local mapFolder = workspace:FindFirstChild("Map")
+                    if not mapFolder then
+                        return
+                    end
+                    local foliageFolder = mapFolder:FindFirstChild("Foliage") or mapFolder:FindFirstChild("Landmarks")
+                    if not foliageFolder then
+                        return
+                    end
+                    local trees = {}
+                    for _, tree in ipairs(foliageFolder:GetChildren()) do
+                        if tree.Name == "Small Tree" and tree:IsA("Model") then
+                            local trunk = tree:FindFirstChild("Trunk") or tree.PrimaryPart
+                            if trunk then
+                                table.insert(trees, trunk)
+                            end
+                        end
+                    end
+                    if #trees > 0 then
+                        local randomTree = trees[math.random(1, #trees)].CFrame
+                        local rightVector = randomTree.RightVector
+                        local teleportPosition = randomTree.Position + rightVector * 3
+                        hrp.CFrame = CFrame.new(teleportPosition)
+                    end
+                end
+                teleportCount = teleportCount + 1
+                task.wait(teleportDelay)
+            end
+            WindUI:Notify({
+                ["Title"] = "One Click Teleport",
+                ["Content"] = string.format("Teleported to %d locations", teleportCount),
+                ["Duration"] = 3,
+                ["Icon"] = "check"
+            })
+        else
+            WindUI:Notify({
+                ["Title"] = "Error",
+                ["Content"] = "Please select locations first!",
+                ["Duration"] = 2,
+                ["Icon"] = "x"
+            })
+        end
+    end
+})
+
+teleportTab:Section({
+    ["Title"] = "Locations",
+    ["Box"] = false,
+    ["TextTransparency"] = 0.05,
+    ["TextXAlignment"] = "Left",
+    ["TextSize"] = 17,
+    ["Opened"] = true
+})
+
+teleportTab:Dropdown({
+    ["Title"] = "Select Location",
+    ["Values"] = {
+        "Campfire",
+        "Stronghold",
+        "Safe Zone",
+        "Trader (Bunny Foot)"
+    },
+    ["Multi"] = false,
+    ["AllowNone"] = true,
+    ["Callback"] = function(selected)
+        selectedLocation = selected[#selected] or "Campfire"
+    end
+})
+
+teleportTab:Button({
+    ["Title"] = "Teleport to Selected Location",
+    ["Callback"] = function()
+        if selectedLocation ~= "Campfire" then
+            if selectedLocation ~= "Stronghold" then
+                if selectedLocation ~= "Safe Zone" then
+                    if selectedLocation == "Trader (Bunny Foot)" then
+                        local traderPosition = Vector3.new(-37.08, 3.98, -16.33)
+                        local player = game:GetService("Players").LocalPlayer
+                        (player.Character or player.CharacterAdded:Wait()):WaitForChild("HumanoidRootPart").CFrame = CFrame.new(traderPosition)
+                    end
+                else
+                    if not workspace:FindFirstChild("SafeZonePart") then
+                        local safeZonePart = Instance.new("Part")
+                        safeZonePart.Name = "SafeZonePart"
+                        safeZonePart.Size = Vector3.new(30, 3, 30)
+                        safeZonePart.Position = Vector3.new(0, 350, 0)
+                        safeZonePart.Anchored = true
+                        safeZonePart.CanCollide = true
+                        safeZonePart.Transparency = 0.8
+                        safeZonePart.Color = Color3.fromRGB(255, 0, 0)
+                        safeZonePart.Parent = workspace
+                    end
+                    local player = game:GetService("Players").LocalPlayer
+                    (player.Character or player.CharacterAdded:Wait()):WaitForChild("HumanoidRootPart").CFrame = CFrame.new(0, 360, 0)
+                end
+            else
+                tp2()
+            end
+        else
+            tp1()
+        end
+    end
+})
+
+teleportTab:Section({
+    ["Title"] = "Nature",
+    ["Box"] = false,
+    ["TextTransparency"] = 0.05,
+    ["TextXAlignment"] = "Left",
+    ["TextSize"] = 17,
+    ["Opened"] = true
+})
+
+teleportTab:Dropdown({
+    ["Title"] = "Select Nature",
+    ["Values"] = { "Random Tree" },
+    ["Multi"] = false,
+    ["AllowNone"] = true,
+    ["Callback"] = function(selected)
+        selectedNature = selected[#selected] or "Random Tree"
+    end
+})
+
+teleportTab:Button({
+    ["Title"] = "Teleport to Selected Nature",
+    ["Callback"] = function()
+        if selectedNature == "Random Tree" then
+            local player = game:GetService("Players").LocalPlayer
+            local hrp = (player.Character or player.CharacterAdded:Wait()):FindFirstChild("HumanoidRootPart", 3)
+            if not hrp then
+                return
+            end
+            local mapFolder = workspace:FindFirstChild("Map")
+            if not mapFolder then
+                return
+            end
+            local foliageFolder = mapFolder:FindFirstChild("Foliage") or mapFolder:FindFirstChild("Landmarks")
+            if not foliageFolder then
+                return
+            end
+            local trees = {}
+            for _, tree in ipairs(foliageFolder:GetChildren()) do
+                if tree.Name == "Small Tree" and tree:IsA("Model") then
+                    local trunk = tree:FindFirstChild("Trunk") or tree.PrimaryPart
+                    if trunk then
+                        table.insert(trees, trunk)
+                    end
+                end
+            end
+            if #trees > 0 then
+                local randomTree = trees[math.random(1, #trees)].CFrame
+                local rightVector = randomTree.RightVector
+                local teleportPosition = randomTree.Position + rightVector * 3
+                hrp.CFrame = CFrame.new(teleportPosition)
+            end
+        end
+    end
+})
+
+teleportTab:Section({
+    ["Title"] = "Entities",
+    ["Box"] = false,
+    ["TextTransparency"] = 0.05,
+    ["TextXAlignment"] = "Left",
+    ["TextSize"] = 17,
+    ["Opened"] = true
+})
+
+local mobDropdown = teleportTab:Dropdown({
+    ["Title"] = "Select Child",
+    ["Values"] = currentMobNames,
+    ["Multi"] = false,
+    ["AllowNone"] = true,
+    ["Callback"] = function(selected)
+        selectedMob = selected[#selected] or currentMobNames[1] or nil
+    end
+})
+
+teleportTab:Button({
+    ["Title"] = "Teleport to Selected Child",
+    ["Callback"] = function()
+        if selectedMob and currentMobs then
+            for index, mobName in ipairs(currentMobNames) do
+                if mobName == selectedMob then
+                    local mob = currentMobs[index]
+                    if mob then
+                        local mobPart = mob.PrimaryPart or mob:FindFirstChildWhichIsA("BasePart")
+                        local playerHrp = mobPart and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                        if playerHrp then
+                            playerHrp.CFrame = mobPart.CFrame + Vector3.new(0, 5, 0)
+                        end
+                    end
+                    break
+                end
+            end
+        end
+    end
+})
+
+teleportTab:Button({
+    ["Title"] = "Refresh Child List",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        local mobs, mobNames = getMobs()
+        currentMobNames = mobNames
+        currentMobs = mobs
+        if #currentMobNames <= 0 then
+            selectedMob = nil
+            mobDropdown:Refresh({ "No child found" })
+        else
+            selectedMob = currentMobNames[1]
+            mobDropdown:Refresh(currentMobNames)
+        end
+    end
+})
+
+teleportTab:Section({
+    ["Title"] = "Containers",
+    ["Box"] = false,
+    ["TextTransparency"] = 0.05,
+    ["TextXAlignment"] = "Left",
+    ["TextSize"] = 17,
+    ["Opened"] = true
+})
+
+local chestDropdown = teleportTab:Dropdown({
+    ["Title"] = "Select Chest",
+    ["Values"] = currentChestNames,
+    ["Multi"] = false,
+    ["AllowNone"] = true,
+    ["Callback"] = function(selected)
+        selectedChest = selected[#selected] or currentChestNames[1] or nil
+    end
+})
+
+teleportTab:Button({
+    ["Title"] = "Teleport to Selected Chest",
+    ["Callback"] = function()
+        if selectedChest and currentChests then
+            local chestIndex = 1
+            for index, chestName in ipairs(currentChestNames) do
+                if chestName == selectedChest then
+                    chestIndex = index
+                    break
+                end
+            end
+            local chest = currentChests[chestIndex]
+            if chest then
+                local chestPart = chest.PrimaryPart or chest:FindFirstChildWhichIsA("BasePart")
+                local playerHrp = chestPart and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                if playerHrp then
+                    playerHrp.CFrame = chestPart.CFrame + Vector3.new(0, 5, 0)
+                end
+            end
+        end
+    end
+})
+
+teleportTab:Button({
+    ["Title"] = "Refresh Chest List",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        local chests, chestNames = getChests()
+        currentChestNames = chestNames
+        currentChests = chests
+        if #currentChestNames <= 0 then
+            selectedChest = nil
+            chestDropdown:Refresh({ "No chests found" })
+        else
+            selectedChest = currentChestNames[1]
+            chestDropdown:Refresh(currentChestNames)
+        end
+    end
+})
+
+local PlayersService3 = game:GetService("Players")
+game:GetService("ReplicatedStorage")
+local WorkspaceRef = game:GetService("Workspace")
+local _ = PlayersService3.LocalPlayer
+
+local campfirePosition = Vector3.new(0, 19, 0)
+local scrapPosition = Vector3.new(21, 20, -5)
+
+local function moveItemToPosition(itemModel, targetPosition)
+    if itemModel and (itemModel:IsDescendantOf(workspace) and (itemModel:IsA("BasePart") or itemModel:IsA("Model"))) then
+        local basePart
+        if itemModel:IsA("Model") then
+            basePart = itemModel.PrimaryPart or itemModel:FindFirstChildWhichIsA("BasePart") or (itemModel:FindFirstChild("Handle") or itemModel)
+        else
+            basePart = itemModel
+        end
+        if basePart and basePart:IsA("BasePart") then
+            if itemModel:IsA("Model") and not itemModel.PrimaryPart then
+                pcall(function()
+                    itemModel.PrimaryPart = basePart
+                end)
+            end
+            pcall(function()
+                game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents").RequestStartDraggingItem:FireServer(itemModel)
+                if itemModel:IsA("Model") then
+                    itemModel:SetPrimaryPartCFrame(CFrame.new(targetPosition))
+                else
+                    basePart.CFrame = CFrame.new(targetPosition)
+                end
+                game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents").StopDraggingItem:FireServer(itemModel)
+            end)
+        end
+    else
+        return
+    end
+end
+
+local autoUpgradeSection = tabs.Auto:Section({
+    ["Title"] = "Auto Upgrade Campfire",
+    ["Icon"] = "flame"
+})
+
+local selectedFuelItems = {}
+
+autoUpgradeSection:Dropdown({
+    ["Title"] = "Select Fuel Items",
+    ["Desc"] = "Choose items to auto-upgrade campfire",
+    ["Values"] = {
+        "Log",
+        "Coal",
+        "Chair",
+        "Fuel Canister",
+        "Oil Barrel",
+        "Biofuel"
+    },
+    ["Multi"] = true,
+    ["AllowNone"] = true,
+    ["Callback"] = function(selected)
+        selectedFuelItems = selected
+    end
+})
+
+autoUpgradeSection:Button({
+    ["Title"] = "Start Auto Upgrade Campfire",
+    ["Icon"] = "flame",
+    ["Callback"] = function()
+        if #selectedFuelItems ~= 0 then
+            task.spawn(function()
+                for _, fuelName in ipairs(selectedFuelItems) do
+                    for _, item in ipairs(workspace:WaitForChild("Items"):GetChildren()) do
+                        if item.Name == fuelName then
+                            moveItemToPosition(item, campfirePosition)
+                            task.wait(0.5)
+                        end
+                    end
+                end
+                WindUI:Notify({
+                    ["Title"] = "Auto Upgrade Complete",
+                    ["Content"] = "Campfire upgrade items processed!",
+                    ["Duration"] = 2,
+                    ["Icon"] = "check"
+                })
+            end)
+        else
+            WindUI:Notify({
+                ["Title"] = "Error",
+                ["Content"] = "Please select at least one item!",
+                ["Duration"] = 2,
+                ["Icon"] = "x"
+            })
+        end
+    end
+})
+
+local autoScrapSection = tabs.Auto:Section({
+    ["Title"] = "Auto Scrap Items",
+    ["Icon"] = "cog"
+})
+
+local selectedScrapItems = {}
+
+autoScrapSection:Dropdown({
+    ["Title"] = "Select Scrap Items",
+    ["Desc"] = "Choose items to auto-scrap",
+    ["Values"] = {
+        "Log",
+        "Chair",
+        "Tyre",
+        "Bolt",
+        "Broken Fan",
+        "Broken Microwave",
+        "Sheet Metal",
+        "Old Radio",
+        "Washing Machine",
+        "Old Car Engine"
+    },
+    ["Multi"] = true,
+    ["AllowNone"] = true,
+    ["Callback"] = function(selected)
+        selectedScrapItems = selected
+    end
+})
+
+autoScrapSection:Button({
+    ["Title"] = "Start Auto Scrap Items",
+    ["Icon"] = "cog",
+    ["Callback"] = function()
+        if #selectedScrapItems ~= 0 then
+            task.spawn(function()
+                for _, scrapName in ipairs(selectedScrapItems) do
+                    for _, item in ipairs(workspace:WaitForChild("Items"):GetChildren()) do
+                        if item.Name == scrapName then
+                            moveItemToPosition(item, scrapPosition)
+                            task.wait(0.5)
+                        end
+                    end
+                end
+                WindUI:Notify({
+                    ["Title"] = "Auto Scrap Complete",
+                    ["Content"] = "Scrap items processed!",
+                    ["Duration"] = 2,
+                    ["Icon"] = "check"
+                })
+            end)
+        else
+            WindUI:Notify({
+                ["Title"] = "Error",
+                ["Content"] = "Please select at least one item!",
+                ["Duration"] = 2,
+                ["Icon"] = "x"
+            })
+        end
+    end
+})
+
+local autoCookSection = tabs.Auto:Section({
+    ["Title"] = "Auto Cook Food",
+    ["Icon"] = "utensils"
+})
+
+local selectedCookItems = {}
+
+autoCookSection:Dropdown({
+    ["Title"] = "Select Food Items",
+    ["Desc"] = "Choose food items to auto-cook",
+    ["Values"] = {
+        "Morsel",
+        "Steak",
+        "Ribs",
+        "Salmon",
+        "Mackerel"
+    },
+    ["Multi"] = true,
+    ["AllowNone"] = true,
+    ["Callback"] = function(selected)
+        selectedCookItems = selected
+    end
+})
+
+autoCookSection:Button({
+    ["Title"] = "Start Auto Cook Food",
+    ["Icon"] = "utensils",
+    ["Callback"] = function()
+        if #selectedCookItems ~= 0 then
+            task.spawn(function()
+                for _, foodName in ipairs(selectedCookItems) do
+                    for _, item in ipairs(WorkspaceRef:WaitForChild("Items"):GetChildren()) do
+                        if item.Name == foodName then
+                            moveItemToPosition(item, campfirePosition)
+                            task.wait(0.5)
+                        end
+                    end
+                end
+                WindUI:Notify({
+                    ["Title"] = "Auto Cook Complete",
+                    ["Content"] = "Food items processed!",
+                    ["Duration"] = 2,
+                    ["Icon"] = "check"
+                })
+            end)
+        else
+            WindUI:Notify({
+                ["Title"] = "Error",
+                ["Content"] = "Please select at least one item!",
+                ["Duration"] = 2,
+                ["Icon"] = "x"
+            })
+        end
+    end
+})
+
+local _ = game:GetService("Players").LocalPlayer
+game:GetService("Workspace")
+game:GetService("Lighting")
+game:GetService("RunService")
+game:GetService("ReplicatedStorage")
+
+local scanPlayer = game.Players.LocalPlayer
+local scanHumanoidRootPart = (scanPlayer.Character or scanPlayer.CharacterAdded:Wait()):WaitForChild("HumanoidRootPart")
+local scanCenterPosition = Vector3.new(13.287, 100, 0.362)
+local scanMaxRadius = 1380
+local scanAngleStep = math.rad(10)
+local scanRadiusStep = 15
+local scanSpeed = 100
+local mapMinX = -1386.61
+local mapMaxX = 1385.55
+local mapMinZ = -1396.19
+local mapMaxZ = 1376.45
+local mapArea = (mapMaxX - mapMinX) * (mapMaxZ - mapMinZ)
+
+local function calculateOverlapArea(centerX, centerZ, radius, minX, minZ, maxX, maxZ)
+    local sampleCount = 10000
+    local insideCount = 0
+    for _ = 1, sampleCount do
+        local angle = math.random() * 2 * math.pi
+        local distance = math.sqrt(math.random()) * radius
+        local pointX = centerX + distance * math.cos(angle)
+        local pointZ = centerZ + distance * math.sin(angle)
+        if minX <= pointX then
+            if pointX <= maxX then
+                if minZ <= pointZ then
+                    if pointZ <= maxZ then
+                        insideCount = insideCount + 1
+                    end
+                end
+            end
+        end
+    end
+    return insideCount / sampleCount * math.pi * radius * radius
+end
+
+local scanEnabled = false
+local scanRunning = false
+local scanAngle = 0
+local scanRadius = 0
+
+local scanPlayerGui = scanPlayer:WaitForChild("PlayerGui")
+local scanScreenGui = Instance.new("ScreenGui")
+scanScreenGui.Parent = scanPlayerGui
+
+local explorationLabel = Instance.new("TextLabel")
+explorationLabel.Parent = scanScreenGui
+explorationLabel.Size = UDim2.new(0, 250, 0, 40)
+explorationLabel.Position = UDim2.new(0.5, -125, 0.08, 0)
+explorationLabel.Text = "Exploration: 0%"
+explorationLabel.BackgroundTransparency = 0.3
+explorationLabel.TextScaled = true
+explorationLabel.TextColor3 = Color3.new(1, 1, 1)
+explorationLabel.BackgroundColor3 = Color3.new(0, 0, 0)
+explorationLabel.BorderSizePixel = 0
+explorationLabel.Visible = false
+
+local progressBarFrame = Instance.new("Frame")
+progressBarFrame.Parent = scanScreenGui
+progressBarFrame.Size = UDim2.new(0, 250, 0, 25)
+progressBarFrame.Position = UDim2.new(0.5, -125, 0.15, 0)
+progressBarFrame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+progressBarFrame.BackgroundTransparency = 0.3
+progressBarFrame.BorderSizePixel = 0
+progressBarFrame.Visible = false
+
+local progressBar = Instance.new("Frame")
+progressBar.Parent = progressBarFrame
+progressBar.Size = UDim2.new(0, 0, 1, 0)
+progressBar.BackgroundColor3 = Color3.new(0, 1, 0)
+progressBar.BorderSizePixel = 0
+
+local labelCorner = Instance.new("UICorner")
+labelCorner.CornerRadius = UDim.new(0, 8)
+labelCorner.Parent = explorationLabel
+
+local frameCorner = Instance.new("UICorner")
+frameCorner.CornerRadius = UDim.new(0, 8)
+frameCorner.Parent = progressBarFrame
+
+local barCorner = Instance.new("UICorner")
+barCorner.CornerRadius = UDim.new(0, 8)
+barCorner.Parent = progressBar
+
+local scanBodyVelocity = Instance.new("BodyVelocity")
+scanBodyVelocity.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+scanBodyVelocity.P = 5000
+scanBodyVelocity.Velocity = Vector3.zero
+
+local function attachBodyVelocity()
+    if scanBodyVelocity.Parent ~= scanHumanoidRootPart then
+        scanBodyVelocity.Parent = scanHumanoidRootPart
+    end
+end
+
+local function detachBodyVelocity()
+    if scanBodyVelocity.Parent then
+        scanBodyVelocity.Parent = nil
+    end
+end
+
+local function moveToPosition(targetPosition)
+    while scanEnabled and (scanHumanoidRootPart.Position - targetPosition).Magnitude > 5 do
+        local direction = targetPosition - scanHumanoidRootPart.Position
+        if direction.Magnitude == 0 then
+            break
+        end
+        scanBodyVelocity.Velocity = direction.Unit * scanSpeed
+        task.wait()
+    end
+end
+
+local function runScanLoop()
+    if not scanRunning then
+        scanRunning = true
+        explorationLabel.Visible = true
+        progressBarFrame.Visible = true
+        attachBodyVelocity()
+        while scanEnabled and scanRadius < scanMaxRadius do
+            local posX = scanCenterPosition.X + math.cos(scanAngle) * scanRadius
+            local posZ = scanCenterPosition.Z + math.sin(scanAngle) * scanRadius
+            moveToPosition((Vector3.new(posX, scanCenterPosition.Y, posZ)))
+            scanAngle = scanAngle + scanAngleStep
+            scanRadius = scanRadius + scanRadiusStep * (scanAngleStep / (2 * math.pi))
+            local overlapArea = calculateOverlapArea(scanCenterPosition.X, scanCenterPosition.Z, scanRadius, mapMinX, mapMinZ, mapMaxX, mapMaxZ)
+            local percentage = math.floor(overlapArea / mapArea * 100)
+            local clampedPercentage = percentage > 100 and 100 or percentage
+            explorationLabel.Text = "Exploration: " .. clampedPercentage .. "%"
+            progressBar.Size = UDim2.new(clampedPercentage / 100, 0, 1, 0)
+            task.wait()
+        end
+        scanBodyVelocity.Velocity = Vector3.zero
+        detachBodyVelocity()
+        explorationLabel.Visible = false
+        progressBarFrame.Visible = false
+        scanRunning = false
+    end
+end
+
+local function stopScan()
+    scanEnabled = false
+    scanBodyVelocity.Velocity = Vector3.zero
+    detachBodyVelocity()
+    explorationLabel.Text = "Exploration: 0%"
+    progressBar.Size = UDim2.new(0, 0, 1, 0)
+    scanRadius = 0
+    scanAngle = 0
+end
+
+tabs.Scan:Toggle({
+    ["Title"] = "Scan Map",
+    ["Callback"] = function(enabled)
+        if enabled then
+            scanEnabled = true
+            task.spawn(runScanLoop)
+        else
+            stopScan()
+        end
+    end
+})
+
+tabs.Scan:Slider({
+    ["Title"] = "Scan Speed",
+    ["Step"] = 10,
+    ["Value"] = {
+        ["Min"] = 50,
+        ["Max"] = 500,
+        ["Default"] = 100
+    },
+    ["Suffix"] = " studs/s",
+    ["Callback"] = function(value)
+        scanSpeed = value
+    end
+})
+
+tabs.Scan:Slider({
+    ["Title"] = "Step Radius",
+    ["Step"] = 1,
+    ["Value"] = {
+        ["Min"] = 1,
+        ["Max"] = 100,
+        ["Default"] = 15
+    },
+    ["Suffix"] = " studs",
+    ["Callback"] = function(value)
+        scanRadiusStep = value
+    end
+})
+
+tabs.Scan:Slider({
+    ["Title"] = "Step Angle",
+    ["Step"] = 1,
+    ["Value"] = {
+        ["Min"] = 1,
+        ["Max"] = 90,
+        ["Default"] = 10
+    },
+    ["Suffix"] = "°",
+    ["Callback"] = function(value)
+        scanAngleStep = math.rad(value)
+    end
+})
+
+tabs.Vision:Section({
+    ["Title"] = "Vision",
+    ["Icon"] = "eye"
+})
+
+local originalLightingObjects = {
+    ["Sky"] = nil,
+    ["Bloom"] = nil,
+    ["CampfireEffect"] = nil
+}
+
+(function()
+    local lighting = game:GetService("Lighting")
+    local sky = lighting:FindFirstChild("Sky")
+    local bloom = lighting:FindFirstChild("Bloom")
+    local campfireEffect = lighting:FindFirstChild("CampfireEffect")
+    if sky and not originalLightingObjects.Sky then
+        originalLightingObjects.Sky = sky.Parent
+    end
+    if bloom and not originalLightingObjects.Bloom then
+        originalLightingObjects.Bloom = bloom.Parent
+    end
+    if campfireEffect and not originalLightingObjects.CampfireEffect then
+        originalLightingObjects.CampfireEffect = campfireEffect.Parent
+    end
+end)()
+
+local colorCorrectionParent = nil
+
+(function()
+    local colorCorrection = game:GetService("Lighting"):FindFirstChild("ColorCorrection")
+    if colorCorrection and not colorCorrectionParent then
+        colorCorrectionParent = colorCorrection.Parent
+    end
+end)()
+
+tabs.Vision:Toggle({
+    ["Title"] = "Disable Fog",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        local lighting = game:GetService("Lighting")
+        if enabled then
+            local sky = lighting:FindFirstChild("Sky")
+            local bloom = lighting:FindFirstChild("Bloom")
+            local campfireEffect = lighting:FindFirstChild("CampfireEffect")
+            if sky then
+                sky.Parent = nil
+            end
+            if bloom then
+                bloom.Parent = nil
+            end
+            if campfireEffect then
+                campfireEffect.Parent = nil
+            end
+        else
+            local sky = game:FindFirstChild("Sky", true)
+            local bloom = game:FindFirstChild("Bloom", true)
+            local campfireEffect = game:FindFirstChild("CampfireEffect", true)
+            local skyObj = sky or lighting:FindFirstChild("Sky")
+            local bloomObj = bloom or lighting:FindFirstChild("Bloom")
+            local campfireObj = campfireEffect or lighting:FindFirstChild("CampfireEffect")
+            if skyObj then
+                skyObj.Parent = originalLightingObjects.Sky or lighting
+            end
+            if bloomObj then
+                bloomObj.Parent = originalLightingObjects.Bloom or lighting
+            end
+            if campfireObj then
+                campfireObj.Parent = originalLightingObjects.CampfireEffect or lighting
+            end
+        end
+    end
+})
+
+local originalLightingSettings = {
+    ["Brightness"] = nil,
+    ["Ambient"] = nil,
+    ["OutdoorAmbient"] = nil,
+    ["ShadowSoftness"] = nil,
+    ["GlobalShadows"] = nil,
+    ["Technology"] = nil
+}
+
+(function()
+    local lighting = game:GetService("Lighting")
+    if not originalLightingSettings.Brightness then
+        originalLightingSettings.Brightness = lighting.Brightness
+        originalLightingSettings.Ambient = lighting.Ambient
+        originalLightingSettings.OutdoorAmbient = lighting.OutdoorAmbient
+        originalLightingSettings.ShadowSoftness = lighting.ShadowSoftness
+        originalLightingSettings.GlobalShadows = lighting.GlobalShadows
+        originalLightingSettings.Technology = lighting.Technology
+    end
+end)()
+
+tabs.Vision:Toggle({
+    ["Title"] = "Disable Night CampFire Effect",
+    ["Desc"] = "",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        local lighting = game:GetService("Lighting")
+        if enabled then
+            local colorCorrection = lighting:FindFirstChild("ColorCorrection")
+            if colorCorrection then
+                if not colorCorrectionParent then
+                    colorCorrectionParent = colorCorrection.Parent
+                end
+                colorCorrection.Parent = nil
+            end
+        else
+            local colorCorrection = lighting:FindFirstChild("ColorCorrection") or game:FindFirstChild("ColorCorrection", true)
+            if colorCorrection then
+                colorCorrection.Parent = lighting
+            end
+        end
+    end
+})
+
+tabs.Vision:Toggle({
+    ["Title"] = "Fullbright",
+    ["Desc"] = "",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        local lighting = game:GetService("Lighting")
+        if enabled then
+            lighting.Brightness = 2
+            lighting.Ambient = Color3.new(1, 1, 1)
+            lighting.OutdoorAmbient = Color3.new(1, 1, 1)
+            lighting.ShadowSoftness = 0
+            lighting.GlobalShadows = false
+            lighting.Technology = Enum.Technology.Compatibility
+        else
+            lighting.Brightness = originalLightingSettings.Brightness
+            lighting.Ambient = originalLightingSettings.Ambient
+            lighting.OutdoorAmbient = originalLightingSettings.OutdoorAmbient
+            lighting.ShadowSoftness = originalLightingSettings.ShadowSoftness
+            lighting.GlobalShadows = originalLightingSettings.GlobalShadows
+            lighting.Technology = originalLightingSettings.Technology
+        end
+    end
+})
+
+local PlayersService4 = game:GetService("Players")
+game:GetService("ReplicatedStorage")
+local _ = PlayersService4.LocalPlayer
+
+repeat
+    task.wait()
+until game:IsLoaded()
+
+local plantingRadius = 5
+local plantingAngleIncrement = math.pi / 4
+local plantingHeightOffset = 0
+local previewEnabled = false
+local placementMethod = "Circle"
+
+local campfireCenterPosition = (function()
+    local mapFolder = workspace:FindFirstChild("Map")
+    local campground = mapFolder and mapFolder:FindFirstChild("Campground")
+    if campground then
+        local mainFire = campground:FindFirstChild("MainFire")
+        if mainFire and mainFire:IsA("Model") then
+            if mainFire.PrimaryPart then
+                return mainFire.PrimaryPart.Position
+            else
+                return mainFire:GetModelCFrame().Position
+            end
+        end
+        for _, child in ipairs(campground:GetChildren()) do
+            if child:IsA("BasePart") then
+                return child.Position
+            end
+        end
+    end
+    return Vector3.new(-41.2053, 1.0633, 29.2236)
+end)()
+
+local function generatePlantingPositions(count)
+    local positions = {}
+    if placementMethod ~= "Circle" then
+        if placementMethod == "Square" then
+            local halfRadius = plantingRadius / 2
+            local gridSize = 4
+            local startX = campfireCenterPosition.X - 1.5 * halfRadius
+            local startZ = campfireCenterPosition.Z - 1.5 * halfRadius
+            for row = 1, gridSize do
+                for col = 1, gridSize do
+                    if row == 1 or (row == gridSize or (col == 1 or col == gridSize)) then
+                        if count <= #positions then
+                            break
+                        end
+                        local position = Vector3.new(startX + (row - 1) * halfRadius, plantingHeightOffset + 0.5, startZ + (col - 1) * halfRadius)
+                        table.insert(positions, position)
+                    end
+                end
+            end
+        end
+    else
+        local currentRadius = plantingRadius
+        local positionCount = 0
+        while positionCount < count do
+            local positionsPerRing = math.floor(2 * math.pi / plantingAngleIncrement)
+            if positionsPerRing == 0 then
+                break
+            end
+            for i = 0, positionsPerRing - 1 do
+                if count <= positionCount then
+                    break
+                end
+                local angle = i * plantingAngleIncrement
+                local offsetX = math.cos(angle) * currentRadius
+                local offsetZ = math.sin(angle) * currentRadius
+                local position = campfireCenterPosition + Vector3.new(offsetX, plantingHeightOffset + 0.5, offsetZ)
+                table.insert(positions, position)
+                positionCount = positionCount + 1
+            end
+            currentRadius = currentRadius + plantingRadius
+        end
+    end
+    return positions
+end
+
+local previewParts = {}
+local previewActive = false
+
+local function clearPreview()
+    for _, part in ipairs(previewParts) do
+        if part and part.Parent then
+            part:Destroy()
+        end
+    end
+    previewParts = {}
+end
+
+local function createPreview()
+    if previewActive then
+        clearPreview()
+    end
+    previewActive = true
+    local positions = generatePlantingPositions((math.floor(360 / math.deg(plantingAngleIncrement))))
+    
+    for _, position in ipairs(positions) do
+        local previewPart = Instance.new("Part")
+        previewPart.Size = Vector3.new(1, 1, 1)
+        previewPart.Position = position
+        previewPart.Anchored = true
+        previewPart.CanCollide = false
+        previewPart.BrickColor = BrickColor.new("Bright green")
+        previewPart.Material = Enum.Material.Neon
+        previewPart.Transparency = 0.2
+        previewPart.Shape = Enum.PartType.Block
+        previewPart.Parent = workspace
+        
+        local pointLight = Instance.new("PointLight")
+        pointLight.Brightness = 3
+        pointLight.Color = Color3.fromRGB(0, 255, 0)
+        pointLight.Range = 10
+        pointLight.Parent = previewPart
+        
+        local particleEmitter = Instance.new("ParticleEmitter")
+        particleEmitter.Texture = "rbxassetid://241685484"
+        particleEmitter.Size = NumberSequence.new(0.5)
+        particleEmitter.Transparency = NumberSequence.new({ NumberSequenceKeypoint.new(0, 0.5), NumberSequenceKeypoint.new(1, 1) })
+        particleEmitter.Lifetime = NumberRange.new(1, 2)
+        particleEmitter.Rate = 10
+        particleEmitter.Speed = NumberRange.new(1, 3)
+        particleEmitter.Color = ColorSequence.new(Color3.fromRGB(0, 255, 0))
+        particleEmitter.Parent = previewPart
+        
+        local orbitPart = Instance.new("Part")
+        orbitPart.Size = Vector3.new(0.5, 0.5, 0.5)
+        orbitPart.Position = position + Vector3.new(0, 1.5, 0)
+        orbitPart.Anchored = true
+        orbitPart.CanCollide = false
+        orbitPart.BrickColor = BrickColor.new("Lime green")
+        orbitPart.Material = Enum.Material.Neon
+        orbitPart.Transparency = 0.1
+        orbitPart.Shape = Enum.PartType.Ball
+        orbitPart.Parent = workspace
+        
+        task.spawn(function()
+            while true do
+                if not (orbitPart and orbitPart.Parent) then
+                    return
+                end
+                for t = 0, 1, 0.05 do
+                    if not (orbitPart and orbitPart.Parent) then
+                        break
+                    end
+                    local scale = 1 + math.sin(t * math.pi * 2) * 0.3
+                    orbitPart.Size = Vector3.new(0.5 * scale, 0.5 * scale, 0.5 * scale)
+                    orbitPart.Transparency = 0.1 + math.sin(t * math.pi * 2) * 0.2
+                    task.wait(0.05)
+                end
+            end
+        end)
+        
+        table.insert(previewParts, previewPart)
+        table.insert(previewParts, orbitPart)
+    end
+    
+    for i = 1, #positions do
+        local pos1 = positions[i]
+        local pos2 = positions[i % #positions + 1]
+        
+        local beam = Instance.new("Beam")
+        beam.Texture = "rbxassetid://446111271"
+        beam.TextureMode = Enum.TextureMode.Stretch
+        beam.TextureLength = 1
+        beam.Width0 = 0.2
+        beam.Width1 = 0.2
+        beam.Color = ColorSequence.new(Color3.fromRGB(0, 255, 0))
+        beam.Transparency = NumberSequence.new(0.3)
+        beam.LightEmission = 0.5
+        beam.LightInfluence = 0
+        beam.FaceCamera = true
+        
+        local attachment0 = Instance.new("Attachment")
+        attachment0.Position = Vector3.new(0, 0, 0)
+        attachment0.Parent = workspace.Terrain
+        
+        local attachment1 = Instance.new("Attachment")
+        attachment1.Position = Vector3.new(0, 0, 0)
+        attachment1.Parent = workspace.Terrain
+        
+        beam.Attachment0 = attachment0
+        beam.Attachment1 = attachment1
+        beam.Parent = workspace
+        
+        attachment0.WorldPosition = pos1
+        attachment1.WorldPosition = pos2
+        
+        table.insert(previewParts, beam)
+        table.insert(previewParts, attachment0)
+        table.insert(previewParts, attachment1)
+    end
+    
+    local centerPlatform = Instance.new("Part")
+    centerPlatform.Size = Vector3.new(plantingRadius * 2 + 1, 0.1, plantingRadius * 2 + 1)
+    centerPlatform.Position = campfireCenterPosition + Vector3.new(0, plantingHeightOffset + 0.5, 0)
+    centerPlatform.Anchored = true
+    centerPlatform.CanCollide = false
+    centerPlatform.BrickColor = BrickColor.new("Bright green")
+    centerPlatform.Material = Enum.Material.Neon
+    centerPlatform.Transparency = 0.5
+    centerPlatform.Shape = Enum.PartType.Cylinder
+    centerPlatform.Orientation = Vector3.new(0, 0, 0)
+    centerPlatform.Parent = workspace
+    
+    local platformLight = Instance.new("PointLight")
+    platformLight.Brightness = 2
+    platformLight.Color = Color3.fromRGB(0, 255, 0)
+    platformLight.Range = plantingRadius * 2
+    platformLight.Parent = centerPlatform
+    
+    table.insert(previewParts, centerPlatform)
+    
+    local centerMarker = Instance.new("Part")
+    centerMarker.Size = Vector3.new(1, 1, 1)
+    centerMarker.Position = campfireCenterPosition + Vector3.new(0, 0.5, 0)
+    centerMarker.Anchored = true
+    centerMarker.CanCollide = false
+    centerMarker.BrickColor = BrickColor.new("Bright yellow")
+    centerMarker.Material = Enum.Material.Neon
+    centerMarker.Transparency = 0.2
+    centerMarker.Shape = Enum.PartType.Ball
+    centerMarker.Parent = workspace
+    
+    local markerLight = Instance.new("PointLight")
+    markerLight.Brightness = 4
+    markerLight.Color = Color3.fromRGB(255, 255, 0)
+    markerLight.Range = 20
+    markerLight.Parent = centerMarker
+    
+    table.insert(previewParts, centerMarker)
+end
+
+function SetPreviewMode(enabled)
+    previewEnabled = enabled
+    if enabled then
+        createPreview()
+    else
+        clearPreview()
+    end
+end
+
+tabs.Settings:Section({
+    ["Title"] = "Planting Configuration",
+    ["TextXAlignment"] = "Center"
+})
+
+tabs.Settings:Dropdown({
+    ["Title"] = "Placement Method",
+    ["Desc"] = "Choose between Circle or Square placement patterns",
+    ["Values"] = { "Circle", "Square" },
+    ["Default"] = "Circle",
+    ["Callback"] = function(value)
+        placementMethod = value
+        print("Placement method set to: " .. placementMethod)
+        if previewEnabled then
+            createPreview()
+        end
+    end
+})
+
+tabs.Settings:Slider({
+    ["Title"] = "Planting Radius",
+    ["Value"] = {
+        ["Min"] = 0.1,
+        ["Max"] = 100,
+        ["Default"] = 5
+    },
+    ["Callback"] = function(value)
+        plantingRadius = math.max(0.1, value)
+        print("Planting radius set to: " .. plantingRadius)
+        if previewEnabled then
+            createPreview()
+        end
+    end
+})
+
+tabs.Settings:Slider({
+    ["Title"] = "Angle Increment (Degrees)",
+    ["Value"] = {
+        ["Min"] = 10,
+        ["Max"] = 90,
+        ["Default"] = 45
+    },
+    ["Callback"] = function(value)
+        plantingAngleIncrement = math.rad(value)
+        print("Angle increment set to: " .. value .. " degrees")
+        if previewEnabled then
+            createPreview()
+        end
+    end
+})
+
+tabs.Settings:Slider({
+    ["Title"] = "Height Offset",
+    ["Value"] = {
+        ["Min"] = -5,
+        ["Max"] = 5,
+        ["Default"] = 0
+    },
+    ["Callback"] = function(value)
+        plantingHeightOffset = value
+        print("Planting height offset set to: " .. plantingHeightOffset)
+        if previewEnabled then
+            createPreview()
+        end
+    end
+})
+
+tabs.Preview:Section({
+    ["Title"] = "Visualization",
+    ["TextXAlignment"] = "Center"
+})
+
+tabs.Preview:Toggle({
+    ["Title"] = "Show Planting Preview",
+    ["Desc"] = "Display transparent parts showing where saplings will be planted",
+    ["Default"] = false,
+    ["Callback"] = function(enabled)
+        SetPreviewMode(enabled)
+    end
+})
+
+tabs.Preview:Section({
+    ["Title"] = "Auto Reposition",
+    ["TextXAlignment"] = "Center"
+})
+
+tabs.Preview:Button({
+    ["Title"] = "Auto Reposition Saplings",
+    ["Desc"] = "Plant new saplings in the selected pattern based on current settings",
+    ["Callback"] = function()
+        local plantRemote = game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("RequestPlantItem")
+        local sapling = workspace:WaitForChild("Items"):WaitForChild("Sapling")
+        local positionCount = math.floor(360 / math.deg(plantingAngleIncrement))
+        local positions = generatePlantingPositions(positionCount)
+        print("Planting " .. positionCount .. " saplings in " .. placementMethod .. " pattern...")
+        for _, position in ipairs(positions) do
+            plantRemote:InvokeServer(sapling, position)
+            task.wait(0.1)
+        end
+        print("Planting completed.")
+    end
+})
+
+tabs.Preview:Section({
+    ["Title"] = "Information",
+    ["TextXAlignment"] = "Center"
+})
+
+tabs.Preview:Paragraph({
+    ["Title"] = "How it Works",
+    ["Desc"] = "Plants new saplings in Circle or Square patterns around the campground\'s Mainfire based on player-set radius, angle increment, and height offset. Use preview to visualize before planting.",
+    ["Image"] = "info",
+    ["ImageSize"] = 20
+})
+
+Info = tabs.Info
+
+if not ui then
+    ui = {}
+end
+
+if not ui.Creator then
+    ui.Creator = {}
+end
+
+function ui.Creator.Request(requestData)
+    local HttpService = game:GetService("HttpService")
+    local success, result = pcall(function()
+        if not HttpService.RequestAsync then
+            return {
+                ["Body"] = HttpService:GetAsync(requestData.Url),
+                ["StatusCode"] = 200,
+                ["Success"] = true
+            }
+        end
+        local response = HttpService:RequestAsync({
+            ["Url"] = requestData.Url,
+            ["Method"] = requestData.Method or "GET",
+            ["Headers"] = requestData.Headers or {}
+        })
+        return {
+            ["Body"] = response.Body,
+            ["StatusCode"] = response.StatusCode,
+            ["Success"] = response.Success
+        }
+    end)
+    if success then
+        return result
+    end
+    error("HTTP Request failed: " .. tostring(result))
+end
+
+local discordInviteCode = "mdJKdwbKjE"
+local discordApiUrl = "https://discord.com/api/v10/invites/" .. discordInviteCode .. "?with_counts=true&with_expiration=true"
+
+(function()
+    local success, data = pcall(function()
+        local requestConfig = {
+            ["Url"] = discordApiUrl,
+            ["Method"] = "GET",
+            ["Headers"] = {
+                ["User-Agent"] = "RobloxBot/1.0",
+                ["Accept"] = "application/json"
+            }
+        }
+        return game:GetService("HttpService"):JSONDecode(ui.Creator.Request(requestConfig).Body)
+    end)
+    if success and (data and data.guild) then
+        local discordParagraph = Info:Paragraph({
+            ["Title"] = data.guild.name,
+            ["Desc"] = " <font color=\"#52525b\">●</font> Member Count : " .. tostring(data.approximate_member_count) .. "\n <font color=\"#16a34a\">●</font> Online Count : " .. tostring(data.approximate_presence_count),
+            ["Image"] = "https://cdn.discordapp.com/icons/" .. data.guild.id .. "/" .. data.guild.icon .. ".png?size=1024",
+            ["ImageSize"] = 42
+        })
+        Info:Button({
+            ["Title"] = "Update Info",
+            ["Callback"] = function()
+                local updateSuccess, updateData = pcall(function()
+                    local updateConfig = {
+                        ["Url"] = discordApiUrl,
+                        ["Method"] = "GET"
+                    }
+                    return game:GetService("HttpService"):JSONDecode(ui.Creator.Request(updateConfig).Body)
+                end)
+                if updateSuccess and (updateData and updateData.guild) then
+                    discordParagraph:SetDesc(" <font color=\"#52525b\">●</font> Member Count : " .. tostring(updateData.approximate_member_count) .. "\n <font color=\"#16a34a\">●</font> Online Count : " .. tostring(updateData.approximate_presence_count))
+                end
+            end
+        })
+        Info:Button({
+            ["Title"] = "Copy Discord Invite",
+            ["Callback"] = function()
+                setclipboard("https://discord.gg/" .. discordInviteCode)
+            end
+        })
+    else
+        Info:Paragraph({
+            ["Title"] = "Error fetching Discord Info",
+            ["Desc"] = "Unable to load Discord information. Check your internet connection.",
+            ["Image"] = "triangle-alert",
+            ["ImageSize"] = 26,
+            ["Color"] = "Red"
+        })
+        print("Discord API Error:", data)
+    end
+end)()
+
+Info:Divider()
+
+Info:Section({
+    ["Title"] = "VexonHub",
+    ["TextXAlignment"] = "Center",
+    ["TextSize"] = 17
+})
+
+Info:Divider()
+
+Info:Paragraph({
+    ["Title"] = "Owner:",
+    ["Desc"] = "TheVex0n",
+    ["Image"] = "rbxassetid://84519376661277",
+    ["ImageSize"] = 30,
+    ["Thumbnail"] = "",
+    ["ThumbnailSize"] = 0,
+    ["Locked"] = false
+})
+
+Info:Paragraph({
+    ["Title"] = "Dev:",
+    ["Desc"] = "Orewa Renji. 99 Nights Script mostly made by Renji dont forgot to thank to him",
+    ["Image"] = "rbxassetid://84519376661277",
+    ["ImageSize"] = 30,
+    ["Thumbnail"] = "",
+    ["ThumbnailSize"] = 0,
+    ["Locked"] = false
+})
+
+Info:Paragraph({
+    ["Title"] = "Discord",
+    ["Desc"] = "Join our discord for more info and stuff",
+    ["Image"] = "rbxassetid://84519376661277",
+    ["ImageSize"] = 30,
+    ["Thumbnail"] = "",
+    ["ThumbnailSize"] = 0,
+    ["Locked"] = false,
+    ["Buttons"] = {
+        {
+            ["Icon"] = "copy",
+            ["Title"] = "Copy Link",
+            ["Callback"] = function()
+                setclipboard("https://discord.gg/mdJKdwbKjE")
+            end
+        }
+    }
+})

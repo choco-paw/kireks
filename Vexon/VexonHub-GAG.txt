@@ -1,0 +1,1601 @@
+--[[
+                 . .  .     .          .  .             .
+          .       .  .  .     ..   .    .      .        .
+                   .   .     .             ...  .        
+.                  .       .    ..  .    .=*+-.         .
+       . .             .               .-*:..+:  .      .
+..      .               .+=:..        :*-.. .-+          
+.           ..        . :#-..-#=.   .#-      .*.         
+  .          .........:-=#=.  ..=*-==.       .*..   .    
+        . .:+#%%%%*#%%#%%=..      -+:.       .*.         
+         .-%#%*%%#****%%#=:.       ..     .. .*.      .  
+        ..=%%*@*******%%##+.           .    .==        . 
+       .  -%%%**********+--.   .  ..:*%=-. .:+:  .. . .  
+          .=#****#%@%**++**:.    .+#-.#..  .=-. .   .    
+      ..   :****#@@@@%*****-.=..-%@%-.--  :*=:..     .   
+     .     :*****#%@%******=-:+#@@@#:..=..:::+=          
+. .       .:##************=:. ..*@%=..... .:*-..         
+           :##**********+=++::..  ..:==-:.=*.      .     
+          .=##********##===+*+++:  ...-... :+:..  .    . 
+ ..  .    :+##********##===*-....  ...:++===*=.      .   
+    .     .-#%#%*****##@=-*= ....:=#%+.                  
+        .     :%%%%#%*%%#*..      .:+.                .  
+        . .   -@%#%#******+..   .  .-+.                  
+    .        :%%#******+-... .  .  ..+=.   .         .   
+            :%*%********+...  .    . .%.            .  . 
+       .   .*##%*********....        .:+.  .   .         
+          .-#*##*********+:..        ..*.    .           
+  .    .  .=#*%#********+::...     .  .=:  . .           
+    .     .+#*%#*******=.... ..       .--        .  ..   
+          .*#*%%********=.. .     . . .-=.    .    .     
+   .   .  .+#*#%*******-:..           .-=.         .   . 
+       .  .:--+*********+-...   .  .  ... .  .     .     
+        .     .........::::..            .  ..           
+                        .. .                     ..      
+             .            .           .               .  
+This file was generated on https://dsc.gg/decompiler | Pulsar v1.4.3
+Resolved: 156 identifiers | 52 functions | 0 Strings | Renamed: 47 functions | Connected: 28 callbacks | Dead Code Removed: 6 blocks | Inlined: 3 wrappers | Detected loop: 2 blocks
+[Renamer: ON] [Decompiler: ON]
+]]
+
+repeat
+    task.wait()
+until game:IsLoaded()
+
+local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/DiosDi/VexonHub/refs/heads/main/Dr.Ray-VexonHub"))()
+DrRayLibrary:Load("VexonHub", "http://www.roblox.com/asset/?id=84519376661277")
+
+game:GetService("CoreGui").DrRay.TopBar.BackgroundColor3 = Color3.new(0, 0, 0)
+game:GetService("CoreGui").DrRay.MainBar.BackgroundColor3 = Color3.new(0, 0, 0)
+game:GetService("CoreGui").DrRay.TopBar.TopBar.BackgroundColor3 = Color3.new(0, 0, 0)
+game:GetService("CoreGui").DrRay.TopBar.ProfileMenu.Clock.BackgroundTransparency = 1
+game:GetService("CoreGui").DrRay.TopBar.ProfileMenu.PlayerProfile.BackgroundTransparency = 0.5
+game:GetService("CoreGui").DrRay.TopBar.ProfileMenu.Title.BackgroundTransparency = 0.5
+game:GetService("CoreGui").DrRay.TopBar.TopBarClose.BackgroundTransparency = 0.55
+game:GetService("CoreGui").DrRay.TopBar.TopBarClose.idk.Visible = false
+
+local LocalPlayer = game:GetService("Players").LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+local EventTeleportPosition = Vector3.new(-100, 4, -10)
+
+local EventScreenGui = Instance.new("ScreenGui")
+EventScreenGui.Name = "SimpleTPGui"
+EventScreenGui.Parent = PlayerGui
+EventScreenGui.ResetOnSpawn = false
+
+local EventTeleportButton = Instance.new("TextButton")
+EventTeleportButton.Name = "TPButton"
+EventTeleportButton.Parent = EventScreenGui
+EventTeleportButton.Size = UDim2.new(0, 40, 0, 15)
+EventTeleportButton.Position = UDim2.new(0, 532, 0, 10)
+EventTeleportButton.BackgroundColor3 = Color3.fromRGB(0, 215, 0)
+EventTeleportButton.BorderColor3 = Color3.fromRGB(0, 165, 0)
+EventTeleportButton.BorderSizePixel = 2
+EventTeleportButton.Text = "EVENT"
+EventTeleportButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+EventTeleportButton.TextScaled = true
+EventTeleportButton.Font = Enum.Font.GothamBold
+
+EventTeleportButton.MouseEnter:Connect(function()
+    EventTeleportButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+end)
+
+EventTeleportButton.MouseLeave:Connect(function()
+    EventTeleportButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+end)
+
+EventTeleportButton.MouseButton1Click:Connect(function()
+    local Character = LocalPlayer.Character
+    if Character and Character:FindFirstChild("HumanoidRootPart") then
+        Character.HumanoidRootPart.CFrame = CFrame.new(EventTeleportPosition)
+        EventTeleportButton.Text = "DONE"
+        task.wait(0.5)
+        EventTeleportButton.Text = "EVENT"
+    end
+end)
+
+local LocalPlayer2 = game:GetService("Players").LocalPlayer
+local PlayerGui2 = LocalPlayer2:WaitForChild("PlayerGui")
+local GearTeleportPosition = Vector3.new(-284.41, 3, -25.98)
+
+local GearScreenGui = Instance.new("ScreenGui")
+GearScreenGui.Name = "SimpleTPGui"
+GearScreenGui.Parent = PlayerGui2
+GearScreenGui.ResetOnSpawn = false
+
+local GearTeleportButton = Instance.new("TextButton")
+GearTeleportButton.Name = "TPButton"
+GearTeleportButton.Parent = GearScreenGui
+GearTeleportButton.Size = UDim2.new(0, 40, 0, 15)
+GearTeleportButton.Position = UDim2.new(0, 202, 0, 10)
+GearTeleportButton.BackgroundColor3 = Color3.fromRGB(255, 215, 0)
+GearTeleportButton.BorderColor3 = Color3.fromRGB(255, 165, 0)
+GearTeleportButton.BorderSizePixel = 2
+GearTeleportButton.Text = "GEAR"
+GearTeleportButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+GearTeleportButton.TextScaled = true
+GearTeleportButton.Font = Enum.Font.GothamBold
+
+GearTeleportButton.MouseEnter:Connect(function()
+    GearTeleportButton.BackgroundColor3 = Color3.fromRGB(255, 225, 0)
+end)
+
+GearTeleportButton.MouseLeave:Connect(function()
+    GearTeleportButton.BackgroundColor3 = Color3.fromRGB(255, 215, 0)
+end)
+
+GearTeleportButton.MouseButton1Click:Connect(function()
+    local Character = LocalPlayer2.Character
+    if Character and Character:FindFirstChild("HumanoidRootPart") then
+        Character.HumanoidRootPart.CFrame = CFrame.new(GearTeleportPosition)
+        GearTeleportButton.Text = "DONE"
+        task.wait(0.5)
+        GearTeleportButton.Text = "GEAR"
+    end
+end)
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local MainPlayer = Players.LocalPlayer
+;(MainPlayer.Character or MainPlayer.CharacterAdded:Wait()):WaitForChild("HumanoidRootPart")
+
+local Backpack = MainPlayer:WaitForChild("Backpack")
+local GameEvents = ReplicatedStorage:WaitForChild("GameEvents")
+GameEvents:WaitForChild("Plant_RE")
+GameEvents:WaitForChild("Sell_Inventory")
+
+local BuySeedStockEvent = GameEvents:WaitForChild("BuySeedStock")
+local BuyGearStockEvent = GameEvents:WaitForChild("BuyGearStock")
+local FavoriteItemEvent = GameEvents:WaitForChild("Favorite_Item")
+GameEvents:WaitForChild("HoneyMachineService_RE")
+
+local MainTab = DrRayLibrary.newTab("Main", "http://www.roblox.com/asset/?id=9405923687")
+
+MainTab.newButton("Copy Discord Link", "Script Made By TheVex0n", function()
+    setclipboard("https://discord.gg/Xm5sThnfsP")
+end)
+
+MainTab.newLabel("Farm")
+
+local AutoTakePlantsEnabled = false
+local AutoHarvestTreesEnabled = false
+
+MainTab.newToggle("Auto Take All Plants", "Automatically collects all farmable items", false, function(State)
+    AutoTakePlantsEnabled = State
+    if State then
+        spawn(function()
+            while AutoTakePlantsEnabled do
+                local Farm = workspace:FindFirstChild("Farm")
+                if Farm then
+                    for _, Plot in pairs(Farm:GetChildren()) do
+                        local Important = Plot:FindFirstChild("Important")
+                        if Important then
+                            Important = Plot.Important:FindFirstChild("Data")
+                        end
+                        if Important and (Important:FindFirstChild("Owner") and Important.Owner.Value == MainPlayer.Name) then
+                            local PlantsPhysical = Plot.Important:FindFirstChild("Plants_Physical")
+                            if PlantsPhysical then
+                                for _, Descendant in pairs(PlantsPhysical:GetDescendants()) do
+                                    if Descendant:IsA("BasePart") and Descendant:FindFirstChildOfClass("ProximityPrompt") then
+                                        fireproximityprompt(Descendant:FindFirstChildOfClass("ProximityPrompt"))
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+                wait(0.1)
+            end
+        end)
+    end
+end)
+
+MainTab.newToggle("Auto Harvest Trees", "Automatically harvests plants", false, function(State)
+    AutoHarvestTreesEnabled = State
+    if State then
+        spawn(function()
+            while AutoHarvestTreesEnabled do
+                local Farm = workspace:FindFirstChild("Farm")
+                if Farm then
+                    for _, Plot in pairs(Farm:GetChildren()) do
+                        local Important = Plot:FindFirstChild("Important")
+                        if Important then
+                            Important = Plot.Important:FindFirstChild("Data")
+                        end
+                        if Important and (Important:FindFirstChild("Owner") and Important.Owner.Value == MainPlayer.Name) then
+                            local PlantsPhysical = Plot.Important:FindFirstChild("Plants_Physical")
+                            if PlantsPhysical then
+                                for _, Plant in pairs(PlantsPhysical:GetChildren()) do
+                                    local Fruits = Plant:FindFirstChild("Fruits")
+                                    if Fruits then
+                                        for _, Fruit in pairs(Fruits:GetChildren()) do
+                                            for _, FruitPart in pairs(Fruit:GetDescendants()) do
+                                                if FruitPart:IsA("BasePart") and FruitPart:FindFirstChildOfClass("ProximityPrompt") then
+                                                    fireproximityprompt(FruitPart:FindFirstChildOfClass("ProximityPrompt"))
+                                                end
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+                wait(0.1)
+            end
+        end)
+    end
+end)
+
+MainTab.newLabel("Movement")
+
+local UserInputService = game:GetService("UserInputService")
+local SpeedBypassEnabled = false
+local SpeedMultiplier = 9
+
+local function ToggleSpeedBypass(State)
+    SpeedBypassEnabled = State
+    getgenv().WalkspeedBypass = SpeedBypassEnabled
+    if SpeedBypassEnabled then
+        task.spawn(function()
+            while getgenv().WalkspeedBypass == true and game:GetService("Players").LocalPlayer do
+                pcall(function()
+                    local Character = game:GetService("Players").LocalPlayer.Character
+                    if Character then
+                        local Humanoid = Character:FindFirstChildWhichIsA("Humanoid")
+                        if Humanoid and Humanoid.Parent then
+                            local DeltaTime = game:GetService("RunService").Heartbeat:Wait()
+                            if Humanoid.MoveDirection.Magnitude <= 0 then
+                                Character:TranslateBy(Humanoid.MoveDirection * DeltaTime * 7)
+                            else
+                                Character:TranslateBy(Humanoid.MoveDirection * SpeedMultiplier * DeltaTime * 7)
+                            end
+                        end
+                    end
+                end)
+                task.wait(0.0015)
+            end
+        end)
+    end
+end
+
+MainTab.newToggle("Speed Cframe", "On/Off With V Key", false, function(State)
+    ToggleSpeedBypass(State)
+end)
+
+MainTab.newSlider("Speed Boost Value", "Speed Multiplier", 1, 100, 9, true, function(Value)
+    SpeedMultiplier = Value
+end)
+
+UserInputService.InputBegan:Connect(function(Input, GameProcessed)
+    if Input.KeyCode == Enum.KeyCode.V and not GameProcessed then
+        ToggleSpeedBypass(not SpeedBypassEnabled)
+    end
+end)
+
+local JumpPower = 200
+
+MainTab.newToggle("Jump Cframe", "Teleport Super Jump", false, function(State)
+    getgenv().JumpPowerBypass = State
+    task.spawn(function()
+        while getgenv().JumpPowerBypass == true do
+            pcall(function()
+                if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):GetState() == Enum.HumanoidStateType.Jumping then
+                    game.Players.LocalPlayer.Character.Humanoid.RootPart.CFrame = game.Players.LocalPlayer.Character.Humanoid.RootPart.CFrame * CFrame.new(0, JumpPower, 0)
+                end
+            end)
+            task.wait(0.0015)
+        end
+    end)
+end)
+
+MainTab.newSlider("Jump Boost Value", "Epic slider", 1, 1000, 200, false, function(Value)
+    JumpPower = Value
+end)
+
+MainTab.newLabel("Shops")
+
+MainTab.newToggle("Quest Panel", "Open The Quest Panel Gui", false, function(State)
+    quest = MainPlayer.PlayerGui:FindFirstChild("DailyQuests_UI")
+    if quest then
+        quest.Enabled = State
+    end
+end)
+
+MainTab.newToggle("Seed Shop", "Open The Seed Shop Gui", false, function(State)
+    local SeedShop = MainPlayer.PlayerGui:FindFirstChild("Seed_Shop")
+    if SeedShop then
+        SeedShop.Enabled = State
+    end
+end)
+
+MainTab.newToggle("Gear Shop", "Open The Gear Shop Gui", false, function(State)
+    local GearShop = MainPlayer.PlayerGui:FindFirstChild("Gear_Shop")
+    if GearShop then
+        GearShop.Enabled = State
+    end
+end)
+
+MainTab.newButton("Honey Shop", "Open The Honey Shop Gui (click again for close gui)", function()
+    local HoneyShopUI = game:GetService("Players").LocalPlayer.PlayerGui.HoneyEventShop_UI
+    if HoneyShopUI then
+        HoneyShopUI.Enabled = not HoneyShopUI.Enabled
+        print("Honey Shop UI:", HoneyShopUI.Enabled and "Ativada" or "Desativada")
+    end
+end)
+
+MainTab.newButton("Egg Shop 1", "Open The Egg Shop Gui (click again for close gui)", function()
+    fireproximityprompt(workspace.NPCS["Pet Stand"].EggLocations["Common Egg"].ProximityPrompt)
+end)
+
+MainTab.newButton("Egg Shop 2", "Open The Egg Shop Gui (click again for close gui)", function()
+    fireproximityprompt(workspace.NPCS["Pet Stand"].EggLocations:GetChildren()[6].ProximityPrompt)
+end)
+
+MainTab.newButton("Egg Shop 3", "Open The Egg Shop Gui (click again for close gui)", function()
+    fireproximityprompt(workspace.NPCS["Pet Stand"].EggLocations:GetChildren()[5].ProximityPrompt)
+end)
+
+MainTab.newLabel("Auto Favorite Item")
+
+local SelectedMutationsForFavorite = { "Gold", "Rainbow" }
+
+MainTab.newMultiDropdown("Select Mutations", "Choose mutations to auto favorite", {
+    "Wet",
+    "Gold",
+    "Frozen",
+    "Rainbow",
+    "Choc",
+    "Chilled",
+    "Shocked",
+    "Moonlit",
+    "Bloodlit",
+    "Celestial",
+    "Plasma",
+    "Disco",
+    "Zombified",
+    "Ripe",
+    "Windstruck",
+    "Pollinated",
+    "HoneyGlazed",
+    "Burnt",
+    "Heavenly",
+    "Overgrown",
+    "Molten",
+    "Meteoric",
+    "Alienlike",
+    "Galactic",
+    "Sundried",
+    "Verdant",
+    "Paradisal",
+    "Twisted",
+    "Voidtouched"
+}, function(Selected)
+    table.insert(SelectedMutationsForFavorite, Selected)
+end)
+
+local AutoFavoriteEnabled = false
+
+MainTab.newToggle("Auto Favorite", "Automatically favorite selected mutations", false, function(State)
+    AutoFavoriteEnabled = State
+    if State then
+        spawn(function()
+            while AutoFavoriteEnabled do
+                for _, Tool in pairs(Backpack:GetChildren()) do
+                    if Tool:IsA("Tool") then
+                        for _, Mutation in pairs(SelectedMutationsForFavorite) do
+                            if string.find(Tool.Name, Mutation) and not Tool:GetAttribute("Favorite") then
+                                FavoriteItemEvent:FireServer(Tool)
+                            end
+                        end
+                    end
+                end
+                wait(1)
+            end
+        end)
+    end
+end)
+
+MainTab.newButton("Unfavorite All", "Unfavorites all tools", function()
+    for _, Tool in pairs(Backpack:GetChildren()) do
+        if Tool:IsA("Tool") and Tool:GetAttribute("Favorite") then
+            FavoriteItemEvent:FireServer(Tool)
+        end
+    end
+end)
+
+MainTab.newLabel("ESP")
+
+local PlayersService = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
+local Workspace = game:GetService("Workspace")
+local ESPLocalPlayer = PlayersService.LocalPlayer
+
+local MutationsList = {
+    "Wet",
+    "Gold",
+    "Frozen",
+    "Rainbow",
+    "Choc",
+    "Chilled",
+    "Shocked",
+    "Moonlit",
+    "Bloodlit",
+    "Celestial",
+    "Plasma",
+    "Disco",
+    "Zombified",
+    "Ripe",
+    "Windstruck",
+    "Pollinated",
+    "HoneyGlazed",
+    "Burnt",
+    "Heavenly",
+    "Overgrown",
+    "Molten",
+    "Meteoric",
+    "Alienlike",
+    "Galactic",
+    "Sundried",
+    "Verdant",
+    "Paradisal",
+    "Twisted",
+    "Voidtouched"
+}
+
+local ESPSettings = {
+    ["espEnabled"] = false,
+    ["mutations"] = {},
+    ["showTextLabels"] = true,
+    ["showGlowEffects"] = true
+}
+
+local ESPObjects = {}
+local ProcessedModels = {}
+
+for _, Mutation in ipairs(MutationsList) do
+    ESPSettings.mutations[Mutation] = false
+end
+
+local MutationColors = {
+    ["Wet"] = Color3.fromRGB(0, 120, 255),
+    ["Gold"] = Color3.fromRGB(255, 215, 0),
+    ["Frozen"] = Color3.fromRGB(135, 206, 250),
+    ["Rainbow"] = Color3.fromRGB(255, 255, 255),
+    ["Choc"] = Color3.fromRGB(139, 69, 19),
+    ["Chilled"] = Color3.fromRGB(0, 255, 255),
+    ["Shocked"] = Color3.fromRGB(255, 255, 0),
+    ["Moonlit"] = Color3.fromRGB(160, 32, 240),
+    ["Bloodlit"] = Color3.fromRGB(200, 0, 0),
+    ["Celestial"] = Color3.fromRGB(200, 150, 255),
+    ["Plasma"] = Color3.fromRGB(0, 255, 127),
+    ["Disco"] = Color3.fromRGB(255, 0, 255),
+    ["Zombified"] = Color3.fromRGB(75, 83, 32),
+    ["Ripe"] = Color3.fromRGB(200, 100, 200),
+    ["Windstruck"] = Color3.fromRGB(230, 230, 255),
+    ["Pollinated"] = Color3.fromRGB(255, 215, 0),
+    ["HoneyGlazed"] = Color3.fromRGB(255, 200, 0),
+    ["Burnt"] = Color3.fromRGB(50, 50, 50),
+    ["Heavenly"] = Color3.fromRGB(255, 245, 220),
+    ["Overgrown"] = Color3.fromRGB(34, 139, 34),
+    ["Molten"] = Color3.fromRGB(255, 69, 0),
+    ["Meteoric"] = Color3.fromRGB(255, 140, 0),
+    ["Alienlike"] = Color3.fromRGB(0, 255, 180),
+    ["Galactic"] = Color3.fromRGB(200, 150, 255),
+    ["Sundried"] = Color3.fromRGB(210, 140, 0),
+    ["Verdant"] = Color3.fromRGB(0, 200, 0),
+    ["Paradisal"] = Color3.fromRGB(255, 170, 50),
+    ["Twisted"] = Color3.fromRGB(245, 245, 245),
+    ["Voidtouched"] = Color3.fromRGB(75, 0, 130)
+}
+
+local MutationTiers = {
+    {
+        ["mutations"] = { "Wet", "Overgrown", "Windstruck" },
+        ["tier"] = 1
+    },
+    {
+        ["mutations"] = {
+            "Gold",
+            "Frozen",
+            "Choc",
+            "Chilled",
+            "Shocked",
+            "Pollinated",
+            "HoneyGlazed",
+            "Burnt",
+            "Moonlit",
+            "Sundried",
+            "Verdant"
+        },
+        ["tier"] = 2
+    },
+    {
+        ["mutations"] = {
+            "Rainbow",
+            "Moonlit",
+            "Bloodlit",
+            "Plasma",
+            "Disco",
+            "Molten",
+            "Meteoric",
+            "Alienlike",
+            "Galactic",
+            "Twisted",
+            "Paradisal"
+        },
+        ["tier"] = 3
+    },
+    {
+        ["mutations"] = {
+            "Celestial",
+            "Zombified",
+            "Voidtouched",
+            "Dawnbound",
+            "Heavenly"
+        },
+        ["tier"] = 4
+    },
+    {
+        ["mutations"] = { "Dawnbound" },
+        ["tier"] = 5
+    }
+}
+
+local function GetMutationTier(MutationName)
+    for _, TierData in ipairs(MutationTiers) do
+        if table.find(TierData.mutations, MutationName) then
+            return TierData.tier
+        end
+    end
+    return 1
+end
+
+local function ClearAllESP()
+    for _, ObjectTable in pairs(ESPObjects) do
+        if ObjectTable and typeof(ObjectTable) == "table" then
+            for _, Object in pairs(ObjectTable) do
+                if Object and Object.Parent then
+                    Object:Destroy()
+                end
+            end
+        end
+    end
+    ESPObjects = {}
+    ProcessedModels = {}
+end
+
+local function CreateGlowEffect(Color, Adornee)
+    local Billboard = Instance.new("BillboardGui")
+    Billboard.Name = "GlowEffect"
+    Billboard.Size = UDim2.fromOffset(6, 6)
+    Billboard.Adornee = Adornee
+    Billboard.AlwaysOnTop = true
+    local ImageLabel = Instance.new("ImageLabel")
+    ImageLabel.Size = UDim2.fromScale(1, 1)
+    ImageLabel.BackgroundTransparency = 1
+    ImageLabel.Image = "rbxassetid://1316045217"
+    ImageLabel.ImageColor3 = Color
+    ImageLabel.ImageTransparency = 0.2
+    ImageLabel.Parent = Billboard
+    return Billboard
+end
+
+local function ApplyESPToModel(Model)
+    if ESPSettings.espEnabled and (Model and (Model:IsA("Model") and not ProcessedModels[Model])) then
+        local MatchedMutations = {}
+        for _, Mutation in ipairs(MutationsList) do
+            if ESPSettings.mutations[Mutation] and Model:GetAttribute(Mutation) then
+                table.insert(MatchedMutations, Mutation)
+            end
+        end
+        if #MatchedMutations ~= 0 then
+            ProcessedModels[Model] = true
+            local HighestMutation = MatchedMutations[1]
+            local HighestTier = 0
+            for _, Mutation in ipairs(MatchedMutations) do
+                local Tier = GetMutationTier(Mutation)
+                if HighestTier < Tier then
+                    HighestMutation = Mutation
+                    HighestTier = Tier
+                end
+            end
+            local ESPColor = MutationColors[HighestMutation] or Color3.fromRGB(255, 255, 255)
+            local CreatedObjects = {}
+            local Highlight = Instance.new("Highlight")
+            Highlight.Name = "MutationESP_Highlight"
+            Highlight.FillTransparency = 0.7
+            Highlight.OutlineColor = ESPColor
+            Highlight.FillColor = ESPColor
+            Highlight.OutlineTransparency = 0
+            Highlight.DepthMode = Enum.HighlightDepthMode.Occluded
+            Highlight.Adornee = Model
+            Highlight.Parent = Model
+            table.insert(CreatedObjects, Highlight)
+            if ESPSettings.showGlowEffects and 3 <= HighestTier then
+                TweenService:Create(Highlight, TweenInfo.new(1.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
+                    ["OutlineTransparency"] = 0.5,
+                    ["FillTransparency"] = 0.9
+                }):Play()
+            end
+            local PrimaryPart = Model.PrimaryPart or Model:FindFirstChildWhichIsA("BasePart")
+            if PrimaryPart then
+                if ESPSettings.showTextLabels then
+                    local Billboard = Instance.new("BillboardGui")
+                    Billboard.Name = "MutationESP_Billboard"
+                    Billboard.Adornee = PrimaryPart
+                    Billboard.Size = UDim2.fromOffset(150, 30)
+                    Billboard.StudsOffset = Vector3.new(0, 2, 0)
+                    Billboard.AlwaysOnTop = true
+                    Billboard.MaxDistance = 100
+                    local Frame = Instance.new("Frame")
+                    Frame.Size = UDim2.fromScale(1, 1)
+                    Frame.BackgroundTransparency = 0.3
+                    Frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+                    local UICorner = Instance.new("UICorner")
+                    UICorner.CornerRadius = UDim.new(0, 8)
+                    UICorner.Parent = Frame
+                    local UIStroke = Instance.new("UIStroke")
+                    UIStroke.Color = ESPColor
+                    UIStroke.Thickness = 2
+                    UIStroke.Parent = Frame
+                    local UIGradient = Instance.new("UIGradient")
+                    UIGradient.Rotation = 45
+                    UIGradient.Color = ColorSequence.new({ ColorSequenceKeypoint.new(0, Color3.fromRGB(40, 40, 40)), ColorSequenceKeypoint.new(1, Color3.fromRGB(15, 15, 15)) })
+                    UIGradient.Parent = Frame
+                    local NameLabel = Instance.new("TextLabel")
+                    NameLabel.Size = UDim2.new(1, 0, 0.4, 0)
+                    NameLabel.Position = UDim2.new(0, 0, 0, 2)
+                    NameLabel.BackgroundTransparency = 1
+                    NameLabel.Text = Model.Name
+                    NameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+                    NameLabel.TextScaled = true
+                    NameLabel.Font = Enum.Font.GothamBold
+                    NameLabel.Parent = Frame
+                    local MutationsText = table.concat(MatchedMutations, " \195\162\226\130\172\194\162 ")
+                    local MutationsLabel = Instance.new("TextLabel")
+                    MutationsLabel.Size = UDim2.new(1, 0, 0.6, 0)
+                    MutationsLabel.Position = UDim2.new(0, 0, 0.4, 0)
+                    MutationsLabel.BackgroundTransparency = 1
+                    MutationsLabel.Text = MutationsText
+                    MutationsLabel.TextColor3 = ESPColor
+                    MutationsLabel.TextScaled = true
+                    MutationsLabel.Font = Enum.Font.GothamSemibold
+                    MutationsLabel.Parent = Frame
+                    Frame.Parent = Billboard
+                    Billboard.Parent = Model
+                    table.insert(CreatedObjects, Billboard)
+                end
+                if ESPSettings.showGlowEffects and 2 <= HighestTier then
+                    local GlowBillboard = CreateGlowEffect(ESPColor, PrimaryPart)
+                    GlowBillboard.Parent = Model
+                    table.insert(CreatedObjects, GlowBillboard)
+                    if HighestTier >= 4 then
+                        for OrbIndex = 1, 3 do
+                            local Orb = Instance.new("Part")
+                            Orb.Name = "MutationOrb_" .. OrbIndex
+                            Orb.Shape = Enum.PartType.Ball
+                            Orb.Size = Vector3.new(0.3, 0.3, 0.3)
+                            Orb.Material = Enum.Material.Neon
+                            Orb.Color = ESPColor
+                            Orb.CanCollide = false
+                            Orb.Anchored = true
+                            Orb.Transparency = 0.3
+                            Orb.Parent = Model
+                            spawn(function()
+                                local AngleOffset = (OrbIndex - 1) * (2 * math.pi / 3)
+                                while Orb and Orb.Parent do
+                                    local Time = tick() * 2 + AngleOffset
+                                    local Radius = 2
+                                    local YOffset = math.sin(Time) * 0.5
+                                    Orb.Position = PrimaryPart.Position + Vector3.new(math.cos(Time) * Radius, YOffset + 1, math.sin(Time) * Radius)
+                                    RunService.Heartbeat:Wait()
+                                end
+                            end)
+                            table.insert(CreatedObjects, Orb)
+                        end
+                    end
+                end
+            end
+            ESPObjects[Model] = CreatedObjects
+            Model.AncestryChanged:Connect(function(_, Parent)
+                if not Parent and ESPObjects[Model] then
+                    for _, Object in pairs(ESPObjects[Model]) do
+                        if Object and Object.Parent then
+                            Object:Destroy()
+                        end
+                    end
+                    ESPObjects[Model] = nil
+                    ProcessedModels[Model] = nil
+                end
+            end)
+        end
+    else
+        return
+    end
+end
+
+local function RefreshESP()
+    local OwnedPlots = {}
+    if Workspace:FindFirstChild("Farm") then
+        for _, Plot in ipairs(Workspace.Farm:GetChildren()) do
+            local Important = Plot:FindFirstChild("Important")
+            if Important then
+                Important = Plot.Important:FindFirstChild("Data")
+            end
+            if Important and (Important:FindFirstChild("Owner") and Important.Owner.Value == ESPLocalPlayer.Name) then
+                table.insert(OwnedPlots, Plot)
+            end
+        end
+        ClearAllESP()
+        for _, Plot in ipairs(OwnedPlots) do
+            local PlantsPhysical = Plot.Important:FindFirstChild("Plants_Physical")
+            if PlantsPhysical then
+                for _, Plant in ipairs(PlantsPhysical:GetChildren()) do
+                    if Plant:IsA("Model") then
+                        local Fruits = Plant:FindFirstChild("Fruits")
+                        if Fruits then
+                            for _, Fruit in ipairs(Fruits:GetChildren()) do
+                                if Fruit:IsA("Model") then
+                                    ApplyESPToModel(Fruit)
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+local function SetupPlantListeners()
+    local Farm = Workspace:FindFirstChild("Farm")
+    if Farm then
+        for _, Plot in ipairs(Farm:GetChildren()) do
+            local Important = Plot:FindFirstChild("Important")
+            if Important then
+                Important = Plot.Important:FindFirstChild("Data")
+            end
+            if Important and (Important:FindFirstChild("Owner") and Important.Owner.Value == ESPLocalPlayer.Name) then
+                local PlantsPhysical = Plot.Important:FindFirstChild("Plants_Physical")
+                if PlantsPhysical then
+                    PlantsPhysical.ChildAdded:Connect(function(NewPlant)
+                        if NewPlant:IsA("Model") then
+                            task.spawn(function()
+                                local Fruits = NewPlant:FindFirstChild("Fruits") or NewPlant:WaitForChild("Fruits", 10)
+                                if Fruits then
+                                    Fruits.ChildAdded:Connect(function(NewFruit)
+                                        if NewFruit:IsA("Model") then
+                                            task.wait(0.2)
+                                            ApplyESPToModel(NewFruit)
+                                        end
+                                    end)
+                                    for _, Fruit in ipairs(Fruits:GetChildren()) do
+                                        if Fruit:IsA("Model") then
+                                            ApplyESPToModel(Fruit)
+                                        end
+                                    end
+                                end
+                            end)
+                        end
+                    end)
+                end
+            end
+        end
+    end
+end
+
+ClearAllESP()
+
+MainTab.newToggle("ESP Toggle", "Turn ESP On/Off", false, function(State)
+    ESPSettings.espEnabled = State
+    if ESPSettings.espEnabled then
+        RefreshESP()
+    else
+        ClearAllESP()
+    end
+end)
+
+MainTab.newMultiDropdown("Select Mutations", "Select which mutations to show ESP for", MutationsList, function(Selected)
+    for _, Mutation in ipairs(MutationsList) do
+        ESPSettings.mutations[Mutation] = false
+    end
+    for _, Mutation in ipairs(Selected) do
+        ESPSettings.mutations[Mutation] = true
+    end
+    if ESPSettings.espEnabled then
+        RefreshESP()
+    end
+end)
+
+SetupPlantListeners()
+RefreshESP()
+
+Workspace.ChildAdded:Connect(function(Child)
+    if Child.Name == "Farm" then
+        task.wait(1)
+        SetupPlantListeners()
+        if ESPSettings.espEnabled then
+            RefreshESP()
+        end
+    end
+end)
+
+if Workspace:FindFirstChild("Farm") then
+    Workspace.Farm.ChildAdded:Connect(function()
+        task.wait(1)
+        SetupPlantListeners()
+        if ESPSettings.espEnabled then
+            RefreshESP()
+        end
+    end)
+end
+
+task.spawn(function()
+    ::LoopStart::
+    if ESPSettings.espEnabled then
+        RefreshESP()
+    else
+        ClearAllESP()
+    end
+    local IterFunc, Table, Index = pairs(ESPObjects)
+    goto CheckNext
+    ::ProcessTable::
+    goto CleanupEntry
+    ::CheckValidity::
+    if CurrentValue and CurrentValue.Parent then
+        goto UpdateIndex
+    else
+        goto IterateInner
+    end
+    ::UpdateIndex::
+    Index = CurrentKey
+    goto CheckNext
+    ::CleanupEntry::
+    local InnerFunc, InnerTable, InnerIndex = pairs(InnerValue)
+    Index = CurrentKey
+    ::IterateInner::
+    local InnerKey, InnerObj = InnerFunc(InnerTable, InnerIndex)
+    if InnerKey ~= nil then
+        if InnerObj and InnerObj.Parent then
+            InnerObj:Destroy()
+        end
+        InnerIndex = InnerKey
+        goto IterateInner
+    end
+    ESPObjects[CurrentKey] = nil
+    ProcessedModels[CurrentKey] = nil
+    ::CheckNext::
+    local CurrentKey, InnerValue = IterFunc(Table, Index)
+    if CurrentKey ~= nil then
+        goto CheckValidity
+    end
+    task.wait(2)
+    goto LoopStart
+    local CurrentValue
+    goto ProcessTable
+end)
+
+MainTab.newButton("EGG Esp", "See The Pet Before Open The Egg", function(_)
+    loadstring(game:HttpGet("https://pastefy.app/8qCjGU2I/raw"))()
+end)
+
+MainTab.newLabel("Others")
+
+MainTab.newButton("Anti Stealer", "Idk It Is Works", function(_)
+    local PlayersForAntiStealer = game:GetService("Players")
+    local RunServiceForAntiStealer = game:GetService("RunService")
+    local LocalPlayerForAntiStealer = PlayersForAntiStealer.LocalPlayer
+    if LocalPlayerForAntiStealer and RunServiceForAntiStealer then
+        RunServiceForAntiStealer.RenderStepped:Connect(function()
+            for _, Player in pairs(PlayersForAntiStealer:GetPlayers()) do
+                if Player ~= LocalPlayerForAntiStealer then
+                    local Character = Player.Character
+                    if Character then
+                        local GiftPrompt = Character:FindFirstChild("GiftPrompt")
+                        if GiftPrompt then
+                            pcall(function()
+                                GiftPrompt:Destroy()
+                            end)
+                        end
+                        local HumanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
+                        if HumanoidRootPart then
+                            local ProximityPrompt = HumanoidRootPart:FindFirstChildWhichIsA("ProximityPrompt")
+                            if ProximityPrompt then
+                                pcall(function()
+                                    ProximityPrompt:Destroy()
+                                end)
+                            end
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
+
+local BuyTab = DrRayLibrary.newTab("Buy", "http://www.roblox.com/asset/?id=9405930424")
+
+BuyTab.newButton("Copy Discord Link", "Script Made By TheVex0n", function()
+    setclipboard("https://discord.gg/Xm5sThnfsP")
+end)
+
+BuyTab.newLabel("Auto Buy")
+
+local AutoBuySeedsEnabled = false
+local SelectedSeeds = option
+
+BuyTab.newMultiDropdown("Select Seeds", "Choose seeds to auto buy", {
+    "Carrot",
+    "Strawberry",
+    "Blueberry",
+    "Tomato",
+    "Cauliflower",
+    "Watermelon",
+    "Green Apple",
+    "Avocado",
+    "Banana",
+    "Pineapple",
+    "Kiwi",
+    "Bell Pepper",
+    "Prickly Pear",
+    "Loquat",
+    "Feijoa",
+    "Sugar Apple"
+}, function(Selected)
+    SelectedSeeds = Selected
+end)
+
+BuyTab.newToggle("Auto Buy Seeds", "Automatically buys selected seeds", false, function(State)
+    AutoBuySeedsEnabled = State
+    if State then
+        spawn(function()
+            while AutoBuySeedsEnabled do
+                for _, Seed in pairs(SelectedSeeds) do
+                    BuySeedStockEvent:FireServer(Seed)
+                    wait(0.1)
+                end
+                wait(0.1)
+            end
+        end)
+    end
+end)
+
+local AutoBuyGearEnabled = false
+local SelectedGear = {}
+
+BuyTab.newMultiDropdown("Select Gear", "Choose gear to auto buy", {
+    "Watering Can",
+    "Trowel",
+    "Recall Wrench",
+    "Basic Sprinkler",
+    "Advanced Sprinkler",
+    "Godly Sprinkler",
+    "Lightning Rod",
+    "Master Sprinkler",
+    "Favorite Tool",
+    "Harvest Tool"
+}, function(Selected)
+    SelectedGear = Selected
+end)
+
+BuyTab.newToggle("Auto Buy Gear", "Automatically buys selected gear", false, function(State)
+    AutoBuyGearEnabled = State
+    if State then
+        spawn(function()
+            while AutoBuyGearEnabled do
+                for _, Gear in pairs(SelectedGear) do
+                    BuyGearStockEvent:FireServer(Gear)
+                    wait(0.1)
+                end
+                wait(0.1)
+            end
+        end)
+    end
+end)
+
+local PetStand = workspace:WaitForChild("NPCS"):WaitForChild("Pet Stand")
+local ResetTimeLabel = PetStand.Timer.SurfaceGui:WaitForChild("ResetTimeLabel")
+local EggLocations = PetStand:WaitForChild("EggLocations")
+local GameEventsFolder = GameEvents
+
+local function FireEggProximityPrompt(Prompt)
+    if Prompt then
+        pcall(function()
+            fireproximityprompt(Prompt)
+        end)
+    end
+end
+
+local function BuyPetEgg(EggIndex)
+    pcall(function()
+        GameEventsFolder:WaitForChild("BuyPetEgg"):FireServer(EggIndex)
+    end)
+end
+
+local function EnableAllEggPrompts()
+    for _, EggLocation in ipairs(EggLocations:GetChildren()) do
+        for _, Descendant in ipairs(EggLocation:GetDescendants()) do
+            if Descendant:IsA("ProximityPrompt") then
+                Descendant.Exclusivity = Enum.ProximityPromptExclusivity.AlwaysShow
+            end
+        end
+    end
+end
+
+local function AutoBuyAllEggs()
+    if Autoegg_autoBuyEnabled then
+        if Autoegg_firstRun then
+            Autoegg_firstRun = false
+        else
+            while ResetTimeLabel.Text ~= "00:00:00" do
+                task.wait(0.1)
+            end
+            task.wait(3)
+        end
+        if not (ESPLocalPlayer.Character and ESPLocalPlayer.Character:FindFirstChild("HumanoidRootPart")) then
+            return
+        end
+        ESPLocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-255.12291, 2.99999976, -1.13749218, -0.0163238496, 1.05261321e-7, 0.999866784, -5.92361182e-9, 1, -1.0537206e-7, -0.999866784, -7.64290053e-9, -0.0163238496)
+        EnableAllEggPrompts()
+        local CommonEgg = EggLocations:FindFirstChild("Common Egg")
+        if CommonEgg then
+            FireEggProximityPrompt(CommonEgg:FindFirstChild("ProximityPrompt"))
+            task.wait(0.3)
+            BuyPetEgg(1)
+        end
+        local SecondEgg = EggLocations:GetChildren()[6]
+        if SecondEgg then
+            FireEggProximityPrompt(SecondEgg:FindFirstChild("ProximityPrompt"))
+            task.wait(0.3)
+            BuyPetEgg(2)
+        end
+        local ThirdEgg = EggLocations:GetChildren()[5]
+        if ThirdEgg then
+            FireEggProximityPrompt(ThirdEgg:FindFirstChild("ProximityPrompt"))
+            task.wait(0.3)
+            BuyPetEgg(3)
+        end
+        ESPLocalPlayer.Character.HumanoidRootPart.CFrame = oldCFrame
+    end
+end
+
+task.spawn(function()
+    while true do
+        repeat
+            task.wait(0.5)
+        until Autoegg_autoBuyEnabled
+        AutoBuyAllEggs()
+    end
+end)
+
+BuyTab.newToggle("Auto Buy Eggs", "Auto Buys All Eggs From Shop", false, function(_)
+    Autoegg_autoBuyEnabled = value
+    if Autoegg_autoBuyEnabled then
+        Autoegg_firstRun = true
+        AutoBuyAllEggs()
+    end
+end)
+
+local MiscTab = DrRayLibrary.newTab("Misc", "http://www.roblox.com/asset/?id=138210695069104")
+
+MiscTab.newButton("Copy Discord Link", "Script Made By TheVex0n", function()
+    setclipboard("https://discord.gg/Xm5sThnfsP")
+end)
+
+MiscTab.newLabel("")
+
+MiscTab.newButton("Inf Yield", "Best Admin Panel Script", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+end)
+
+MiscTab.newButton("Dex Explorer", "Normal pc/mobile White Dex", function()
+    loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Classic-Dex-Explorer-21009"))()
+end)
+
+MiscTab.newButton("Remote Spy", "Just a Remote Spy Script", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/SimpleSpySource.lua"))()
+end)
+
+MiscTab.newButton("KeyBoard", "Mobile KeyBoard Gui", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+end)
+
+MiscTab.newButton("Anim Logger", "Animation ID Grabber", function()
+    loadstring(game:HttpGet("https://pastefy.app/juBGMpCZ/raw"))()
+end)
+
+MiscTab.newButton("f3x", "inf yield f3x Build Tool", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/refs/heads/main/f3x.lua"))()
+end)
+
+MiscTab.newButton("Fly V3", "Like inf yield Fly But Has Gui", function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/xuSMWfDu"))()
+end)
+
+MiscTab.newButton("VFX Logger", "VFX Logger Graber Player", function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/2uXfJqdU"))()
+end)
+
+MiscTab.newLabel("Player")
+
+MiscTab.newButton("ServerHop", "Change Server", function()
+    loadstring(game:HttpGet("https://pastefy.app/uTXUoORd/raw"))()
+end)
+
+MiscTab.newButton("Rejoin", "ReJoin Server", function()
+    game:GetService("TeleportService"):Teleport(game.PlaceId)
+end)
+
+MiscTab.newButton("Reset", "Restart Your Characther", function()
+    loadstring(game:HttpGet("https://pastefy.app/YPv8xrYN/raw"))()
+end)
+
+MiscTab.newButton("Fix Cam", "Sets Your Camera To Normal", function()
+    loadstring(game:HttpGet("https://pastefy.app/IrvnCaF2/raw"))()
+end)
+
+MiscTab.newLabel("Tools")
+
+MiscTab.newButton("TP Tool", "Click Tp", function()
+    loadstring(game:HttpGet("https://pastefy.app/ZLpXLAeF/raw"))()
+end)
+
+MiscTab.newButton("Jerk Off Tool", "Susy Baka (R6)", function()
+    loadstring(game:HttpGet("https://pastefy.app/LcC6ZrhN/raw"))()
+end)
+
+local PlayersTab = DrRayLibrary.newTab("Players", "http://www.roblox.com/asset/?id=7461510428")
+
+PlayersTab.newButton("Copy Discord Link", "Script Made By TheVex0n", function()
+    setclipboard("https://discord.gg/Xm5sThnfsP")
+end)
+
+PlayersTab.newLabel("Players")
+
+local PlayerService = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
+local PlayerTabLocalPlayer = PlayerService.LocalPlayer
+local Camera = game.Workspace.CurrentCamera
+_G.SelectedPlayer = ""
+local LoopTeleportEnabled = false
+local LoopViewEnabled = false
+local OriginalCameraSubject = Camera.CameraSubject
+
+PlayersTab.newInput("Select Player", "Enter Player Name To Select", function(PlayerName)
+    _G.SelectedPlayer = PlayerName
+    if PlayerName and PlayerName ~= "" then
+        for _, Player in ipairs(PlayerService:GetPlayers()) do
+            if string.find(string.lower(Player.Name), string.lower(PlayerName), 1, true) or string.find(string.lower(Player.DisplayName), string.lower(PlayerName), 1, true) then
+                StarterGui:SetCore("SendNotification", {
+                    ["Title"] = "VexonHub",
+                    ["Text"] = "Selected: " .. Player.DisplayName,
+                    ["Icon"] = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. Player.UserId .. "&width=420&height=420&format=png",
+                    ["Duration"] = 10
+                })
+                return
+            end
+        end
+        StarterGui:SetCore("SendNotification", {
+            ["Title"] = "VexonHub",
+            ["Text"] = "Player Not Found",
+            ["Icon"] = "http://www.roblox.com/asset/?id=84519376661277",
+            ["Duration"] = 5
+        })
+    else
+        StarterGui:SetCore("SendNotification", {
+            ["Title"] = "VexonHub",
+            ["Text"] = "No One Selected",
+            ["Icon"] = "http://www.roblox.com/asset/?id=84519376661277",
+            ["Duration"] = 5
+        })
+    end
+end)
+
+local function TeleportToSelectedPlayer()
+    local Character = PlayerTabLocalPlayer.Character
+    if _G.SelectedPlayer and _G.SelectedPlayer ~= "" then
+        if Character and Character:FindFirstChild("HumanoidRootPart") then
+            for _, Player in ipairs(PlayerService:GetPlayers()) do
+                if string.find(string.lower(Player.Name), string.lower(_G.SelectedPlayer), 1, true) or string.find(string.lower(Player.DisplayName), string.lower(_G.SelectedPlayer), 1, true) then
+                    local TargetCharacter = Player.Character
+                    if TargetCharacter and TargetCharacter:FindFirstChild("HumanoidRootPart") then
+                        Character:FindFirstChild("HumanoidRootPart").CFrame = TargetCharacter:FindFirstChild("HumanoidRootPart").CFrame
+                        return
+                    end
+                end
+            end
+        end
+    else
+        return
+    end
+end
+
+PlayersTab.newButton("Teleport", "Teleport to Selected Player One Time", function()
+    if _G.SelectedPlayer and _G.SelectedPlayer ~= "" then
+        TeleportToSelectedPlayer()
+    else
+        StarterGui:SetCore("SendNotification", {
+            ["Title"] = "VexonHub",
+            ["Text"] = "No One Selected",
+            ["Icon"] = "http://www.roblox.com/asset/?id=84519376661277",
+            ["Duration"] = 5
+        })
+    end
+end)
+
+PlayersTab.newToggle("Loop Teleport", "Loop Teleport To The Selected Person", false, function(State)
+    LoopTeleportEnabled = State
+    if State then
+        if not _G.SelectedPlayer or _G.SelectedPlayer == "" then
+            StarterGui:SetCore("SendNotification", {
+                ["Title"] = "VexonHub",
+                ["Text"] = "No One Selected",
+                ["Icon"] = "http://www.roblox.com/asset/?id=84519376661277",
+                ["Duration"] = 5
+            })
+            LoopTeleportEnabled = false
+            return
+        end
+        task.spawn(function()
+            while LoopTeleportEnabled do
+                TeleportToSelectedPlayer()
+                task.wait(0.1)
+            end
+        end)
+    end
+end)
+
+PlayersTab.newButton("View Player", "View Selected Player For 3 Seconds", function()
+    if _G.SelectedPlayer and _G.SelectedPlayer ~= "" then
+        for _, Player in ipairs(PlayerService:GetPlayers()) do
+            if string.find(string.lower(Player.Name), string.lower(_G.SelectedPlayer), 1, true) or string.find(string.lower(Player.DisplayName), string.lower(_G.SelectedPlayer), 1, true) then
+                local TargetHumanoid = Player.Character
+                if TargetHumanoid then
+                    TargetHumanoid = TargetHumanoid:FindFirstChildOfClass("Humanoid")
+                end
+                if TargetHumanoid then
+                    local PreviousSubject = Camera.CameraSubject
+                    Camera.CameraSubject = TargetHumanoid
+                    task.delay(3, function()
+                        if Camera.CameraSubject == TargetHumanoid then
+                            Camera.CameraSubject = PreviousSubject
+                        end
+                    end)
+                end
+                return
+            end
+        end
+    else
+        StarterGui:SetCore("SendNotification", {
+            ["Title"] = "VexonHub",
+            ["Text"] = "No One Selected",
+            ["Icon"] = "http://www.roblox.com/asset/?id=84519376661277",
+            ["Duration"] = 5
+        })
+    end
+end)
+
+PlayersTab.newToggle("Loop View", "Keep Viewing Selected Player", false, function(State)
+    LoopViewEnabled = State
+    if State then
+        if not _G.SelectedPlayer or _G.SelectedPlayer == "" then
+            StarterGui:SetCore("SendNotification", {
+                ["Title"] = "VexonHub",
+                ["Text"] = "No One Selected",
+                ["Icon"] = "http://www.roblox.com/asset/?id=84519376661277",
+                ["Duration"] = 5
+            })
+            LoopViewEnabled = false
+            return
+        end
+        task.spawn(function()
+            while true do
+                if not LoopViewEnabled then
+                    Camera.CameraSubject = OriginalCameraSubject
+                    return
+                end
+                local FoundTarget = false
+                for _, Player in ipairs(PlayerService:GetPlayers()) do
+                    if string.find(string.lower(Player.Name), string.lower(_G.SelectedPlayer or ""), 1, true) or string.find(string.lower(Player.DisplayName), string.lower(_G.SelectedPlayer or ""), 1, true) then
+                        local TargetHumanoid = Player.Character
+                        if TargetHumanoid then
+                            TargetHumanoid = TargetHumanoid:FindFirstChildOfClass("Humanoid")
+                        end
+                        if TargetHumanoid then
+                            Camera.CameraSubject = TargetHumanoid
+                            FoundTarget = true
+                        end
+                        break
+                    end
+                end
+                if not FoundTarget then
+                    Camera.CameraSubject = OriginalCameraSubject
+                end
+                task.wait(0.1)
+            end
+        end)
+    else
+        Camera.CameraSubject = OriginalCameraSubject
+    end
+end)
+
+PlayersTab.newToggle("AimLock Cam Player", "Lock Camera to Selected Player", false, function(State)
+    aimBotEnabled = State
+    if aimBotEnabled then
+        if not _G.SelectedPlayer or _G.SelectedPlayer == "" then
+            StarterGui:SetCore("SendNotification", {
+                ["Title"] = "VexonHub",
+                ["Text"] = "No One Selected",
+                ["Icon"] = "http://www.roblox.com/asset/?id=84519376661277",
+                ["Duration"] = 5
+            })
+            aimBotEnabled = false
+            return
+        end
+        task.spawn(function()
+            while aimBotEnabled do
+                aimAtSelectedPlayer()
+                task.wait(0)
+            end
+        end)
+    end
+end)
+
+PlayersTab.newToggle("AimLock Character Player", "Lock Character to Selected Player", false, function(State)
+    characterAimLockEnabled = State
+    if characterAimLockEnabled then
+        if not _G.SelectedPlayer or _G.SelectedPlayer == "" then
+            StarterGui:SetCore("SendNotification", {
+                ["Title"] = "VexonHub",
+                ["Text"] = "No One Selected",
+                ["Icon"] = "http://www.roblox.com/asset/?id=84519376661277",
+                ["Duration"] = 5
+            })
+            characterAimLockEnabled = false
+            return
+        end
+        task.spawn(function()
+            while characterAimLockEnabled do
+                lockCharacterToSelectedPlayer()
+                task.wait(0)
+            end
+        end)
+    end
+end)
+
+local OrbitRunService = game:GetService("RunService")
+local OrbitEnabled = false
+local OrbitConnection = nil
+local OrbitRenderConnection = nil
+
+PlayersTab.newToggle("Orbit Player", "Orbit Around Selected Player", false, function(State)
+    OrbitEnabled = State
+    if OrbitEnabled then
+        if not _G.SelectedPlayer or _G.SelectedPlayer == "" then
+            StarterGui:SetCore("SendNotification", {
+                ["Title"] = "VexonHub",
+                ["Text"] = "No One Selected",
+                ["Icon"] = "http://www.roblox.com/asset/?id=84519376661277",
+                ["Duration"] = 5
+            })
+            OrbitEnabled = false
+            return
+        end
+        task.spawn(function()
+            local MyRootPart = PlayerTabLocalPlayer.Character
+            if MyRootPart then
+                MyRootPart = MyRootPart:FindFirstChild("HumanoidRootPart")
+            end
+            if not MyRootPart then
+                return
+            end
+            local TargetPlayer = nil
+            for _, Player in ipairs(PlayerService:GetPlayers()) do
+                if string.find(string.lower(Player.Name), string.lower(_G.SelectedPlayer or ""), 1, true) or string.find(string.lower(Player.DisplayName), string.lower(_G.SelectedPlayer or ""), 1, true) then
+                    TargetPlayer = Player
+                    break
+                end
+            end
+            if TargetPlayer and TargetPlayer.Character and TargetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                local TargetRootPart = TargetPlayer.Character:FindFirstChild("HumanoidRootPart")
+                local OrbitAngle = 0
+                local OrbitSpeed = 8
+                local OrbitRadius = 5
+                OrbitConnection = OrbitRunService.Heartbeat:Connect(function()
+                    if OrbitEnabled and (MyRootPart and TargetRootPart) then
+                        OrbitAngle = OrbitAngle + OrbitSpeed
+                        MyRootPart.CFrame = CFrame.new(TargetRootPart.Position) * CFrame.Angles(0, math.rad(OrbitAngle), 0) * CFrame.new(OrbitRadius, 0, 0)
+                    else
+                        OrbitConnection:Disconnect()
+                        OrbitRenderConnection:Disconnect()
+                    end
+                end)
+                OrbitRenderConnection = OrbitRunService.RenderStepped:Connect(function()
+                    if OrbitEnabled and (MyRootPart and TargetRootPart) then
+                        MyRootPart.CFrame = CFrame.new(MyRootPart.Position, TargetRootPart.Position)
+                    else
+                        OrbitConnection:Disconnect()
+                        OrbitRenderConnection:Disconnect()
+                    end
+                end)
+            end
+        end)
+    else
+        if OrbitConnection then
+            OrbitConnection:Disconnect()
+        end
+        if OrbitRenderConnection then
+            OrbitRenderConnection:Disconnect()
+        end
+    end
+end)
+
+local NotifyOnDeathEnabled = false
+local DeathConnection = nil
+
+PlayersTab.newToggle("Notify On Death", "Sends notification if the selected person dies ", false, function(State)
+    NotifyOnDeathEnabled = State
+    if DeathConnection then
+        DeathConnection:Disconnect()
+        DeathConnection = nil
+    end
+    if State then
+        if not _G.SelectedPlayer or _G.SelectedPlayer == "" then
+            StarterGui:SetCore("SendNotification", {
+                ["Title"] = "VexonHub",
+                ["Text"] = "No One Selected",
+                ["Duration"] = 5
+            })
+            NotifyOnDeathEnabled = false
+            return
+        end
+        for _, Player in ipairs(PlayerService:GetPlayers()) do
+            if string.lower(Player.Name):find(string.lower(_G.SelectedPlayer)) or string.lower(Player.DisplayName):find(string.lower(_G.SelectedPlayer)) then
+                local Humanoid = (Player.Character or Player.CharacterAdded:Wait()):WaitForChild("Humanoid", 5)
+                if Humanoid then
+                    DeathConnection = Humanoid.Died:Connect(function()
+                        StarterGui:SetCore("SendNotification", {
+                            ["Title"] = "VexonHub",
+                            ["Text"] = Player.DisplayName .. " Died",
+                            ["Duration"] = 5
+                        })
+                    end)
+                end
+                break
+            end
+        end
+    end
+end)
+
+PlayerService.PlayerRemoving:Connect(function(Player)
+    if _G.SelectedPlayer and _G.SelectedPlayer ~= "" and (string.lower(Player.Name):find(string.lower(_G.SelectedPlayer)) or string.lower(Player.DisplayName):find(string.lower(_G.SelectedPlayer))) then
+        StarterGui:SetCore("SendNotification", {
+            ["Title"] = "VexonHub",
+            ["Text"] = Player.DisplayName .. " Leaved The Game",
+            ["Duration"] = 5
+        })
+    end
+end)
+
+PlayerService.PlayerAdded:Connect(function(Player)
+    if _G.SelectedPlayer and _G.SelectedPlayer ~= "" and (string.lower(Player.Name):find(string.lower(_G.SelectedPlayer)) or string.lower(Player.DisplayName):find(string.lower(_G.SelectedPlayer))) then
+        task.delay(0.5, function()
+            StarterGui:SetCore("SendNotification", {
+                ["Title"] = "VexonHub",
+                ["Text"] = Player.DisplayName .. " Rejoined The Game!",
+                ["Duration"] = 6
+            })
+        end)
+    end
+end)
+
+local GuiTab = DrRayLibrary.newTab("Gui", "http://www.roblox.com/asset/?id=86855135563483")
+
+GuiTab.newButton("Copy Discord Link", "Script Made By TheVex0n", function()
+    setclipboard("https://discord.gg/Xm5sThnfsP")
+end)
+
+GuiTab.newLabel("Main Bar")
+
+GuiTab.newButton("Red", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/t2EZmina/raw"))()
+end)
+
+GuiTab.newButton("Yellow", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/ky88HKCn/raw"))()
+end)
+
+GuiTab.newButton("Green", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/R9LpNo4o/raw"))()
+end)
+
+GuiTab.newButton("Cyan", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/WLGGjcNr/raw"))()
+end)
+
+GuiTab.newButton("Blue", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/tWEF9ub9/raw"))()
+end)
+
+GuiTab.newButton("Purple", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/3cqB8vef/raw"))()
+end)
+
+GuiTab.newButton("White", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/PJmlpOD5/raw"))()
+end)
+
+GuiTab.newButton("Black", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/89XoyHTP/raw"))()
+end)
+
+GuiTab.newLabel("Top Bar")
+
+GuiTab.newButton("Red", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/CaTmibHh/raw"))()
+end)
+
+GuiTab.newButton("Yellow", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/MNuiGJKS/raw"))()
+end)
+
+GuiTab.newButton("Green", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/xs0p0WLV/raw"))()
+end)
+
+GuiTab.newButton("Cyan", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/hvR4wdES/raw"))()
+end)
+
+GuiTab.newButton("Blue", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/sxlH2Qh8/raw"))()
+end)
+
+GuiTab.newButton("Purple", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/WaomktDR/raw"))()
+end)
+
+GuiTab.newButton("Black", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/INfdOZTH"))()
+end)
+
+GuiTab.newButton("White", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/oTIPoMQD/raw"))()
+end)
+
+GuiTab.newLabel("Transparency")
+
+GuiTab.newButton("100", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/KzTm98bw/raw"))()
+end)
+
+GuiTab.newButton("75", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/MlvMAVCw/raw"))()
+end)
+
+GuiTab.newButton("50", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/2c7CSeUo/raw"))()
+end)
+
+GuiTab.newButton("25", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/7NWaq078/raw"))()
+end)
+
+GuiTab.newButton("0", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/2qNW7vWu/raw"))()
+end)
+
+GuiTab.newLabel("Restart")
+
+GuiTab.newButton("Restart Colors", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/qasYsJ1p/raw"))()
+end)
+
+GuiTab.newButton("Restart Transparency", "", function()
+    loadstring(game:HttpGet("https://pastefy.app/21OJEwHm/raw"))()
+end)
+
+loadstring(game:HttpGet("https://pastefy.app/ECqWwOoe/raw"))()
+DrRayLibrary:Init()

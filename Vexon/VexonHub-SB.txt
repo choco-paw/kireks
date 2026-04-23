@@ -1,0 +1,2475 @@
+--[[
+                 . .  .     .          .  .             .
+          .       .  .  .     ..   .    .      .        .
+                   .   .     .             ...  .        
+.                  .       .    ..  .    .=*+-.         .
+       . .             .               .-*:..+:  .      .
+..      .               .+=:..        :*-.. .-+          
+.           ..        . :#-..-#=.   .#-      .*.         
+  .          .........:-=#=.  ..=*-==.       .*..   .    
+        . .:+#%%%%*#%%#%%=..      -+:.       .*.         
+         .-%#%*%%#****%%#=:.       ..     .. .*.      .  
+        ..=%%*@*******%%##+.           .    .==        . 
+       .  -%%%**********+--.   .  ..:*%=-. .:+:  .. . .  
+          .=#****#%@%**++**:.    .+#-.#..  .=-. .   .    
+      ..   :****#@@@@%*****-.=..-%@%-.--  :*=:..     .   
+     .     :*****#%@%******=-:+#@@@#:..=..:::+=          
+. .       .:##************=:. ..*@%=..... .:*-..         
+           :##**********+=++::..  ..:==-:.=*.      .     
+          .=##********##===+*+++:  ...-... :+:..  .    . 
+ ..  .    :+##********##===*-....  ...:++===*=.      .   
+    .     .-#%#%*****##@=-*= ....:=#%+.                  
+        .     :%%%%#%*%%#*..      .:+.                .  
+        . .   -@%#%#******+..   .  .-+.                  
+    .        :%%#******+-... .  .  ..+=.   .         .   
+            :%*%********+...  .    . .%.            .  . 
+       .   .*##%*********....        .:+.  .   .         
+          .-#*##*********+:..        ..*.    .           
+  .    .  .=#*%#********+::...     .  .=:  . .           
+    .     .+#*%#*******=.... ..       .--        .  ..   
+          .*#*%%********=.. .     . . .-=.    .    .     
+   .   .  .+#*#%*******-:..           .-=.         .   . 
+       .  .:--+*********+-...   .  .  ... .  .     .     
+        .     .........::::..            .  ..           
+                        .. .                     ..      
+             .            .           .               .  
+This file was generated on https://dsc.gg/decompiler | Pulsar v1.4.3
+Resolved: 127 identifiers | 48 functions | 0 Strings | Renamed: 42 functions | Connected: 23 callbacks | Dead Code Removed: 0 blocks | Inlined: 0 wrappers | Detected loop: 0 blocks
+[Renamer: ON] [Decompiler: ON]
+]]
+
+local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
+
+WindUI:AddTheme({
+    ["Name"] = "Dark",
+    ["Accent"] = "#18181b",
+    ["Dialog"] = "#18181b",
+    ["Outline"] = "#FFFFFF",
+    ["Text"] = "#FFFFFF",
+    ["Placeholder"] = "#999999",
+    ["Background"] = "#0e0e10",
+    ["Button"] = "#52525b",
+    ["Icon"] = "#a1a1aa"
+})
+
+WindUI:AddTheme({
+    ["Name"] = "Light",
+    ["Accent"] = "#f4f4f5",
+    ["Dialog"] = "#f4f4f5",
+    ["Outline"] = "#000000",
+    ["Text"] = "#000000",
+    ["Placeholder"] = "#666666",
+    ["Background"] = "#ffffff",
+    ["Button"] = "#e4e4e7",
+    ["Icon"] = "#52525b"
+})
+
+WindUI:AddTheme({
+    ["Name"] = "Gray",
+    ["Accent"] = "#374151",
+    ["Dialog"] = "#374151",
+    ["Outline"] = "#d1d5db",
+    ["Text"] = "#f9fafb",
+    ["Placeholder"] = "#9ca3af",
+    ["Background"] = "#1f2937",
+    ["Button"] = "#4b5563",
+    ["Icon"] = "#d1d5db"
+})
+
+WindUI:AddTheme({
+    ["Name"] = "Blue",
+    ["Accent"] = "#1e40af",
+    ["Dialog"] = "#1e3a8a",
+    ["Outline"] = "#93c5fd",
+    ["Text"] = "#f0f9ff",
+    ["Placeholder"] = "#60a5fa",
+    ["Background"] = "#1e293b",
+    ["Button"] = "#3b82f6",
+    ["Icon"] = "#93c5fd"
+})
+
+WindUI:AddTheme({
+    ["Name"] = "Green",
+    ["Accent"] = "#059669",
+    ["Dialog"] = "#047857",
+    ["Outline"] = "#6ee7b7",
+    ["Text"] = "#ecfdf5",
+    ["Placeholder"] = "#34d399",
+    ["Background"] = "#064e3b",
+    ["Button"] = "#10b981",
+    ["Icon"] = "#6ee7b7"
+})
+
+WindUI:AddTheme({
+    ["Name"] = "Purple",
+    ["Accent"] = "#7c3aed",
+    ["Dialog"] = "#6d28d9",
+    ["Outline"] = "#c4b5fd",
+    ["Text"] = "#faf5ff",
+    ["Placeholder"] = "#a78bfa",
+    ["Background"] = "#581c87",
+    ["Button"] = "#8b5cf6",
+    ["Icon"] = "#c4b5fd"
+})
+
+WindUI:SetNotificationLower(true)
+
+local ThemeList = {
+    "Dark",
+    "Light",
+    "Gray",
+    "Blue",
+    "Green",
+    "Purple"
+}
+
+local CurrentThemeIndex = 1
+
+if not getgenv().TransparencyEnabled then
+    getgenv().TransparencyEnabled = false
+end
+
+local MainWindow = WindUI:CreateWindow({
+    ["Title"] = "VexonHub",
+    ["Icon"] = "hand",
+    ["Author"] = "Slap Battle",
+    ["Folder"] = "vexonhub",
+    ["Size"] = UDim2.fromOffset(500, 350),
+    ["Transparent"] = getgenv().TransparencyEnabled,
+    ["Theme"] = "Dark",
+    ["Resizable"] = true,
+    ["SideBarWidth"] = 150,
+    ["BackgroundImageTransparency"] = 0.8,
+    ["HideSearchBar"] = false,
+    ["ScrollBarEnabled"] = true,
+    ["NewElements"] = true,
+    ["User"] = {
+        ["Enabled"] = true,
+        ["Anonymous"] = false,
+        ["Callback"] = function()
+            CurrentThemeIndex = CurrentThemeIndex + 1
+            if CurrentThemeIndex > #ThemeList then
+                CurrentThemeIndex = 1
+            end
+            local selectedTheme = ThemeList[CurrentThemeIndex]
+            WindUI:SetTheme(selectedTheme)
+            WindUI:Notify({
+                ["Title"] = "Theme Changed",
+                ["Content"] = "Switched to " .. selectedTheme .. " theme!",
+                ["Duration"] = 2,
+                ["Icon"] = "palette"
+            })
+            print("Switched to " .. selectedTheme .. " theme")
+        end
+    },
+    ["OnClose"] = function()
+        isMinimized = true
+        WindUI:Notify({
+            ["Title"] = "UI Minimized",
+            ["Content"] = "Press G to open the UI again",
+            ["Duration"] = 5,
+            ["Icon"] = "eye"
+        })
+    end
+})
+
+local IsUIHidden = false
+
+game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessed)
+    if input.KeyCode == Enum.KeyCode.G and not gameProcessed then
+        if IsUIHidden then
+            MainWindow:Show()
+            IsUIHidden = false
+        else
+            MainWindow:Hide()
+            IsUIHidden = true
+            WindUI:Notify({
+                ["Title"] = "UI Minimized",
+                ["Content"] = "Press G to open the UI again",
+                ["Duration"] = 5,
+                ["Icon"] = "eye"
+            })
+        end
+    end
+end)
+
+pcall(function()
+    MainWindow:CreateTopbarButton("TransparencyToggle", "eye", function()
+        if getgenv().TransparencyEnabled then
+            getgenv().TransparencyEnabled = false
+            pcall(function()
+                MainWindow:ToggleTransparency(false)
+            end)
+            WindUI:Notify({
+                ["Title"] = "Transparency",
+                ["Content"] = "Transparency disabled",
+                ["Duration"] = 3,
+                ["Icon"] = "eye"
+            })
+            print("Transparency = false")
+        else
+            getgenv().TransparencyEnabled = true
+            pcall(function()
+                MainWindow:ToggleTransparency(true)
+            end)
+            WindUI:Notify({
+                ["Title"] = "Transparency",
+                ["Content"] = "Transparency enabled",
+                ["Duration"] = 3,
+                ["Icon"] = "eye-off"
+            })
+            print(" Transparency = true")
+        end
+        print("Debug - Current Transparency state:", getgenv().TransparencyEnabled)
+    end, 990)
+end)
+
+MainWindow.ToggleKey = Enum.KeyCode.R
+
+local windowRef = MainWindow
+MainWindow.EditOpenButton(windowRef, {
+    ["Title"] = "VexonHub",
+    ["CornerRadius"] = UDim.new(0, 6),
+    ["StrokeThickness"] = 2,
+    ["Color"] = ColorSequence.new(Color3.fromRGB(30, 30, 30), Color3.fromRGB(255, 255, 255)),
+    ["Draggable"] = true
+})
+
+loadstring(game:HttpGet("https://pastefy.app/hcVkWhQF/raw"))()
+
+game.StarterGui:SetCore("SendNotification", {
+    ["Title"] = "VexonHub",
+    ["Text"] = "Toggle Keybind: ( R )",
+    ["Duration"] = 30,
+    ["Icon"] = "rbxassetid://84519376661277"
+})
+
+local Tabs = {}
+
+local tabRef1 = MainWindow
+Tabs.Main = MainWindow.Tab(tabRef1, {
+    ["Title"] = "Main",
+    ["Icon"] = "house",
+    ["Desc"] = "Core Slap Battles features"
+})
+
+local tabRef2 = MainWindow
+Tabs.Misc = MainWindow.Tab(tabRef2, {
+    ["Title"] = "Misc",
+    ["Icon"] = "sparkles",
+    ["Desc"] = "Universal scripts and tools"
+})
+
+local tabRef3 = MainWindow
+Tabs.Anti = MainWindow.Tab(tabRef3, {
+    ["Title"] = "Anti",
+    ["Icon"] = "shield",
+    ["Desc"] = "Anti features"
+})
+
+local tabRef4 = MainWindow
+Tabs.Badge = MainWindow.Tab(tabRef4, {
+    ["Title"] = "Badge",
+    ["Icon"] = "award",
+    ["Desc"] = "Badge obtaining features"
+})
+
+local tabRef5 = MainWindow
+Tabs.Place = MainWindow.Tab(tabRef5, {
+    ["Title"] = "Place",
+    ["Icon"] = "map",
+    ["Desc"] = "Teleportation features"
+})
+
+local tabRef6 = MainWindow
+Tabs.Fling = MainWindow.Tab(tabRef6, {
+    ["Title"] = "Fling",
+    ["Icon"] = "zap",
+    ["Desc"] = "Fling and player interaction"
+})
+
+local tabRef7 = MainWindow
+Tabs.Info = MainWindow.Tab(tabRef7, {
+    ["Title"] = "Information",
+    ["Icon"] = "badge-info",
+    ["Desc"] = "Server/Script Info"
+})
+
+local tabRef8 = MainWindow
+MainWindow.SelectTab(tabRef8, 7)
+
+local _ = game:GetService("Players").LocalPlayer
+
+loadstring(game:HttpGet("https://pastefy.app/hcVkWhQF/raw"))()
+
+Tabs.Main:Section({
+    ["Title"] = "Movement",
+    ["Icon"] = "settings"
+})
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local LocalPlayer = Players.LocalPlayer
+local PlayerCharacter = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+local characterRef = PlayerCharacter
+local PlayerHumanoid = PlayerCharacter.WaitForChild(characterRef, "Humanoid")
+
+LocalPlayer.CharacterAdded:Connect(function(newCharacter)
+    PlayerCharacter = newCharacter
+    PlayerHumanoid = newCharacter:WaitForChild("Humanoid")
+end)
+
+local WalkspeedEnabled = false
+local SpeedBoostValue = 9
+local JumpBoostValue = 200
+
+local function ToggleWalkspeed(enabled)
+    WalkspeedEnabled = enabled
+    getgenv().WalkspeedBypass = WalkspeedEnabled
+    if enabled then
+        task.spawn(function()
+            while getgenv().WalkspeedBypass and (PlayerCharacter and PlayerCharacter.Parent) do
+                local humanoid = PlayerCharacter:FindFirstChildOfClass("Humanoid")
+                if humanoid and humanoid.MoveDirection.Magnitude > 0 then
+                    PlayerCharacter:TranslateBy(humanoid.MoveDirection * SpeedBoostValue * RunService.Heartbeat:Wait() * 7)
+                else
+                    task.wait()
+                end
+            end
+        end)
+    end
+end
+
+Tabs.Main:Toggle({
+    ["Title"] = "Speed (V Key On/Off)",
+    ["Value"] = false,
+    ["Callback"] = ToggleWalkspeed
+})
+
+Tabs.Main:Slider({
+    ["Title"] = "Speed Boost Value",
+    ["step"] = 1,
+    ["Value"] = {
+        ["Min"] = 1,
+        ["Max"] = 100,
+        ["Default"] = 9
+    },
+    ["Callback"] = function(value)
+        SpeedBoostValue = value
+    end
+})
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if input.KeyCode == Enum.KeyCode.V and not gameProcessed then
+        ToggleWalkspeed(not WalkspeedEnabled)
+    end
+end)
+
+Tabs.Main:Toggle({
+    ["Title"] = "Jump",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        getgenv().JumpPowerBypass = enabled
+        if enabled then
+            task.spawn(function()
+                while getgenv().JumpPowerBypass and PlayerCharacter and PlayerCharacter:FindFirstChild("HumanoidRootPart") do
+                    if PlayerHumanoid and PlayerHumanoid:GetState() == Enum.HumanoidStateType.Jumping then
+                        PlayerCharacter.HumanoidRootPart.CFrame = PlayerCharacter.HumanoidRootPart.CFrame * CFrame.new(0, JumpBoostValue, 0)
+                    end
+                    task.wait()
+                end
+            end)
+        end
+    end
+})
+
+Tabs.Main:Slider({
+    ["Title"] = "Jump Boost Value",
+    ["step"] = 1,
+    ["Value"] = {
+        ["Min"] = 1,
+        ["Max"] = 1000,
+        ["Default"] = 200
+    },
+    ["Callback"] = function(value)
+        JumpBoostValue = value
+    end
+})
+
+local UserInputServiceRef = game:GetService("UserInputService")
+local LocalPlayerForInfJump = game:GetService("Players").LocalPlayer
+local InfJumpEnabled = false
+
+Tabs.Main:Toggle({
+    ["Title"] = "Inf-Jump",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        InfJumpEnabled = enabled
+    end
+})
+
+UserInputServiceRef.JumpRequest:Connect(function()
+    if InfJumpEnabled and LocalPlayerForInfJump.Character and LocalPlayerForInfJump.Character:FindFirstChildOfClass("Humanoid") then
+        LocalPlayerForInfJump.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Jumping)
+    end
+end)
+
+local PlayersForNoclip = game:GetService("Players")
+local RunServiceForNoclip = game:GetService("RunService")
+local LocalPlayerForNoclip = PlayersForNoclip.LocalPlayer
+local NoclipEnabled = false
+local NoclipConnection = nil
+
+local function EnableNoclip()
+    if NoclipConnection then
+        NoclipConnection:Disconnect()
+    end
+    NoclipConnection = RunServiceForNoclip.Stepped:Connect(function()
+        local character = LocalPlayerForNoclip.Character
+        if character then
+            local iterFunc, tableRef, index = ipairs(character:GetDescendants())
+            while true do
+                local part
+                index, part = iterFunc(tableRef, index)
+                if index == nil then
+                    break
+                end
+                if part:IsA("BasePart") and part.CanCollide then
+                    part.CanCollide = false
+                end
+            end
+        end
+    end)
+end
+
+local function DisableNoclip()
+    if NoclipConnection then
+        NoclipConnection:Disconnect()
+        NoclipConnection = nil
+    end
+    local character = LocalPlayerForNoclip.Character
+    if character then
+        local iterFunc, tableRef, index = ipairs(character:GetDescendants())
+        while true do
+            local part
+            index, part = iterFunc(tableRef, index)
+            if index == nil then
+                break
+            end
+            if part:IsA("BasePart") then
+                part.CanCollide = true
+            end
+        end
+    end
+end
+
+Tabs.Main:Toggle({
+    ["Title"] = "No-Clip",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        NoclipEnabled = enabled
+        if NoclipEnabled then
+            EnableNoclip()
+        else
+            DisableNoclip()
+        end
+    end
+})
+
+LocalPlayerForNoclip.CharacterAdded:Connect(function()
+    if NoclipEnabled then
+        task.wait(1)
+        EnableNoclip()
+    end
+end)
+
+local PlayersForFly = game:GetService("Players")
+local RunServiceForFly = game:GetService("RunService")
+local LocalPlayerForFly = PlayersForFly.LocalPlayer
+local CharacterForFly = LocalPlayerForFly.Character or LocalPlayerForFly.CharacterAdded:Wait()
+local charRefForFly = CharacterForFly
+local HumanoidRootPartForFly = CharacterForFly.WaitForChild(charRefForFly, "HumanoidRootPart")
+local FlyWalkEnabled = false
+local FlyWalkHeight = 100
+local FlyConnection = nil
+local RaycastParamsForFly = RaycastParams.new()
+RaycastParamsForFly.FilterType = Enum.RaycastFilterType.Blacklist
+RaycastParamsForFly.FilterDescendantsInstances = { CharacterForFly }
+
+Tabs.Main:Toggle({
+    ["Title"] = "Fly Walk",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        FlyWalkEnabled = enabled
+        if enabled then
+            startFloating()
+        else
+            stopFloating()
+        end
+    end
+})
+
+Tabs.Main:Slider({
+    ["Title"] = "Fly Walk Height",
+    ["Value"] = {
+        ["Min"] = 3,
+        ["Max"] = 300,
+        ["Default"] = 100
+    },
+    ["Callback"] = function(value)
+        FlyWalkHeight = value
+    end
+})
+
+local function UpdateFlyWalk()
+    if FlyWalkEnabled and (HumanoidRootPartForFly and HumanoidRootPartForFly.Parent) then
+        local position = HumanoidRootPartForFly.Position
+        local rayResult = workspace:Raycast(position, Vector3.new(0, -1000, 0), RaycastParamsForFly)
+        if rayResult then
+            local targetY = rayResult.Position.Y + FlyWalkHeight + 3
+            local currentCFrame = HumanoidRootPartForFly.CFrame
+            HumanoidRootPartForFly.CFrame = CFrame.new(currentCFrame.Position.X, targetY, currentCFrame.Position.Z) * CFrame.fromOrientation(currentCFrame:ToOrientation())
+        end
+    end
+end
+
+function startFloating()
+    if FlyConnection then
+        FlyConnection:Disconnect()
+    end
+    FlyConnection = RunServiceForFly.Heartbeat:Connect(UpdateFlyWalk)
+end
+
+function stopFloating()
+    if FlyConnection then
+        FlyConnection:Disconnect()
+        FlyConnection = nil
+    end
+end
+
+LocalPlayerForFly.CharacterAdded:Connect(function(newCharacter)
+    CharacterForFly = newCharacter
+    HumanoidRootPartForFly = CharacterForFly:WaitForChild("HumanoidRootPart")
+    RaycastParamsForFly.FilterDescendantsInstances = { CharacterForFly }
+    if FlyWalkEnabled then
+        task.wait(1)
+        startFloating()
+    end
+end)
+
+Tabs.Main:Section({
+    ["Title"] = "Farm",
+    ["Icon"] = "zap",
+    ["Desc"] = "Automated farming features"
+})
+
+Tabs.Main:Toggle({
+    ["Title"] = "ESP",
+    ["Value"] = false,
+    ["Desc"] = "ESP Players And Gloves",
+    ["Callback"] = function(enabled)
+        getgenv().epssb = enabled
+        if getgenv().epssb == false then
+            local iterFunc, tableRef, index = ipairs(game.Players:GetChildren())
+            while true do
+                local player
+                index, player = iterFunc(tableRef, index)
+                if index == nil then
+                    break
+                end
+                if player.Character and (player.Character:FindFirstChild("Head") and player.Character.Head:FindFirstChild("Gesp")) then
+                    player.Character.Head.Gesp:Destroy()
+                end
+            end
+            wait(0.1)
+            local descendants = game:GetService("Workspace"):GetDescendants()
+            local iterFunc2, tableRef2, index2 = ipairs(descendants)
+            while true do
+                local descendant
+                index2, descendant = iterFunc2(tableRef2, index2)
+                if index2 == nil then
+                    break
+                end
+                if descendant.Name == "esp" then
+                    descendant:Destroy()
+                end
+            end
+        end
+        while getgenv().epssb do
+            local iterFunc3, tableRef3, index3 = ipairs(game.Players:GetChildren())
+            while true do
+                local player
+                index3, player = iterFunc3(tableRef3, index3)
+                if index3 == nil then
+                    break
+                end
+                if player ~= game.Players.LocalPlayer and player.Character and (player.Character:FindFirstChild("Head") and (player.Character:FindFirstChild("entered") and player.Character.IsInDefaultArena.Value == false and player.Character.Head:FindFirstChild("Gesp") == nil)) then
+                    Gesp = Instance.new("BillboardGui", player.Character.Head)
+                    Gesp.Adornee = player.Character.Head
+                    Gesp.Name = "Gesp"
+                    Gesp.Size = UDim2.new(0, 100, 0, 150)
+                    Gesp.StudsOffset = Vector3.new(0, 1, 0)
+                    Gesp.AlwaysOnTop = true
+                    Gesp.StudsOffset = Vector3.new(0, 3, 0)
+                    Gesp.StudsOffset = Vector3.new(0, 3, 0)
+                    GespText = Instance.new("TextLabel", Gesp)
+                    GespText.BackgroundTransparency = 1
+                    GespText.Size = UDim2.new(0, 100, 0, 100)
+                    GespText.TextSize = 17
+                    GespText.Font = Enum.Font.SourceSansSemibold
+                    GespText.TextColor3 = Color3.fromRGB(255, 48, 48)
+                    GespText.TextStrokeTransparency = 0
+                    GespText.Text = player.leaderstats.Glove.Value
+                end
+            end
+            local iterFunc4, tableRef4, index4 = ipairs(game.Players:GetChildren())
+            while true do
+                local player
+                index4, player = iterFunc4(tableRef4, index4)
+                if index4 == nil then
+                    break
+                end
+                if player ~= game.Players.LocalPlayer and player.Character and (player.Character:FindFirstChild("Torso") and (player.Character:FindFirstChild("entered") and player.Character.IsInDefaultArena.Value == false and player.Character.Torso:FindFirstChild("esp") == nil)) then
+                    esp = Instance.new("BoxHandleAdornment", player.Character.Torso)
+                    esp.Adornee = player.Character.Torso
+                    esp.ZIndex = 0
+                    esp.Size = Vector3.new(4, 5, 1)
+                    esp.Transparency = 0.65
+                    esp.Color3 = Color3.fromRGB(255, 48, 48)
+                    esp.AlwaysOnTop = true
+                    esp.Name = "esp"
+                end
+            end
+            task.wait(0.2)
+        end
+    end
+})
+
+Tabs.Main:Toggle({
+    ["Title"] = "Slapple Farm",
+    ["Value"] = false,
+    ["Desc"] = "Only In Arena",
+    ["Callback"] = function(enabled)
+        getgenv().slapfarmspissb = enabled
+        while getgenv().slapfarmspissb do
+            local iterFunc, tableRef, index = pairs(game.Workspace.Arena.island5.Slapples:GetDescendants())
+            while true do
+                local descendant
+                index, descendant = iterFunc(tableRef, index)
+                if index == nil then
+                    break
+                end
+                if descendant.Name == "Glove" and descendant:FindFirstChild("TouchInterest") then
+                    firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, descendant, 0)
+                    firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, descendant, 1)
+                end
+            end
+            task.wait()
+        end
+    end
+})
+
+Tabs.Main:Section({
+    ["Title"] = "Gloves",
+    ["Icon"] = "hand",
+    ["Desc"] = "Glove-related features"
+})
+
+Tabs.Main:Button({
+    ["Title"] = "Full Kinetic",
+    ["Desc"] = "Get Full Kinetic",
+    ["Callback"] = function()
+        if game.Players.LocalPlayer.leaderstats.Glove.Value ~= "Kinetic" then
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                ["Title"] = "Error",
+                ["Text"] = "Need Kinetic Glove.",
+                ["Icon"] = "rbxassetid://7733658504",
+                ["Duration"] = 10
+            })
+        else
+            OGL = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            for _ = 1, 100 do
+                game.ReplicatedStorage.SelfKnockback:FireServer({
+                    ["Force"] = 0,
+                    ["Direction"] = Vector3.new(0, 0.01, 0)
+                })
+                wait(0.05)
+            end
+        end
+    end
+})
+
+Tabs.Main:Button({
+    ["Title"] = "Remove Cool Down",
+    ["Desc"] = "Not Work For All Gloves",
+    ["Callback"] = function()
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local tool = character:FindFirstChildOfClass("Tool")
+        if not tool then
+            tool = player.Backpack:FindFirstChildOfClass("Tool")
+        end
+        while character.Humanoid.Health ~= 0 do
+            local localScript = tool:FindFirstChildOfClass("LocalScript")
+            localScript:Clone()
+            local clonedScript = localScript:Clone()
+            clonedScript:Clone()
+            localScript:Destroy()
+            clonedScript.Parent = tool
+            wait(0.1)
+        end
+    end
+})
+
+Tabs.Main:Button({
+    ["Title"] = "Get Infinite Ingredients",
+    ["Desc"] = "Need Alchemist",
+    ["Callback"] = function()
+        if game.Players.LocalPlayer.leaderstats.Glove.Value ~= "Alchemist" then
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                ["Title"] = "Error",
+                ["Text"] = "Need Alchemist Glove.",
+                ["Icon"] = "rbxassetid://7733658504",
+                ["Duration"] = 10
+            })
+        else
+            for _ = 1, 200 do
+                game:GetService("ReplicatedStorage"):WaitForChild("AlchemistEvent"):FireServer(unpack({ "AddItem", "Blood Rose" }))
+            end
+        end
+    end
+})
+
+Tabs.Main:Section({
+    ["Title"] = "Abilities",
+    ["Icon"] = "bolt",
+    ["Desc"] = "Spawn abilities"
+})
+
+local SelectedRetroAbility = "Ban Hammer"
+
+Tabs.Main:Dropdown({
+    ["Title"] = "Choose Retro Ability",
+    ["Values"] = { "Ban Hammer", "Bomb", "Rocket Launcher" },
+    ["Value"] = "Ban Hammer",
+    ["Desc"] = "Works For Every Glove",
+    ["Callback"] = function(value)
+        SelectedRetroAbility = value
+    end
+})
+
+Tabs.Main:Toggle({
+    ["Title"] = "Spam Retro",
+    ["Value"] = false,
+    ["Desc"] = "",
+    ["Callback"] = function(enabled)
+        getgenv().spamretro = enabled
+        while getgenv().spamretro do
+            if SelectedRetroAbility ~= "Ban Hammer" then
+                if SelectedRetroAbility ~= "Bomb" then
+                    if SelectedRetroAbility == "Rocket Launcher" then
+                        game:GetService("ReplicatedStorage"):WaitForChild("RetroAbility"):FireServer(unpack({ "Rocket Launcher" }))
+                    end
+                else
+                    game:GetService("ReplicatedStorage"):WaitForChild("RetroAbility"):FireServer(unpack({ "Bomb" }))
+                end
+            else
+                game:GetService("ReplicatedStorage"):WaitForChild("RetroAbility"):FireServer(unpack({ "Ban Hammer" }))
+            end
+            task.wait(0.2)
+        end
+    end
+})
+
+local SelectedAdminAbility = "Anvil"
+
+Tabs.Main:Dropdown({
+    ["Title"] = "Choose Admin Ability",
+    ["Values"] = { "Anvil", "Fling", "Invisibility" },
+    ["Value"] = "Anvil",
+    ["Desc"] = "Works For Every Glove",
+    ["Callback"] = function(value)
+        SelectedAdminAbility = value
+    end
+})
+
+Tabs.Main:Toggle({
+    ["Title"] = "Spam Admin",
+    ["Value"] = false,
+    ["Desc"] = "All Glove",
+    ["Callback"] = function(enabled)
+        getgenv().spamadmin = enabled
+        while getgenv().spamadmin do
+            if SelectedAdminAbility ~= "Anvil" then
+                if SelectedAdminAbility ~= "Fling" then
+                    if SelectedAdminAbility == "Invisibility" then
+                        game:GetService("ReplicatedStorage"):WaitForChild("AdminAbility"):FireServer(unpack({ "Invisibility" }))
+                    end
+                else
+                    game:GetService("ReplicatedStorage"):WaitForChild("AdminAbility"):FireServer(unpack({ "Fling" }))
+                end
+            else
+                game:GetService("ReplicatedStorage"):WaitForChild("AdminAbility"):FireServer(unpack({ "Anvil" }))
+            end
+            task.wait(0.2)
+        end
+    end
+})
+
+Tabs.Misc:Section({
+    ["Title"] = "Universal Scripts",
+    ["Icon"] = "flame",
+    ["Desc"] = "Load external scripts for enhanced functionality"
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "Inf Yield",
+    ["Desc"] = "Best admin panel script",
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+    end
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "Dex Explorer",
+    ["Desc"] = "Normal PC/mobile white Dex Explorer",
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Classic-Dex-Explorer-21009"))()
+    end
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "Remote Spy",
+    ["Desc"] = "Remote spy script",
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/SimpleSpySource.lua"))()
+    end
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "Keyboard",
+    ["Desc"] = "Mobile keyboard GUI",
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+    end
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "Anim Logger",
+    ["Desc"] = "Animation ID grabber",
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastefy.app/juBGMpCZ/raw"))()
+    end
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "f3x",
+    ["Desc"] = "Inf yield f3x build tool",
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/refs/heads/main/f3x.lua"))()
+    end
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "Fly V3",
+    ["Desc"] = "Fly script with GUI",
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/xuSMWfDu"))()
+    end
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "VFX Logger",
+    ["Desc"] = "VFX logger grabber for players",
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/2uXfJqdU"))()
+    end
+})
+
+Tabs.Misc:Section({
+    ["Title"] = "Player Tools",
+    ["Icon"] = "user",
+    ["Desc"] = "Player-related utilities"
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "ServerHop",
+    ["Desc"] = "Change to a different server",
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastefy.app/uTXUoORd/raw"))()
+    end
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "Rejoin",
+    ["Desc"] = "Rejoin the current server",
+    ["Callback"] = function()
+        game:GetService("TeleportService"):Teleport(game.PlaceId)
+    end
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "Reset",
+    ["Desc"] = "Restart your character",
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastefy.app/YPv8xrYN/raw"))()
+    end
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "Fix Cam",
+    ["Desc"] = "Reset camera to normal",
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastefy.app/IrvnCaF2/raw"))()
+    end
+})
+
+Tabs.Misc:Section({
+    ["Title"] = "Tools",
+    ["Icon"] = "wrench",
+    ["Desc"] = "Useful tools for various actions"
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "TP Tool",
+    ["Desc"] = "Click teleport tool",
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastefy.app/ZLpXLAeF/raw"))()
+    end
+})
+
+Tabs.Anti:Section({
+    ["Title"] = "Void Protection",
+    ["Icon"] = "shield",
+    ["Desc"] = "Prevent falling into the void"
+})
+
+Tabs.Anti:Toggle({
+    ["Title"] = "Anti Void",
+    ["Value"] = false,
+    ["Desc"] = "Saves You From Falling Into The Void",
+    ["Callback"] = function(enabled)
+        if enabled then
+            local workspaceRef = game:GetService("Workspace")
+            local antiVoidPart = Instance.new("Part", workspaceRef)
+            antiVoidPart.CanCollide = true
+            antiVoidPart.Anchored = true
+            antiVoidPart.CFrame = CFrame.new(23.2798462, -19.8447475, 1.83554196, -1, 0, 0, 0, -1, 0, 0, 0, 1)
+            antiVoidPart.Size = Vector3.new(1139.2593994140625, 1.5, 2048)
+            antiVoidPart.Name = "antivoidKYK"
+            antiVoidPart.Transparency = 1
+        else
+            local iterFunc, tableRef, index = ipairs({ "antivoidKYK" })
+            while true do
+                local partName
+                index, partName = iterFunc(tableRef, index)
+                if index == nil then
+                    break
+                end
+                local foundPart = game.Workspace:FindFirstChild(partName)
+                if foundPart then
+                    foundPart:Destroy()
+                end
+            end
+        end
+    end
+})
+
+Tabs.Anti:Toggle({
+    ["Title"] = "Anti Ragdoll",
+    ["Value"] = false,
+    ["Desc"] = "Reset Character While Starting",
+    ["Callback"] = function(enabled)
+        getgenv().antiragdolsb = enabled
+        if getgenv().antiragdolsb then
+            game.Players.LocalPlayer.Character.Humanoid.Health = 0
+            game.Players.LocalPlayer.CharacterAdded:Connect(function()
+                game.Players.LocalPlayer.Character:WaitForChild("Ragdolled").Changed:Connect(function()
+                    if game.Players.LocalPlayer.Character:WaitForChild("Ragdolled").Value == true and getgenv().antiragdolsb then
+                        repeat
+                            task.wait()
+                            game.Players.LocalPlayer.Character.Torso.Anchored = true
+                        until game.Players.LocalPlayer.Character:WaitForChild("Ragdolled").Value == false
+                        game.Players.LocalPlayer.Character.Torso.Anchored = false
+                    end
+                end)
+            end)
+        end
+    end
+})
+
+Tabs.Anti:Toggle({
+    ["Title"] = "Anti Mega Rock/Costum",
+    ["Value"] = false,
+    ["Desc"] = "You Don\'t Die When You Touch MegaRock/Costum",
+    ["Callback"] = function(enabled)
+        getgenv().antimegarocksb = enabled
+        while getgenv().antimegarocksb do
+            local iterFunc, tableRef, index = pairs(game.Players:GetChildren())
+            while true do
+                local player
+                index, player = iterFunc(tableRef, index)
+                if index == nil then
+                    break
+                end
+                if player.Character:FindFirstChild("rock") then
+                    player.Character:FindFirstChild("rock").CanTouch = false
+                    player.Character:FindFirstChild("rock").CanQuery = false
+                end
+            end
+            task.wait()
+        end
+    end
+})
+
+Tabs.Anti:Toggle({
+    ["Title"] = "Anti Time Stop",
+    ["Value"] = false,
+    ["Desc"] = "When Time Stops You Can Move",
+    ["Callback"] = function(enabled)
+        getgenv().antitssb = enabled
+        while getgenv().antitssb do
+            local iterFunc, tableRef, index = pairs(game.Players.LocalPlayer.Character:GetChildren())
+            while true do
+                local child
+                index, child = iterFunc(tableRef, index)
+                if index == nil then
+                    break
+                end
+                if child.ClassName == "Part" then
+                    child.Anchored = false
+                end
+            end
+            task.wait()
+        end
+    end
+})
+
+Tabs.Anti:Toggle({
+    ["Title"] = "Anti Cube Of Death",
+    ["Value"] = false,
+    ["Desc"] = "You Don\'t Die When You Touch The Cube Of Death",
+    ["Callback"] = function(enabled)
+        if enabled then
+            workspace.Arena.CubeOfDeathArea["the cube of death(i heard it kills)"].CanTouch = false
+        else
+            workspace.Arena.CubeOfDeathArea["the cube of death(i heard it kills)"].CanTouch = true
+        end
+    end
+})
+
+Tabs.Anti:Toggle({
+    ["Title"] = "Anti Ice",
+    ["Value"] = false,
+    ["Desc"] = "You Wont freeze",
+    ["Callback"] = function(enabled)
+        getgenv().antiicesb = enabled
+        while getgenv().antiicesb do
+            local iterFunc, tableRef, index = pairs(game.Players.LocalPlayer.Character:GetChildren())
+            while true do
+                local child
+                index, child = iterFunc(tableRef, index)
+                if index == nil then
+                    break
+                end
+                if child.Name == "Icecube" then
+                    child:Destroy()
+                    game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
+                    game.Players.LocalPlayer.Character.Humanoid.AutoRotate = true
+                end
+            end
+            task.wait()
+        end
+    end
+})
+
+Tabs.Badge:Section({
+    ["Title"] = "Glove Badges",
+    ["Icon"] = "award",
+    ["Desc"] = "Obtain specific glove badges"
+})
+
+Tabs.Badge:Button({
+    ["Title"] = "Get All Gloves",
+    ["Callback"] = function()
+        local iterFunc, tableRef, index = pairs(game.workspace.Lobby.GloveStands:GetChildren())
+        while true do
+            local gloveStand
+            index, gloveStand = iterFunc(tableRef, index)
+            if index == nil then
+                break
+            end
+            local iterFunc2, tableRef2, index2 = pairs(game.ReplicatedStorage._NETWORK:GetChildren())
+            while true do
+                local networkChild
+                index2, networkChild = iterFunc2(tableRef2, index2)
+                if index2 == nil then
+                    break
+                end
+                if networkChild.ClassName == "RemoteEvent" then
+                    networkChild:FireServer(gloveStand.Name)
+                end
+            end
+        end
+    end
+})
+
+Tabs.Badge:Button({
+    ["Title"] = "Get The Schlob Glove",
+    ["Desc"] = "Need Cloud",
+    ["Callback"] = function()
+        if game.Players.LocalPlayer.leaderstats.Glove.Value ~= "Cloud" or game.Players.LocalPlayer.Character:FindFirstChild("entered") then
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                ["Title"] = "Error",
+                ["Text"] = "Need Cloud Glove And Located in the Lobby",
+                ["Icon"] = "rbxassetid://7733658504",
+                ["Duration"] = 10
+            })
+        else
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-120.539459, 133.998047, -444.654419)
+            wait(0.1)
+            game:GetService("ReplicatedStorage").CloudAbility:FireServer()
+            fireclickdetector(game.workspace.Lobby.fish.ClickDetector)
+            repeat
+                task.wait()
+                firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("Head"), workspace.Lobby.Teleport1.TouchInterest.Parent, 0)
+                firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("Head"), workspace.Lobby.Teleport1.TouchInterest.Parent, 1)
+            until game.Players.LocalPlayer.Character:FindFirstChild("entered")
+            if game.Players.LocalPlayer.Character.Humanoid.Sit ~= false then
+                wait(0.3)
+                game:GetService("ReplicatedStorage"):WaitForChild("GeneralAbility"):FireServer()
+                wait(0.3)
+                repeat
+                    task.wait()
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Arena.Plate.CFrame
+                until game.Players.LocalPlayer.Character.Ragdolled.Value == false
+            else
+                local iterFunc, tableRef, index = pairs(game.Workspace:GetChildren())
+                while true do
+                    local child
+                    index, child = iterFunc(tableRef, index)
+                    if index == nil then
+                        break
+                    end
+                    if child.Name == game.Players.LocalPlayer.Name .. "_Cloud" and child:FindFirstChild("VehicleSeat") then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = child.VehicleSeat.CFrame
+                        wait(0.3)
+                        game:GetService("ReplicatedStorage"):WaitForChild("GeneralAbility"):FireServer()
+                        wait(0.3)
+                        repeat
+                            task.wait()
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Arena.Plate.CFrame
+                        until game.Players.LocalPlayer.Character.Ragdolled.Value == false
+                    end
+                end
+            end
+        end
+    end
+})
+
+Tabs.Badge:Button({
+    ["Title"] = "Get Bomb Glove",
+    ["Callback"] = function()
+        if game.Players.LocalPlayer.leaderstats.Glove.Value ~= "Warp" or not game.Players.LocalPlayer.Character:FindFirstChild("entered") then
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                ["Title"] = "Error",
+                ["Text"] = "Need Warp Glove And Located in the Arena",
+                ["Icon"] = "rbxassetid://7733658504",
+                ["Duration"] = 10
+            })
+        else
+            local playerList = game.Players:GetChildren()
+            local _ = playerList[math.random(1, #playerList)]
+            repeat
+                local randomPlayer = playerList[math.random(1, #playerList)]
+            until randomPlayer ~= game.Players.LocalPlayer and (randomPlayer.Character:FindFirstChild("entered") and randomPlayer.Character:FindFirstChild("Ragdolled").Value == false)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = randomPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame
+            wait(0.3)
+            game.ReplicatedStorage.WarpHt:FireServer(randomPlayer.Character:WaitForChild("HumanoidRootPart"))
+            wait(0.3)
+            game:GetService("ReplicatedStorage").WLOC:FireServer()
+            wait(0.2)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.DEATHBARRIER.CFrame
+        end
+    end
+})
+
+Tabs.Badge:Button({
+    ["Title"] = "Get Plank Glove",
+    ["Callback"] = function()
+        if game.Players.LocalPlayer.leaderstats.Glove.Value ~= "Fort" then
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                ["Title"] = "Error",
+                ["Text"] = "Need Fort Glove.",
+                ["Icon"] = "rbxassetid://7733658504",
+                ["Duration"] = 10
+            })
+        else
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(8, 97, 4)
+            wait(0.2)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+            wait(0.3)
+            game:GetService("ReplicatedStorage").Fortlol:FireServer()
+            wait(3.5)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+            wait(0.1)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(8, 106, -6)
+        end
+    end
+})
+
+Tabs.Badge:Button({
+    ["Title"] = "Get Psycho Glove",
+    ["Callback"] = function()
+        if game.Workspace then
+            workspace.RepressedMemoriesMap.Psychokinesis.Triggers.StartPsychoEvent.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            wait(2.5)
+            workspace.RepressedMemoriesMap.Psychokinesis.Triggers.StartPsychoEvent.CFrame = CFrame.new(17879.957, 2977.60913, -242.609451, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+            wait(2.5)
+            workspace.RepressedMemoriesMap.Psychokinesis.Triggers.StopPsychoEvent.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            wait(2.5)
+            workspace.RepressedMemoriesMap.Psychokinesis.Triggers.StopPsychoEvent.CFrame = CFrame.new(17347.5801, 2977.60913, 103.471375, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+            wait(2.5)
+            fireclickdetector(workspace.RepressedMemoriesMap.Psychokinesis.Triggers.Psycho.ClickDetector)
+        else
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                ["Title"] = "Error",
+                ["Text"] = "You have not entered Limbo.",
+                ["Icon"] = "rbxassetid://7733658504",
+                ["Duration"] = 10
+            })
+        end
+    end
+})
+
+Tabs.Badge:Button({
+    ["Title"] = "Get FrostBite Glove",
+    ["Callback"] = function()
+        local queueFunc = not queueonteleport and (not queue_on_teleport and syn)
+        if queueFunc then
+            queueFunc = syn.queue_on_teleport
+        end
+        if queueFunc then
+            queueFunc("\r\n            if not game:IsLoaded() then\r\n                game.Loaded:Wait()\r\n            end\r\n            repeat wait() until game.Players.LocalPlayer\r\n            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-554, 177, 56)\r\nwait(0.7)\r\nfor i,v in ipairs(game:GetService(\"Workspace\"):GetDescendants()) do\r\n            if v.ClassName == \"ProximityPrompt\" then\r\n                v.HoldDuration = 0\r\n            end\r\n        end\r\n       wait(0.5)\r\n       for i,v in ipairs(game:GetService(\"Workspace\"):GetDescendants()) do\r\n            if v.ClassName == \"ProximityPrompt\" then\r\n                fireproximityprompt(v)\r\n            end\r\n        end\r\n        ")
+        end
+        game:GetService("TeleportService"):Teleport(17290438723)
+    end
+})
+
+Tabs.Badge:Button({
+    ["Title"] = "Get Lamb Glove",
+    ["Desc"] = "Need ZZZZZZZ glove",
+    ["Callback"] = function()
+        if game.Players.LocalPlayer.leaderstats.Glove.Value ~= "ZZZZZZZ" then
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                ["Title"] = "Error",
+                ["Text"] = "Need ZZZZZZZ Glove.",
+                ["Icon"] = "rbxassetid://7733658504",
+                ["Duration"] = 10
+            })
+        else
+            for _ = 1, 5 do
+                game:GetService("ReplicatedStorage").nightmare:FireServer("LightBroken")
+            end
+        end
+    end
+})
+
+Tabs.Badge:Button({
+    ["Title"] = "Get Ice Skate Glove",
+    ["Callback"] = function()
+        game:GetService("ReplicatedStorage").IceSkate:FireServer(unpack({ "Freeze" }))
+    end
+})
+
+Tabs.Badge:Button({
+    ["Title"] = "Get Chain Glove",
+    ["Desc"] = "Need 1k And More Slap",
+    ["Callback"] = function()
+        if game.Players.LocalPlayer.leaderstats.Slaps.Value < 1000 then
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                ["Title"] = "Error",
+                ["Text"] = "Need 1000 And More Slap.",
+                ["Icon"] = "rbxassetid://7733658504",
+                ["Duration"] = 10
+            })
+        else
+            local queueFunc = not queueonteleport and (not queue_on_teleport and syn)
+            if queueFunc then
+                queueFunc = syn.queue_on_teleport
+            end
+            if queueFunc then
+                queueFunc("\r\n                if not game:IsLoaded() then\r\n                    game.Loaded:Wait()\r\n                end\r\n                repeat wait() until game.Players.LocalPlayer\r\n         repeat wait() until game.Workspace:FindFirstChild(\"Map\"):FindFirstChild(\"CodeBrick\")\r\n        if game.Workspace.Map.CodeBrick.SurfaceGui:FindFirstChild(\"IMGTemplate\") then\r\n        game.Workspace.Map.CodeBrick.SurfaceGui.IMGTemplate.Name = \"1st\"\r\n        game.Workspace.Map.CodeBrick.SurfaceGui.IMGTemplate.Name = \"2nd\"\r\n        game.Workspace.Map.CodeBrick.SurfaceGui.IMGTemplate.Name = \"3rd\"\r\n        game.Workspace.Map.CodeBrick.SurfaceGui.IMGTemplate.Name = \"4th\"\r\n        end\r\n        for i,v in pairs(game.Workspace.Map.CodeBrick.SurfaceGui:GetChildren()) do\r\n                            if v.Name == \"1st\" then\r\n                                if v.Image == \"http://www.roblox.com/asset/?id=9648769161\" then\r\n                            first = \"4\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648765536\" then\r\n                            first = \"2\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648762863\" then\r\n                            first = \"3\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648759883\" then\r\n                            first = \"9\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648755440\" then\r\n                            first = \"8\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648752438\" then\r\n                            first = \"2\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648749145\" then\r\n                            first = \"8\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648745618\" then\r\n                            first = \"3\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648742013\" then\r\n                            first = \"7\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648738553\" then\r\n                            first = \"8\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648734698\" then\r\n                            first = \"2\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648730082\" then\r\n                            first = \"6\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648723237\" then\r\n                            first = \"3\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648718450\" then\r\n                            first = \"6\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648715920\" then\r\n                            first = \"6\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648712563\" then\r\n                            first = \"2\"\r\n                        end\r\n                            end\r\n                        end\r\n        for i,v in pairs(game.Workspace.Map.CodeBrick.SurfaceGui:GetChildren()) do\r\n                            if v.Name == \"2nd\" then\r\n                                if v.Image == \"http://www.roblox.com/asset/?id=9648769161\" then\r\n                            second = \"4\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648765536\" then\r\n                            second = \"2\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648762863\" then\r\n                            second = \"3\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648759883\" then\r\n                            second = \"9\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648755440\" then\r\n                            second = \"8\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648752438\" then\r\n                            second = \"2\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648749145\" then\r\n                            second = \"8\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648745618\" then\r\n                            second = \"3\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648742013\" then\r\n                            second = \"7\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648738553\" then\r\n                            second = \"8\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648734698\" then\r\n                            second = \"2\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648730082\" then\r\n                            second = \"6\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648723237\" then\r\n                            second = \"3\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648718450\" then\r\n                            second = \"6\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648715920\" then\r\n                            second = \"6\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648712563\" then\r\n                            second = \"2\"\r\n                        end\r\n                            end\r\n                        end\r\n        for i,v in pairs(game.Workspace.Map.CodeBrick.SurfaceGui:GetChildren()) do\r\n                            if v.Name == \"3rd\" then\r\n                                if v.Image == \"http://www.roblox.com/asset/?id=9648769161\" then\r\n                            third = \"4\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648765536\" then\r\n                            third = \"2\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648762863\" then\r\n                            third = \"3\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648759883\" then\r\n                            third = \"9\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648755440\" then\r\n                            third = \"8\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648752438\" then\r\n                            third = \"2\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648749145\" then\r\n                            third = \"8\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648745618\" then\r\n                            third = \"3\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648742013\" then\r\n                            third = \"7\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648738553\" then\r\n                            third = \"8\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648734698\" then\r\n                            third = \"2\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648730082\" then\r\n                            third = \"6\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648723237\" then\r\n                            third = \"3\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648718450\" then\r\n                            third = \"6\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648715920\" then\r\n                            third = \"6\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648712563\" then\r\n                            third = \"2\"\r\n                        end\r\n                            end\r\n                        end\r\n        for i,v in pairs(game.Workspace.Map.CodeBrick.SurfaceGui:GetChildren()) do\r\n                            if v.Name == \"4th\" then\r\n                                if v.Image == \"http://www.roblox.com/asset/?id=9648769161\" then\r\n                            fourth = \"4\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648765536\" then\r\n                            fourth = \"2\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648762863\" then\r\n                            fourth = \"3\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648759883\" then\r\n                            fourth = \"9\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648755440\" then\r\n                            fourth = \"8\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648752438\" then\r\n                            fourth = \"2\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648749145\" then\r\n                            fourth = \"8\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648745618\" then\r\n                            fourth = \"3\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648742013\" then\r\n                            fourth = \"7\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648738553\" then\r\n                            fourth = \"8\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648734698\" then\r\n                            fourth = \"2\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648730082\" then\r\n                            fourth = \"6\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648723237\" then\r\n                            fourth = \"3\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648718450\" then\r\n                            fourth = \"6\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648715920\" then\r\n                            fourth = \"6\"\r\n                        elseif v.Image == \"http://www.roblox.com/asset/?id=9648712563\" then\r\n                            fourth = \"2\"\r\n                        end\r\n                            end\r\n                        end\r\n        fireclickdetector(game.Workspace.Map.OriginOffice.Door.Keypad.Buttons.Reset.ClickDetector)\r\n        task.wait(1)\r\n        fireclickdetector(game.Workspace.Map.OriginOffice.Door.Keypad.Buttons[first].ClickDetector)\r\n        task.wait(1)\r\n        fireclickdetector(game.Workspace.Map.OriginOffice.Door.Keypad.Buttons[second].ClickDetector)\r\n        task.wait(1)\r\n        fireclickdetector(game.Workspace.Map.OriginOffice.Door.Keypad.Buttons[third].ClickDetector)\r\n        task.wait(1)\r\n        fireclickdetector(game.Workspace.Map.OriginOffice.Door.Keypad.Buttons[fourth].ClickDetector)\r\n        task.wait(1)\r\n        fireclickdetector(game.Workspace.Map.OriginOffice.Door.Keypad.Buttons.Enter.ClickDetector)\r\n        task.wait(0.5)\r\n        game:GetService(\"TeleportService\"):Teleport(6403373529)\r\n            ")
+            end
+            game:GetService("TeleportService"):Teleport(9431156611)
+        end
+    end
+})
+
+Tabs.Badge:Button({
+    ["Title"] = "Get Redacted Glove",
+    ["Desc"] = "Need 5k And More Slap",
+    ["Callback"] = function()
+        if game.Players.LocalPlayer.leaderstats.Slaps.Value < 5000 then
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                ["Title"] = "Error",
+                ["Text"] = "Need 5000 And More Slap.",
+                ["Icon"] = "rbxassetid://7733658504",
+                ["Duration"] = 10
+            })
+        else
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.PocketDimension.Doors["1"].CFrame
+            wait(3.75)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.PocketDimension.Doors["10"].CFrame
+            wait(3.75)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.PocketDimension.Doors["2"].CFrame
+            wait(3.75)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.PocketDimension.Doors["3"].CFrame
+            wait(3.75)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.PocketDimension.Doors["4"].CFrame
+            wait(3.75)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.PocketDimension.Doors["5"].CFrame
+            wait(3.75)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.PocketDimension.Doors["6"].CFrame
+            wait(3.75)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.PocketDimension.Doors["7"].CFrame
+            wait(3.75)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.PocketDimension.Doors["8"].CFrame
+            wait(3.75)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.PocketDimension.Doors["9"].CFrame
+        end
+    end
+})
+
+Tabs.Badge:Button({
+    ["Title"] = "Get Retro Glove",
+    ["Callback"] = function()
+        if game.Players.LocalPlayer.leaderstats.Glove.Value ~= "Recall" then
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                ["Title"] = "Error",
+                ["Text"] = "Need Recall Glove.",
+                ["Icon"] = "rbxassetid://7733658504",
+                ["Duration"] = 10
+            })
+        else
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.FinishDoor_Retro.Part.CFrame
+        end
+    end
+})
+
+Tabs.Badge:Button({
+    ["Title"] = "Get Easy Badges",
+    ["Callback"] = function()
+        fireclickdetector(workspace.Arena["default island"]["Rubber Ducky"].ClickDetector)
+        fireclickdetector(workspace.Lobby.Scene.knofe.ClickDetector)
+        fireclickdetector(workspace.Arena.island5.Orange.ClickDetector)
+    end
+})
+
+Tabs.Badge:Button({
+    ["Title"] = "TP to Brazil",
+    ["Callback"] = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Lobby.brazil.portal.CFrame
+    end
+})
+
+Tabs.Place:Section({
+    ["Title"] = "Teleportation",
+    ["Icon"] = "map-pin",
+    ["Desc"] = "Teleport to different locations"
+})
+
+Tabs.Place:Button({
+    ["Title"] = "SafeZone",
+    ["Desc"] = "",
+    ["Callback"] = function()
+        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(2461.50464, 243.291565, -4546.78467))
+    end
+})
+
+Tabs.Place:Button({
+    ["Title"] = "Slapples Island",
+    ["Desc"] = "",
+    ["Callback"] = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Arena.island5.Union.CFrame
+    end
+})
+
+Tabs.Place:Button({
+    ["Title"] = "Moai Island",
+    ["Desc"] = "",
+    ["Callback"] = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Arena.island4["Big Tree"].Bark.CFrame * CFrame.new(3, -4, 0)
+    end
+})
+
+Tabs.Place:Button({
+    ["Title"] = "Plate",
+    ["Desc"] = "",
+    ["Callback"] = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Arena.Plate.CFrame
+    end
+})
+
+Tabs.Place:Button({
+    ["Title"] = "Battle Arena",
+    ["Desc"] = "",
+    ["Callback"] = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Arena.island5.Union.CFrame
+    end
+})
+
+Tabs.Place:Button({
+    ["Title"] = "Slapples Island",
+    ["Desc"] = "Default Arena",
+    ["Callback"] = function()
+        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(120, 364, -3))
+    end
+})
+
+Tabs.Place:Button({
+    ["Title"] = "Normal Arena",
+    ["Desc"] = "",
+    ["Callback"] = function()
+        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(-15.3642788, -3.69053721, -7.41954088))
+    end
+})
+
+Tabs.Place:Button({
+    ["Title"] = "Spawn",
+    ["Desc"] = "",
+    ["Callback"] = function()
+        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(-798.47345, 329.357147, 0.84058404))
+    end
+})
+
+Tabs.Place:Button({
+    ["Title"] = "Cannon Island",
+    ["Desc"] = "",
+    ["Callback"] = function()
+        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(257.620972, 35.9974861, 198.8535))
+    end
+})
+
+Tabs.Place:Button({
+    ["Title"] = "Bounti Hunter Room",
+    ["Desc"] = "",
+    ["Callback"] = function()
+        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(17894.6855, -130.158478, -3539.8374))
+    end
+})
+
+local StarterGui = game:GetService("StarterGui")
+local PlayersService = game:GetService("Players")
+local RunServiceForFling = game:GetService("RunService")
+local LocalPlayerForFling = PlayersService.LocalPlayer
+local Camera = workspace.CurrentCamera
+local OriginalCameraSubject = Camera.CameraSubject
+local SelectedPlayer = nil
+local DeathConnection = nil
+local OrbitHeartbeatConnection = nil
+local OrbitRenderConnection = nil
+local ESPConnection = nil
+local ESPData = {}
+local ESPEnabled = false
+
+local ToggleStates = {
+    ["teleport"] = false,
+    ["fling"] = false,
+    ["view"] = false,
+    ["aimLockCam"] = false,
+    ["aimLockChar"] = false,
+    ["orbit"] = false,
+    ["notifyOnDeath"] = false
+}
+
+local function SendNotification(title, text, icon, duration)
+    StarterGui:SetCore("SendNotification", {
+        ["Title"] = title or "VexonHub",
+        ["Text"] = text,
+        ["Icon"] = icon or "rbxassetid://84519376661277",
+        ["Duration"] = duration or 5
+    })
+end
+
+local function AimLockCamera(targetPlayer)
+    if targetPlayer then
+        targetPlayer = targetPlayer.Character
+    end
+    if targetPlayer then
+        targetPlayer = targetPlayer:FindFirstChild("Head")
+    end
+    if targetPlayer then
+        Camera.CFrame = CFrame.new(Camera.CFrame.Position, targetPlayer.Position)
+    end
+end
+
+local function AimLockCharacter(targetPlayer)
+    local rootPart = LocalPlayerForFling.Character
+    if rootPart then
+        rootPart = rootPart:FindFirstChild("HumanoidRootPart")
+    end
+    if targetPlayer then
+        targetPlayer = targetPlayer.Character
+    end
+    if targetPlayer then
+        targetPlayer = targetPlayer:FindFirstChild("HumanoidRootPart")
+    end
+    if rootPart and targetPlayer then
+        rootPart.CFrame = CFrame.new(rootPart.Position, targetPlayer.Position)
+    end
+end
+
+local function SetupDeathNotify()
+    if DeathConnection then
+        DeathConnection:Disconnect()
+        DeathConnection = nil
+    end
+    if ToggleStates.notifyOnDeath and SelectedPlayer then
+        local character = SelectedPlayer.Character or SelectedPlayer.CharacterAdded:Wait()
+        if character then
+            character = character:FindFirstChildOfClass("Humanoid")
+        end
+        if character then
+            DeathConnection = character.Died:Connect(function()
+                SendNotification("VexonHub", SelectedPlayer.DisplayName .. " Died")
+            end)
+        end
+    end
+end
+
+local function SelectPlayer(playerName)
+    if DeathConnection then
+        DeathConnection:Disconnect()
+        DeathConnection = nil
+    end
+    SelectedPlayer = nil
+    if not playerName or playerName == "" then
+        SendNotification("VexonHub", "No One Selected")
+        return
+    end
+    local lowerName = string.lower(playerName)
+    local playersRef = PlayersService
+    local iterFunc, tableRef, index = ipairs(playersRef:GetPlayers())
+    local foundPlayer = nil
+    while true do
+        local player
+        index, player = iterFunc(tableRef, index)
+        if index == nil then
+            player = foundPlayer
+            break
+        end
+        if string.find(string.lower(player.Name), lowerName, 1, true) or string.find(string.lower(player.DisplayName), lowerName, 1, true) then
+            break
+        end
+    end
+    if player then
+        SelectedPlayer = player
+        SendNotification("VexonHub", "Selected: " .. player.DisplayName, "https://www.roblox.com/headshot-thumbnail/image?userId=" .. player.UserId .. "&width=420&height=420&format=png", 10)
+        SetupDeathNotify()
+    else
+        SendNotification("VexonHub", "Player Not Found...")
+    end
+end
+
+function createEspForPlayer(targetPlayer)
+    local head = targetPlayer.Character
+    if head then
+        head = targetPlayer.Character:FindFirstChild("Head")
+    end
+    if head then
+        local billboard = Instance.new("BillboardGui")
+        billboard.Name = "ESP_Billboard"
+        billboard.Size = UDim2.new(0, 200, 0, 50)
+        billboard.Adornee = head
+        billboard.AlwaysOnTop = true
+        local frame = Instance.new("Frame")
+        frame.Size = UDim2.new(1, 0, 1, 0)
+        frame.BackgroundColor3 = Color3.new(0.8, 0, 0)
+        frame.BackgroundTransparency = 0.6
+        frame.Parent = billboard
+        local corner = Instance.new("UICorner")
+        corner.CornerRadius = UDim.new(0, 8)
+        corner.Parent = frame
+        local label = Instance.new("TextLabel")
+        label.Size = UDim2.new(1, 0, 1, 0)
+        label.BackgroundTransparency = 1
+        label.TextColor3 = Color3.new(1, 1, 1)
+        label.Text = targetPlayer.DisplayName
+        label.Font = Enum.Font.SourceSansBold
+        label.TextSize = 16
+        label.Parent = frame
+        ESPData[targetPlayer] = {
+            ["billboard"] = billboard
+        }
+        billboard.Parent = LocalPlayerForFling.PlayerGui
+    end
+end
+
+function updateEspForPlayer(targetPlayer)
+    local espInfo = ESPData[targetPlayer]
+    if espInfo and espInfo.billboard then
+        local head = targetPlayer.Character
+        if head then
+            head = head:FindFirstChild("Head")
+        end
+        if head and espInfo.billboard.Adornee ~= head then
+            espInfo.billboard.Adornee = head
+        end
+    end
+end
+
+function removeEspForPlayer(targetPlayer)
+    if ESPData[targetPlayer] then
+        if ESPData[targetPlayer].billboard then
+            ESPData[targetPlayer].billboard:Destroy()
+        end
+        ESPData[targetPlayer] = nil
+    end
+end
+
+function runEspLoop()
+    local playersRef = PlayersService
+    local iterFunc, tableRef, index = ipairs(playersRef:GetPlayers())
+    while true do
+        local player
+        index, player = iterFunc(tableRef, index)
+        if index == nil then
+            break
+        end
+        if player == LocalPlayerForFling or not player.Character or not player.Character:FindFirstChild("Head") then
+            if ESPData[player] then
+                removeEspForPlayer(player)
+            end
+        elseif ESPData[player] then
+            updateEspForPlayer(player)
+        else
+            createEspForPlayer(player)
+        end
+    end
+end
+
+Tabs.Fling:Button({
+    ["Title"] = "Copy Discord Link",
+    ["Callback"] = function()
+        setclipboard("https://discord.gg/mdJKdwbKjE")
+        SendNotification("VexonHub", "Discord link copied to clipboard!")
+    end
+})
+
+Tabs.Fling:Section({
+    ["Title"] = "Player Selection",
+    ["Icon"] = "eye"
+})
+
+Tabs.Fling:Input({
+    ["Title"] = "Select Player",
+    ["Desc"] = "Enter Player Name To Select Target",
+    ["Placeholder"] = "PlayerName",
+    ["Callback"] = function(text)
+        SelectPlayer(text)
+    end
+})
+
+Tabs.Fling:Section({
+    ["Title"] = "Player Actions"
+})
+
+Tabs.Fling:Button({
+    ["Title"] = "Teleport to Player",
+    ["Callback"] = function()
+        if SelectedPlayer then
+            local myRoot = LocalPlayerForFling.Character
+            if myRoot then
+                myRoot = myRoot:FindFirstChild("HumanoidRootPart")
+            end
+            local targetRoot = SelectedPlayer.Character
+            if targetRoot then
+                targetRoot = targetRoot:FindFirstChild("HumanoidRootPart")
+            end
+            if myRoot and targetRoot then
+                myRoot.CFrame = targetRoot.CFrame
+            else
+                SendNotification("VexonHub", "Could not find character to teleport.")
+            end
+        else
+            SendNotification("VexonHub", "No One Selected")
+        end
+    end
+})
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Loop Teleport",
+    ["Value"] = ToggleStates.teleport,
+    ["Callback"] = function(enabled)
+        ToggleStates.teleport = enabled
+        if enabled then
+            if SelectedPlayer then
+                task.spawn(function()
+                    while ToggleStates.teleport and (SelectedPlayer and SelectedPlayer.Parent) do
+                        local myRoot = LocalPlayerForFling.Character
+                        if myRoot then
+                            myRoot = myRoot:FindFirstChild("HumanoidRootPart")
+                        end
+                        local targetRoot = SelectedPlayer.Character
+                        if targetRoot then
+                            targetRoot = targetRoot:FindFirstChild("HumanoidRootPart")
+                        end
+                        if not (myRoot and targetRoot) then
+                            ToggleStates.teleport = false
+                            break
+                        end
+                        myRoot.CFrame = targetRoot.CFrame
+                        task.wait()
+                    end
+                end)
+            else
+                SendNotification("VexonHub", "No One Selected")
+                ToggleStates.teleport = false
+            end
+        else
+            return
+        end
+    end
+})
+
+Tabs.Fling:Button({
+    ["Title"] = "Fling Player",
+    ["Callback"] = function()
+        if SelectedPlayer then
+            miniFling(SelectedPlayer)
+        else
+            SendNotification("VexonHub", "No One Selected")
+        end
+    end
+})
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Loop Fling",
+    ["Value"] = ToggleStates.fling,
+    ["Callback"] = function(enabled)
+        ToggleStates.fling = enabled
+        if enabled then
+            if SelectedPlayer then
+                task.spawn(function()
+                    while ToggleStates.fling and (SelectedPlayer and SelectedPlayer.Parent) do
+                        miniFling(SelectedPlayer)
+                        task.wait(0.5)
+                    end
+                end)
+            else
+                SendNotification("VexonHub", "No One Selected")
+                ToggleStates.fling = false
+            end
+        else
+            return
+        end
+    end
+})
+
+Tabs.Fling:Button({
+    ["Title"] = "View Player (3 sec)",
+    ["Callback"] = function()
+        if SelectedPlayer then
+            local targetHumanoid = SelectedPlayer.Character
+            if targetHumanoid then
+                targetHumanoid = targetHumanoid:FindFirstChildOfClass("Humanoid")
+            end
+            if targetHumanoid then
+                Camera.CameraSubject = targetHumanoid
+                task.delay(3, function()
+                    if Camera.CameraSubject == targetHumanoid then
+                        Camera.CameraSubject = OriginalCameraSubject
+                    end
+                end)
+            else
+                SendNotification("VexonHub", "Could not find the player\'s character to view.")
+            end
+        else
+            SendNotification("VexonHub", "No One Selected")
+        end
+    end
+})
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Loop View",
+    ["Value"] = ToggleStates.view,
+    ["Callback"] = function(enabled)
+        ToggleStates.view = enabled
+        if enabled then
+            if SelectedPlayer then
+                task.spawn(function()
+                    while ToggleStates.view and (SelectedPlayer and SelectedPlayer.Parent) do
+                        local targetHumanoid = SelectedPlayer.Character
+                        if targetHumanoid then
+                            targetHumanoid = targetHumanoid:FindFirstChildOfClass("Humanoid")
+                        end
+                        if targetHumanoid then
+                            Camera.CameraSubject = targetHumanoid
+                        end
+                        task.wait(0.1)
+                    end
+                    Camera.CameraSubject = OriginalCameraSubject
+                end)
+            else
+                SendNotification("VexonHub", "No One Selected")
+                ToggleStates.view = false
+            end
+        else
+            Camera.CameraSubject = OriginalCameraSubject
+            return
+        end
+    end
+})
+
+Tabs.Fling:Toggle({
+    ["Title"] = "AimLock (Camera)",
+    ["Value"] = ToggleStates.aimLockCam,
+    ["Callback"] = function(enabled)
+        ToggleStates.aimLockCam = enabled
+        if enabled then
+            if SelectedPlayer then
+                task.spawn(function()
+                    while ToggleStates.aimLockCam and (SelectedPlayer and SelectedPlayer.Parent) do
+                        AimLockCamera(SelectedPlayer)
+                        RunServiceForFling.RenderStepped:Wait()
+                    end
+                end)
+            else
+                SendNotification("VexonHub", "No One Selected")
+                ToggleStates.aimLockCam = false
+            end
+        else
+            return
+        end
+    end
+})
+
+Tabs.Fling:Toggle({
+    ["Title"] = "AimLock (Character)",
+    ["Value"] = ToggleStates.aimLockChar,
+    ["Callback"] = function(enabled)
+        ToggleStates.aimLockChar = enabled
+        if enabled then
+            if SelectedPlayer then
+                task.spawn(function()
+                    while ToggleStates.aimLockChar and (SelectedPlayer and SelectedPlayer.Parent) do
+                        AimLockCharacter(SelectedPlayer)
+                        RunServiceForFling.Heartbeat:Wait()
+                    end
+                end)
+            else
+                                SendNotification("VexonHub", "No One Selected")
+                ToggleStates.aimLockChar = false
+            end
+        else
+            return
+        end
+    end
+})
+
+Tabs.Fling:Toggle({
+    ["Title"] = "ESP",
+    ["Value"] = ESPEnabled,
+    ["Callback"] = function(enabled)
+        ESPEnabled = enabled
+        if ESPEnabled then
+            if not ESPConnection then
+                ESPConnection = RunServiceForFling.RenderStepped:Connect(runEspLoop)
+            end
+        else
+            if ESPConnection then
+                ESPConnection:Disconnect()
+                ESPConnection = nil
+            end
+            local iterFunc, tableRef, index = pairs(ESPData)
+            while true do
+                local player
+                index, player = iterFunc(tableRef, index)
+                if index == nil then
+                    break
+                end
+                removeEspForPlayer(index)
+            end
+            table.clear(ESPData)
+        end
+    end
+})
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Orbit Player",
+    ["Value"] = ToggleStates.orbit,
+    ["Callback"] = function(enabled)
+        ToggleStates.orbit = enabled
+        if OrbitHeartbeatConnection then
+            OrbitHeartbeatConnection:Disconnect()
+            OrbitHeartbeatConnection = nil
+        end
+        if OrbitRenderConnection then
+            OrbitRenderConnection:Disconnect()
+            OrbitRenderConnection = nil
+        end
+        if enabled then
+            if SelectedPlayer then
+                task.spawn(function()
+                    local orbitAngle = 0
+                    local orbitSpeed = 8
+                    local orbitRadius = 10
+                    OrbitHeartbeatConnection = RunServiceForFling.Heartbeat:Connect(function()
+                        if ToggleStates.orbit and (SelectedPlayer and SelectedPlayer.Parent) then
+                            local myRoot = LocalPlayerForFling.Character
+                            if myRoot then
+                                myRoot = myRoot:FindFirstChild("HumanoidRootPart")
+                            end
+                            local targetRoot = SelectedPlayer.Character
+                            if targetRoot then
+                                targetRoot = targetRoot:FindFirstChild("HumanoidRootPart")
+                            end
+                            if myRoot and targetRoot then
+                                orbitAngle = orbitAngle + orbitSpeed
+                                myRoot.CFrame = CFrame.new(targetRoot.Position) * CFrame.Angles(0, math.rad(orbitAngle), 0) * CFrame.new(orbitRadius, 0, 0)
+                            else
+                                ToggleStates.orbit = false
+                            end
+                        else
+                            if OrbitHeartbeatConnection then
+                                OrbitHeartbeatConnection:Disconnect()
+                                OrbitHeartbeatConnection = nil
+                            end
+                            if OrbitRenderConnection then
+                                OrbitRenderConnection:Disconnect()
+                                OrbitRenderConnection = nil
+                            end
+                            return
+                        end
+                    end)
+                    OrbitRenderConnection = RunServiceForFling.RenderStepped:Connect(function()
+                        if ToggleStates.orbit and (SelectedPlayer and SelectedPlayer.Parent) then
+                            local myRoot = LocalPlayerForFling.Character
+                            if myRoot then
+                                myRoot = myRoot:FindFirstChild("HumanoidRootPart")
+                            end
+                            local targetRoot = SelectedPlayer.Character
+                            if targetRoot then
+                                targetRoot = targetRoot:FindFirstChild("HumanoidRootPart")
+                            end
+                            if myRoot and targetRoot then
+                                myRoot.CFrame = CFrame.new(myRoot.Position, targetRoot.Position)
+                            else
+                                ToggleStates.orbit = false
+                            end
+                        else
+                            if OrbitHeartbeatConnection then
+                                OrbitHeartbeatConnection:Disconnect()
+                                OrbitHeartbeatConnection = nil
+                            end
+                            if OrbitRenderConnection then
+                                OrbitRenderConnection:Disconnect()
+                                OrbitRenderConnection = nil
+                            end
+                            return
+                        end
+                    end)
+                end)
+            else
+                SendNotification("VexonHub", "No One Selected")
+                ToggleStates.orbit = false
+            end
+        else
+            return
+        end
+    end
+})
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Notify On Death",
+    ["Value"] = ToggleStates.notifyOnDeath,
+    ["Callback"] = function(enabled)
+        ToggleStates.notifyOnDeath = enabled
+        SetupDeathNotify()
+    end
+})
+
+PlayersService.PlayerRemoving:Connect(function(leavingPlayer)
+    if SelectedPlayer and leavingPlayer == SelectedPlayer then
+        SendNotification("VexonHub", leavingPlayer.DisplayName .. " left the game")
+        SelectedPlayer = nil
+        local iterFunc, tableRef, index = pairs(ToggleStates)
+        while true do
+            local key
+            index, key = iterFunc(tableRef, index)
+            if index == nil then
+                break
+            end
+            ToggleStates[index] = false
+        end
+    end
+    removeEspForPlayer(leavingPlayer)
+end)
+
+Tabs.Fling:Section({
+    ["Title"] = "Fling",
+    ["Icon"] = "utensils"
+})
+
+local FlingAuraPlayer = game.Players.LocalPlayer
+local FlingAuraEnabled = false
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Fling Aura",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        FlingAuraEnabled = enabled
+        if enabled then
+            task.spawn(function()
+                while FlingAuraEnabled do
+                    if FlingAuraPlayer.Character and FlingAuraPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                        local iterFunc, tableRef, index = pairs(game.Players:GetPlayers())
+                        while true do
+                            local player
+                            index, player = iterFunc(tableRef, index)
+                            if index == nil then
+                                break
+                            end
+                            if player ~= FlingAuraPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                                local targetRoot = player.Character.HumanoidRootPart
+                                if (FlingAuraPlayer.Character.HumanoidRootPart.Position - targetRoot.Position).Magnitude <= 15 then
+                                    pcall(function()
+                                        miniFling(player)
+                                    end)
+                                end
+                            end
+                        end
+                    end
+                    task.wait(0.5)
+                end
+            end)
+        end
+    end
+})
+
+FlingAuraPlayer.CharacterAdded:Connect(function()
+    FlingAuraEnabled = false
+end)
+
+local PlayersForClickFling = game:GetService("Players")
+local UserInputForClickFling = game:GetService("UserInputService")
+local LocalPlayerForClickFling = PlayersForClickFling.LocalPlayer
+local MouseForClickFling = LocalPlayerForClickFling:GetMouse()
+local CameraForClickFling = workspace.CurrentCamera
+local ClickFlingEnabled = false
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Click Fling",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        ClickFlingEnabled = enabled
+    end
+})
+
+local function GetPlayerFromPart(part)
+    if part and part.Parent and part.Parent:IsA("Model") then
+        return PlayersForClickFling:GetPlayerFromCharacter(part.Parent)
+    end
+end
+
+MouseForClickFling.Button1Down:Connect(function()
+    if ClickFlingEnabled then
+        local targetPlayer = GetPlayerFromPart(MouseForClickFling.Target)
+        if targetPlayer and targetPlayer ~= LocalPlayerForClickFling then
+            miniFling(targetPlayer)
+        end
+    end
+end)
+
+UserInputForClickFling.TouchTap:Connect(function(touchPositions, gameProcessed)
+    if ClickFlingEnabled and not gameProcessed then
+        local touchPos = touchPositions[1]
+        local camPos = CameraForClickFling.CFrame.Position
+        local rayDirection = CameraForClickFling:ViewportPointToRay(touchPos.X, touchPos.Y).Direction * 500
+        local rayParams = RaycastParams.new()
+        rayParams.FilterDescendantsInstances = { LocalPlayerForClickFling.Character }
+        rayParams.FilterType = Enum.RaycastFilterType.Blacklist
+        local rayResult = workspace:Raycast(camPos, rayDirection, rayParams)
+        local hitInstance
+        if rayResult then
+            hitInstance = rayResult.Instance
+        end
+        local targetPlayer = GetPlayerFromPart(hitInstance)
+        if targetPlayer and targetPlayer ~= LocalPlayerForClickFling then
+            miniFling(targetPlayer)
+        end
+    end
+end)
+
+local FlingAllEnabled = false
+local PlayersForFlingAll = game:GetService("Players")
+local LocalPlayerForFlingAll = PlayersForFlingAll.LocalPlayer
+local OriginalRootPart = (LocalPlayerForFlingAll.Character or LocalPlayerForFlingAll.CharacterAdded:Wait()):FindFirstChild("HumanoidRootPart")
+local OriginalCFrame
+if OriginalRootPart then
+    OriginalCFrame = OriginalRootPart.CFrame
+end
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Fling All (Buggy?)",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        FlingAllEnabled = enabled
+        if enabled then
+            task.spawn(function()
+                while FlingAllEnabled do
+                    local iterFunc, tableRef, index = pairs(PlayersForFlingAll:GetPlayers())
+                    while true do
+                        local player
+                        index, player = iterFunc(tableRef, index)
+                        if index == nil then
+                            break
+                        end
+                        if player ~= LocalPlayerForFlingAll then
+                            miniFling(player)
+                        end
+                    end
+                    task.wait(0.5)
+                end
+            end)
+        elseif OriginalCFrame and OriginalRootPart then
+            OriginalRootPart.CFrame = OriginalCFrame
+        end
+    end
+})
+
+local TouchFlingEnabled = false
+if not game:GetService("ReplicatedStorage"):FindFirstChild("juisdfj0i32i0eidsuf0iok") then
+    local marker = Instance.new("Decal")
+    marker.Name = "juisdfj0i32i0eidsuf0iok"
+    marker.Parent = game:GetService("ReplicatedStorage")
+end
+
+local function TouchFlingLoop()
+    local character = nil
+    local rootPart = nil
+    local velocityOffset = 0.1
+    while TouchFlingEnabled do
+        game:GetService("RunService").Heartbeat:Wait()
+        local player = game.Players.LocalPlayer
+        while TouchFlingEnabled and not (character and character.Parent and rootPart and rootPart.Parent) do
+            game:GetService("RunService").Heartbeat:Wait()
+            character = player.Character
+            rootPart = character:FindFirstChild("HumanoidRootPart") or character:FindFirstChild("Torso") or character:FindFirstChild("UpperTorso")
+        end
+        if TouchFlingEnabled then
+            local currentVelocity = rootPart.Velocity
+            rootPart.Velocity = currentVelocity * 10000 + Vector3.new(0, 10000, 0)
+            game:GetService("RunService").RenderStepped:Wait()
+            if character and character.Parent and rootPart and rootPart.Parent then
+                rootPart.Velocity = currentVelocity
+            end
+            game:GetService("RunService").Stepped:Wait()
+            if character and character.Parent and rootPart and rootPart.Parent then
+                rootPart.Velocity = currentVelocity + Vector3.new(0, velocityOffset, 0)
+                velocityOffset = velocityOffset * -1
+            end
+        end
+    end
+end
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Touch Fling",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        if enabled then
+            TouchFlingEnabled = true
+            coroutine.wrap(TouchFlingLoop)()
+        else
+            TouchFlingEnabled = false
+        end
+    end
+})
+
+local AntiFlingEnabled = false
+local AntiFlingConnections = {}
+
+local function DisableCollisionForPlayer(targetPlayer)
+    if AntiFlingEnabled and targetPlayer.Character then
+        for _, part in pairs(targetPlayer.Character:GetDescendants()) do
+            if part:IsA("BasePart") and part.CanCollide then
+                part.CanCollide = false
+            end
+        end
+    end
+end
+
+local function RestoreCollisionForPlayers()
+    for _, player in pairs(game.Players:GetPlayers()) do
+        if player ~= game.Players.LocalPlayer and player.Character then
+            for _, part in pairs(player.Character:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = true
+                end
+            end
+        end
+    end
+end
+
+local function SetupAntiFling()
+    for _, player in pairs(game.Players:GetPlayers()) do
+        if player ~= game.Players.LocalPlayer then
+            local connection = game:GetService("RunService").Stepped:Connect(function()
+                DisableCollisionForPlayer(player)
+            end)
+            table.insert(AntiFlingConnections, connection)
+        end
+    end
+    game.Players.PlayerAdded:Connect(function(newPlayer)
+        if newPlayer ~= game.Players.LocalPlayer then
+            local connection = game:GetService("RunService").Stepped:Connect(function()
+                DisableCollisionForPlayer(newPlayer)
+            end)
+            table.insert(AntiFlingConnections, connection)
+        end
+    end)
+end
+
+local function CleanupAntiFling()
+    for _, connection in pairs(AntiFlingConnections) do
+        connection:Disconnect()
+    end
+    table.clear(AntiFlingConnections)
+    RestoreCollisionForPlayers()
+end
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Anti Fling",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        AntiFlingEnabled = enabled
+        if enabled then
+            SetupAntiFling()
+        else
+            CleanupAntiFling()
+        end
+    end
+})
+
+local CustomFlingPower = 1000
+local CustomTouchFlingEnabled = false
+
+local function CustomTouchFlingLoop()
+    local character = nil
+    local rootPart = nil
+    local velocityOffset = 0.1
+    while CustomTouchFlingEnabled do
+        game:GetService("RunService").Heartbeat:Wait()
+        local player = game.Players.LocalPlayer
+        while CustomTouchFlingEnabled and not (character and character.Parent and rootPart and rootPart.Parent) do
+            game:GetService("RunService").Heartbeat:Wait()
+            character = player.Character
+            rootPart = character:FindFirstChild("HumanoidRootPart") or character:FindFirstChild("Torso") or character:FindFirstChild("UpperTorso")
+        end
+        if CustomTouchFlingEnabled then
+            local currentVelocity = rootPart.Velocity
+            rootPart.Velocity = currentVelocity * CustomFlingPower + Vector3.new(0, 100, 0)
+            game:GetService("RunService").RenderStepped:Wait()
+            if character and character.Parent and rootPart and rootPart.Parent then
+                rootPart.Velocity = currentVelocity
+            end
+            game:GetService("RunService").Stepped:Wait()
+            if character and character.Parent and rootPart and rootPart.Parent then
+                rootPart.Velocity = currentVelocity + Vector3.new(0, velocityOffset, 0)
+                velocityOffset = velocityOffset * -1
+            end
+        end
+    end
+end
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Costum Touch Fling Power",
+    ["Value"] = false,
+    ["Callback"] = function(enabled)
+        if enabled then
+            CustomTouchFlingEnabled = true
+            coroutine.wrap(CustomTouchFlingLoop)()
+        else
+            CustomTouchFlingEnabled = false
+        end
+    end
+})
+
+Tabs.Fling:Slider({
+    ["Title"] = "Fling Power Value",
+    ["Value"] = {
+        ["Min"] = 1,
+        ["Max"] = 10000,
+        ["Default"] = 100
+    },
+    ["Callback"] = function(value)
+        CustomFlingPower = value
+    end
+})
+
+Info = Tabs.Info
+
+if not ui then
+    ui = {}
+end
+
+if not ui.Creator then
+    ui.Creator = {}
+end
+
+function ui.Creator.Request(requestData)
+    local HttpService = game:GetService("HttpService")
+    local success, result = pcall(function()
+        if not HttpService.RequestAsync then
+            return {
+                ["Body"] = HttpService:GetAsync(requestData.Url),
+                ["StatusCode"] = 200,
+                ["Success"] = true
+            }
+        end
+        local response = HttpService:RequestAsync({
+            ["Url"] = requestData.Url,
+            ["Method"] = requestData.Method or "GET",
+            ["Headers"] = requestData.Headers or {}
+        })
+        return {
+            ["Body"] = response.Body,
+            ["StatusCode"] = response.StatusCode,
+            ["Success"] = response.Success
+        }
+    end)
+    if success then
+        return result
+    end
+    error("HTTP Request failed: " .. tostring(result))
+end
+
+local DiscordInviteCode = "mdJKdwbKjE"
+local DiscordAPIUrl = "https://discord.com/api/v10/invites/" .. DiscordInviteCode .. "?with_counts=true&with_expiration=true"
+
+;(function()
+    local success, discordData = pcall(function()
+        local requestConfig = {
+            ["Url"] = DiscordAPIUrl,
+            ["Method"] = "GET",
+            ["Headers"] = {
+                ["User-Agent"] = "RobloxBot/1.0",
+                ["Accept"] = "application/json"
+            }
+        }
+        return game:GetService("HttpService"):JSONDecode(ui.Creator.Request(requestConfig).Body)
+    end)
+    if success and discordData and discordData.guild then
+        local DiscordParagraph = Info:Paragraph({
+            ["Title"] = discordData.guild.name,
+            ["Desc"] = " <font color=\"#52525b\">●</font> Member Count : " .. tostring(discordData.approximate_member_count) .. "\n <font color=\"#16a34a\">●</font> Online Count : " .. tostring(discordData.approximate_presence_count),
+            ["Image"] = "https://cdn.discordapp.com/icons/" .. discordData.guild.id .. "/" .. discordData.guild.icon .. ".png?size=1024",
+            ["ImageSize"] = 42
+        })
+        Info:Button({
+            ["Title"] = "Update Info",
+            ["Callback"] = function()
+                local updateSuccess, updatedData = pcall(function()
+                    local requestConfig = {
+                        ["Url"] = DiscordAPIUrl,
+                        ["Method"] = "GET"
+                    }
+                    return game:GetService("HttpService"):JSONDecode(ui.Creator.Request(requestConfig).Body)
+                end)
+                if updateSuccess and updatedData and updatedData.guild then
+                    DiscordParagraph:SetDesc(" <font color=\"#52525b\">●</font> Member Count : " .. tostring(updatedData.approximate_member_count) .. "\n <font color=\"#16a34a\">●</font> Online Count : " .. tostring(updatedData.approximate_presence_count))
+                end
+            end
+        })
+        Info:Button({
+            ["Title"] = "Copy Discord Invite",
+            ["Callback"] = function()
+                setclipboard("https://discord.gg/" .. DiscordInviteCode)
+            end
+        })
+    else
+        Info:Paragraph({
+            ["Title"] = "Error fetching Discord Info",
+            ["Desc"] = "Unable to load Discord information. Check your internet connection.",
+            ["Image"] = "triangle-alert",
+            ["ImageSize"] = 26,
+            ["Color"] = "Red"
+        })
+        print("Discord API Error:", discordData)
+    end
+end)()
+
+Info:Divider()
+
+Info:Section({
+    ["Title"] = "VexonHub",
+    ["TextXAlignment"] = "Center",
+    ["TextSize"] = 17
+})
+
+Info:Divider()
+
+Info:Paragraph({
+    ["Title"] = "Owner:",
+    ["Desc"] = "TheVex0n",
+    ["Image"] = "rbxassetid://84519376661277",
+    ["ImageSize"] = 30,
+    ["Thumbnail"] = "",
+    ["ThumbnailSize"] = 0,
+    ["Locked"] = false
+})
+
+Info:Paragraph({
+    ["Title"] = "Dev:",
+    ["Desc"] = "Orewa Renji. dont forgot to thank to her",
+    ["Image"] = "rbxassetid://84519376661277",
+    ["ImageSize"] = 30,
+    ["Thumbnail"] = "",
+    ["ThumbnailSize"] = 0,
+    ["Locked"] = false
+})
+
+Info:Paragraph({
+    ["Title"] = "Discord",
+    ["Desc"] = "Join our discord for more info and stuff",
+    ["Image"] = "rbxassetid://84519376661277",
+    ["ImageSize"] = 30,
+    ["Thumbnail"] = "",
+    ["ThumbnailSize"] = 0,
+    ["Locked"] = false,
+    ["Buttons"] = {
+        {
+            ["Icon"] = "copy",
+            ["Title"] = "Copy Link",
+            ["Callback"] = function()
+                setclipboard("https://discord.gg/mdJKdwbKjE")
+            end
+        }
+    }
+})
+
+;(function(radius, height, position, transparency)
+    local cylinder = Instance.new("Part")
+    cylinder.Shape = Enum.PartType.Cylinder
+    cylinder.Size = Vector3.new(height, radius * 2, radius * 2)
+    cylinder.CFrame = CFrame.new(position) * CFrame.Angles(0, 0, math.rad(90))
+    cylinder.Anchored = true
+    cylinder.Transparency = transparency
+    cylinder.CanCollide = true
+    cylinder.CastShadow = false
+    cylinder.Color = Color3.new(0, 0, 0)
+    cylinder.Parent = game.Workspace
+    return cylinder
+end)(200, 0.5, Vector3.new(2457.6001, 229.365677, -4558.22363), 0.5)
+
+local OriginalNamecall = nil
+OriginalNamecall = hookmetamethod(game, "__namecall", function(self, ...)
+    if getnamecallmethod() == "FireServer" then
+        if self == game.ReplicatedStorage.Ban or self == game.ReplicatedStorage.AdminGUI or self == game.ReplicatedStorage.WalkSpeedChanged then
+            return
+        end
+    end
+    return OriginalNamecall(self, ...)
+end)

@@ -1,0 +1,2315 @@
+--[[
+                 . .  .     .          .  .             .
+          .       .  .  .     ..   .    .      .        .
+                   .   .     .             ...  .        
+.                  .       .    ..  .    .=*+-.         .
+       . .             .               .-*:..+:  .      .
+..      .               .+=:..        :*-.. .-+          
+.           ..        . :#-..-#=.   .#-      .*.         
+  .          .........:-=#=.  ..=*-==.       .*..   .    
+        . .:+#%%%%*#%%#%%=..      -+:.       .*.         
+         .-%#%*%%#****%%#=:.       ..     .. .*.      .  
+        ..=%%*@*******%%##+.           .    .==        . 
+       .  -%%%**********+--.   .  ..:*%=-. .:+:  .. . .  
+          .=#****#%@%**++**:.    .+#-.#..  .=-. .   .    
+      ..   :****#@@@@%*****-.=..-%@%-.--  :*=:..     .   
+     .     :*****#%@%******=-:+#@@@#:..=..:::+=          
+. .       .:##************=:. ..*@%=..... .:*-..         
+           :##**********+=++::..  ..:==-:.=*.      .     
+          .=##********##===+*+++:  ...-... :+:..  .    . 
+ ..  .    :+##********##===*-....  ...:++===*=.      .   
+    .     .-#%#%*****##@=-*= ....:=#%+.                  
+        .     :%%%%#%*%%#*..      .:+.                .  
+        . .   -@%#%#******+..   .  .-+.                  
+    .        :%%#******+-... .  .  ..+=.   .         .   
+            :%*%********+...  .    . .%.            .  . 
+       .   .*##%*********....        .:+.  .   .         
+          .-#*##*********+:..        ..*.    .           
+  .    .  .=#*%#********+::...     .  .=:  . .           
+    .     .+#*%#*******=.... ..       .--        .  ..   
+          .*#*%%********=.. .     . . .-=.    .    .     
+   .   .  .+#*#%*******-:..           .-=.         .   . 
+       .  .:--+*********+-...   .  .  ... .  .     .     
+        .     .........::::..            .  ..           
+                        .. .                     ..      
+             .            .           .               .  
+This file was generated on https://dsc.gg/decompiler | Pulsar v1.4.3
+Resolved: 287 identifiers | 76 functions | 0 Strings | Renamed: 68 functions | Connected: 42 callbacks | Dead Code Removed: 7 blocks | Inlined: 4 wrappers | Detected loop: 3 blocks
+[Renamer: ON] [Decompiler: ON]
+]]
+
+repeat
+    task.wait()
+until game:IsLoaded()
+
+local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
+
+WindUI:AddTheme({
+    ["Name"] = "Dark",
+    ["Accent"] = "#18181b",
+    ["Dialog"] = "#18181b",
+    ["Outline"] = "#FFFFFF",
+    ["Text"] = "#FFFFFF",
+    ["Placeholder"] = "#999999",
+    ["Background"] = "#0e0e10",
+    ["Button"] = "#52525b",
+    ["Icon"] = "#a1a1aa"
+})
+
+WindUI:AddTheme({
+    ["Name"] = "Light",
+    ["Accent"] = "#f4f4f5",
+    ["Dialog"] = "#f4f4f5",
+    ["Outline"] = "#000000",
+    ["Text"] = "#000000",
+    ["Placeholder"] = "#666666",
+    ["Background"] = "#ffffff",
+    ["Button"] = "#e4e4e7",
+    ["Icon"] = "#52525b"
+})
+
+WindUI:AddTheme({
+    ["Name"] = "Gray",
+    ["Accent"] = "#374151",
+    ["Dialog"] = "#374151",
+    ["Outline"] = "#d1d5db",
+    ["Text"] = "#f9fafb",
+    ["Placeholder"] = "#9ca3af",
+    ["Background"] = "#1f2937",
+    ["Button"] = "#4b5563",
+    ["Icon"] = "#d1d5db"
+})
+
+WindUI:AddTheme({
+    ["Name"] = "Blue",
+    ["Accent"] = "#1e40af",
+    ["Dialog"] = "#1e3a8a",
+    ["Outline"] = "#93c5fd",
+    ["Text"] = "#f0f9ff",
+    ["Placeholder"] = "#60a5fa",
+    ["Background"] = "#1e293b",
+    ["Button"] = "#3b82f6",
+    ["Icon"] = "#93c5fd"
+})
+
+WindUI:AddTheme({
+    ["Name"] = "Green",
+    ["Accent"] = "#059669",
+    ["Dialog"] = "#047857",
+    ["Outline"] = "#6ee7b7",
+    ["Text"] = "#ecfdf5",
+    ["Placeholder"] = "#34d399",
+    ["Background"] = "#064e3b",
+    ["Button"] = "#10b981",
+    ["Icon"] = "#6ee7b7"
+})
+
+WindUI:AddTheme({
+    ["Name"] = "Purple",
+    ["Accent"] = "#7c3aed",
+    ["Dialog"] = "#6d28d9",
+    ["Outline"] = "#c4b5fd",
+    ["Text"] = "#faf5ff",
+    ["Placeholder"] = "#a78bfa",
+    ["Background"] = "#581c87",
+    ["Button"] = "#8b5cf6",
+    ["Icon"] = "#c4b5fd"
+})
+
+WindUI:SetNotificationLower(true)
+
+local ThemesList = {
+    "Dark",
+    "Light",
+    "Gray",
+    "Blue",
+    "Green",
+    "Purple"
+}
+
+local CurrentThemeIndex = 1
+
+if not getgenv().TransparencyEnabled then
+    getgenv().TransparencyEnabled = false
+end
+
+game.StarterGui:SetCore("SendNotification", {
+    ["Title"] = "VexonHub",
+    ["Text"] = "Toggle Keybind: ( R )",
+    ["Duration"] = 30,
+    ["Icon"] = "rbxassetid://84519376661277"
+})
+
+local MainWindow = WindUI:CreateWindow({
+    ["Title"] = "VexonHub",
+    ["Icon"] = "zap",
+    ["Author"] = "Build a Boat For Treasure",
+    ["Folder"] = "vexonhub",
+    ["Size"] = UDim2.fromOffset(500, 350),
+    ["Transparent"] = getgenv().TransparencyEnabled,
+    ["Theme"] = "Dark",
+    ["Resizable"] = true,
+    ["SideBarWidth"] = 150,
+    ["BackgroundImageTransparency"] = 0.8,
+    ["HideSearchBar"] = false,
+    ["ScrollBarEnabled"] = true,
+    ["User"] = {
+        ["Enabled"] = true,
+        ["Anonymous"] = false,
+        ["Callback"] = function()
+            CurrentThemeIndex = CurrentThemeIndex + 1
+            if CurrentThemeIndex > #ThemesList then
+                CurrentThemeIndex = 1
+            end
+            local NewTheme = ThemesList[CurrentThemeIndex]
+            WindUI:SetTheme(NewTheme)
+            WindUI:Notify({
+                ["Title"] = "Theme Changed",
+                ["Content"] = "Switched to " .. NewTheme .. " theme!",
+                ["Duration"] = 2,
+                ["Icon"] = "palette"
+            })
+        end
+    }
+})
+
+pcall(function()
+    MainWindow:CreateTopbarButton("TransparencyToggle", "eye", function()
+        if getgenv().TransparencyEnabled then
+            getgenv().TransparencyEnabled = false
+            pcall(function()
+                MainWindow:ToggleTransparency(false)
+            end)
+            WindUI:Notify({
+                ["Title"] = "Transparency",
+                ["Content"] = "Transparency disabled",
+                ["Duration"] = 3,
+                ["Icon"] = "eye"
+            })
+        else
+            getgenv().TransparencyEnabled = true
+            pcall(function()
+                MainWindow:ToggleTransparency(true)
+            end)
+            WindUI:Notify({
+                ["Title"] = "Transparency",
+                ["Content"] = "Transparency enabled",
+                ["Duration"] = 3,
+                ["Icon"] = "eye-off"
+            })
+        end
+        print("Debug - Current Transparency state:", getgenv().TransparencyEnabled)
+    end, 990)
+end)
+
+if not isfolder("FileStorage") then
+    makefolder("FileStorage")
+end
+
+if not isfolder("BABFT/Build") then
+    makefolder("BABFT/Build")
+end
+
+MainWindow:EditOpenButton({
+    ["Title"] = "VexonHub",
+    ["CornerRadius"] = UDim.new(0, 6),
+    ["StrokeThickness"] = 2,
+    ["Color"] = ColorSequence.new(Color3.fromRGB(30, 30, 30), Color3.fromRGB(255, 255, 255)),
+    ["Draggable"] = true
+})
+
+MainWindow.ToggleKey = Enum.KeyCode.R
+
+local Tabs = {}
+
+Tabs.Main = MainWindow:Tab({
+    ["Title"] = "Main",
+    ["Icon"] = "house",
+    ["Desc"] = "VexonHub"
+})
+
+Tabs.Misc = MainWindow:Tab({
+    ["Title"] = "Misc",
+    ["Icon"] = "sparkles",
+    ["Desc"] = "VexonHub"
+})
+
+Tabs.Global = MainWindow:Tab({
+    ["Title"] = "Global",
+    ["Icon"] = "user-cog",
+    ["Desc"] = "VexonHub"
+})
+
+Tabs.TP = MainWindow:Tab({
+    ["Title"] = "Teleport",
+    ["Icon"] = "earth",
+    ["Desc"] = "VexonHub"
+})
+
+Tabs.Webhook = MainWindow:Tab({
+    ["Title"] = "Webhook",
+    ["Icon"] = "webhook",
+    ["Desc"] = "VexonHub"
+})
+
+Tabs.Fling = MainWindow:Tab({
+    ["Title"] = "Fling",
+    ["Icon"] = "user",
+    ["Desc"] = "VexonHub"
+})
+
+Tabs.Tools = MainWindow:Tab({
+    ["Title"] = "Tools",
+    ["Icon"] = "hammer",
+    ["Desc"] = "VexonHub"
+})
+
+Tabs.Info = MainWindow:Tab({
+    ["Title"] = "Information",
+    ["Icon"] = "badge-info",
+    ["Desc"] = "VexonHub"
+})
+
+MainWindow:SelectTab(8)
+
+Tabs.Main:Section({
+    ["Title"] = "Farm",
+    ["Icon"] = "star"
+})
+
+local AntiAFKConnection = nil
+
+Tabs.Main:Toggle({
+    ["Title"] = "Anti-AFK",
+    ["Value"] = false,
+    ["Callback"] = function(State)
+        if State then
+            AntiAFKConnection = game:GetService("Players").LocalPlayer.Idled:Connect(function()
+                game:GetService("VirtualUser"):Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+                task.wait(30)
+                game:GetService("VirtualUser"):Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+            end)
+        elseif AntiAFKConnection then
+            AntiAFKConnection:Disconnect()
+            AntiAFKConnection = nil
+        end
+    end
+})
+
+getgenv().AF = false
+local AutoFarmParts = {}
+local CharacterAddedConnection = nil
+
+Tabs.Main:Toggle({
+    ["Title"] = "Auto Farm",
+    ["Value"] = false,
+    ["Callback"] = function(State)
+        if State then
+            getgenv().AF = true
+            AutoFarmStart()
+        else
+            getgenv().AF = false
+            RemoveAutoFarmParts()
+            if CharacterAddedConnection then
+                CharacterAddedConnection:Disconnect()
+            end
+        end
+    end
+})
+
+function AutoFarmStart()
+    local GoldenChestTrigger = workspace.BoatStages.NormalStages.TheEnd.GoldenChest.Trigger
+    local LocalPlayer = game.Players.LocalPlayer
+    local HumanoidRootPart = (LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()):WaitForChild("HumanoidRootPart")
+    if CharacterAddedConnection then
+        CharacterAddedConnection:Disconnect()
+    end
+    CharacterAddedConnection = LocalPlayer.CharacterAdded:Connect(function(NewCharacter)
+        NewCharacter:WaitForChild("HumanoidRootPart")
+        wait(1)
+        if getgenv().AF then
+            AutoFarmStart()
+        end
+    end)
+    local function TeleportToStage(StageNumber)
+        if getgenv().AF ~= false then
+            local FloorPart = Instance.new("Part")
+            FloorPart.Size = Vector3.new(5, 1, 5)
+            FloorPart.Transparency = 1
+            FloorPart.CanCollide = true
+            FloorPart.Anchored = true
+            FloorPart.Parent = workspace
+            local FloorDecal = Instance.new("Decal")
+            FloorDecal.Face = Enum.NormalId.Top
+            FloorDecal.Texture = "rbxassetid://84519376661277"
+            FloorDecal.Parent = FloorPart
+            table.insert(AutoFarmParts, FloorPart)
+            if StageNumber == 5 then
+                GoldenChestTrigger.CFrame = CFrame.new(-51, 65, 4064)
+                task.delay(0.8, function()
+                    workspace.ClaimRiverResultsGold:FireServer()
+                end)
+                HumanoidRootPart.CFrame = CFrame.new(-51, 65, 984 + (StageNumber - 1) * 770)
+            elseif StageNumber == 1 then
+                HumanoidRootPart.CFrame = CFrame.new(160.16104125976562, 29.595888137817383, 973.813720703125)
+            else
+                HumanoidRootPart.CFrame = CFrame.new(-51, 65, 984 + (StageNumber - 1) * 770)
+            end
+            FloorPart.Position = HumanoidRootPart.Position - Vector3.new(0, 2, 0)
+            wait(2.3)
+            if StageNumber == 1 then
+                wait(2.3)
+            end
+            if StageNumber ~= 4 then
+                workspace.ClaimRiverResultsGold:FireServer()
+            end
+        end
+    end
+    spawn(function()
+        while true do
+            if not getgenv().AF then
+                return
+            end
+            for Stage = 1, 10 do
+                if getgenv().AF == false then
+                    break
+                end
+                TeleportToStage(Stage)
+            end
+            wait(1)
+        end
+    end)
+end
+
+function RemoveAutoFarmParts()
+    for _, Part in ipairs(AutoFarmParts) do
+        if Part and Part.Parent then
+            Part:Destroy()
+        end
+    end
+    AutoFarmParts = {}
+end
+
+local DeleteMapEnabled = false
+
+Tabs.Main:Toggle({
+    ["Title"] = "Delete Map",
+    ["Desc"] = "For farm",
+    ["Value"] = false,
+    ["Callback"] = function(State)
+        DeleteMapEnabled = State
+        if State then
+            local MapParts = {
+                "Blocks",
+                "Challenge",
+                "TempStuff",
+                "Teams",
+                "MainTerrain",
+                "OtherStages",
+                "BlackZone",
+                "CamoZone",
+                "MagentaZone",
+                "New YellerZone",
+                "Really blueZone",
+                "Really redZone",
+                "Sand",
+                "Water",
+                "WhiteZone",
+                "WaterMask"
+            }
+            for _, PartName in ipairs(MapParts) do
+                local MapPart = workspace:FindFirstChild(PartName) or workspace.BoatStages:FindFirstChild("OtherStages")
+                if MapPart then
+                    MapPart.Parent = game:GetService("ReplicatedStorage")
+                end
+            end
+        else
+            local MapParts = {
+                "Blocks",
+                "Challenge",
+                "TempStuff",
+                "Teams",
+                "MainTerrain",
+                "OtherStages",
+                "BlackZone",
+                "CamoZone",
+                "MagentaZone",
+                "New YellerZone",
+                "Really blueZone",
+                "Really redZone",
+                "Sand",
+                "Water",
+                "WhiteZone",
+                "WaterMask"
+            }
+            for _, PartName in ipairs(MapParts) do
+                local MapPart = game:GetService("ReplicatedStorage"):FindFirstChild(PartName)
+                if MapPart then
+                    if PartName == "OtherStages" then
+                        game:GetService("ReplicatedStorage").OtherStages.Parent = workspace.BoatStages
+                    else
+                        MapPart.Parent = workspace
+                    end
+                end
+            end
+        end
+    end
+})
+
+local function FormatTime(Seconds)
+    local Hours = math.floor(Seconds / 3600)
+    local Minutes = math.floor(Seconds % 3600 / 60)
+    local Secs = Seconds % 60
+    return string.format("%02d:%02d:%02d", Hours, Minutes, Secs)
+end
+
+Tabs.Main:Section({
+    ["Title"] = "Movement",
+    ["Icon"] = "settings"
+})
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+local Humanoid = Character:WaitForChild("Humanoid")
+
+LocalPlayer.CharacterAdded:Connect(function(NewCharacter)
+    Character = NewCharacter
+    Humanoid = NewCharacter:WaitForChild("Humanoid")
+end)
+
+local SpeedEnabled = false
+local SpeedValue = 9
+local JumpValue = 200
+
+local function ToggleSpeedBypass(State)
+    SpeedEnabled = State
+    getgenv().WalkspeedBypass = SpeedEnabled
+    if State then
+        task.spawn(function()
+            while getgenv().WalkspeedBypass and (Character and Character.Parent) do
+                local CurrentHumanoid = Character:FindFirstChildOfClass("Humanoid")
+                if CurrentHumanoid and CurrentHumanoid.MoveDirection.Magnitude > 0 then
+                    Character:TranslateBy(CurrentHumanoid.MoveDirection * SpeedValue * RunService.Heartbeat:Wait() * 7)
+                else
+                    task.wait()
+                end
+            end
+        end)
+    end
+end
+
+Tabs.Main:Toggle({
+    ["Title"] = "Speed (V Key On/Off)",
+    ["Value"] = false,
+    ["Callback"] = ToggleSpeedBypass
+})
+
+Tabs.Main:Slider({
+    ["Title"] = "Speed Boost Value",
+    ["step"] = 1,
+    ["Value"] = {
+        ["Min"] = 1,
+        ["Max"] = 100,
+        ["Default"] = 9
+    },
+    ["Callback"] = function(Value)
+        SpeedValue = Value
+    end
+})
+
+UserInputService.InputBegan:Connect(function(Input, GameProcessed)
+    if Input.KeyCode == Enum.KeyCode.V and not GameProcessed then
+        ToggleSpeedBypass(not SpeedEnabled)
+    end
+end)
+
+Tabs.Main:Toggle({
+    ["Title"] = "Jump",
+    ["Value"] = false,
+    ["Callback"] = function(State)
+        getgenv().JumpPowerBypass = State
+        if State then
+            task.spawn(function()
+                while getgenv().JumpPowerBypass and Character and Character:FindFirstChild("HumanoidRootPart") do
+                    if Humanoid and Humanoid:GetState() == Enum.HumanoidStateType.Jumping then
+                        Character.HumanoidRootPart.CFrame = Character.HumanoidRootPart.CFrame * CFrame.new(0, JumpValue, 0)
+                    end
+                    task.wait()
+                end
+            end)
+        end
+    end
+})
+
+Tabs.Main:Slider({
+    ["Title"] = "Jump Boost Value",
+    ["step"] = 1,
+    ["Value"] = {
+        ["Min"] = 1,
+        ["Max"] = 1000,
+        ["Default"] = 200
+    },
+    ["Callback"] = function(Value)
+        JumpValue = Value
+    end
+})
+
+local InfiniteJumpEnabled = false
+
+Tabs.Main:Toggle({
+    ["Title"] = "Inf-Jump",
+    ["Value"] = false,
+    ["Callback"] = function(State)
+        InfiniteJumpEnabled = State
+    end
+})
+
+UserInputService.JumpRequest:Connect(function()
+    if InfiniteJumpEnabled and LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
+        LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Jumping)
+    end
+end)
+
+local PlayersNoclip = game:GetService("Players")
+local RunServiceNoclip = game:GetService("RunService")
+local LocalPlayerNoclip = PlayersNoclip.LocalPlayer
+local NoclipEnabled = false
+local NoclipConnection = nil
+
+local function StartNoclip()
+    if NoclipConnection then
+        NoclipConnection:Disconnect()
+    end
+    NoclipConnection = RunServiceNoclip.Stepped:Connect(function()
+        local PlayerCharacter = LocalPlayerNoclip.Character
+        if PlayerCharacter then
+            for _, Descendant in ipairs(PlayerCharacter:GetDescendants()) do
+                if Descendant:IsA("BasePart") and Descendant.CanCollide then
+                    Descendant.CanCollide = false
+                end
+            end
+        end
+    end)
+end
+
+local function StopNoclip()
+    if NoclipConnection then
+        NoclipConnection:Disconnect()
+        NoclipConnection = nil
+    end
+    local PlayerCharacter = LocalPlayerNoclip.Character
+    if PlayerCharacter then
+        for _, Descendant in ipairs(PlayerCharacter:GetDescendants()) do
+            if Descendant:IsA("BasePart") then
+                Descendant.CanCollide = true
+            end
+        end
+    end
+end
+
+Tabs.Main:Toggle({
+    ["Title"] = "No-Clip",
+    ["Value"] = false,
+    ["Callback"] = function(State)
+        NoclipEnabled = State
+        if NoclipEnabled then
+            StartNoclip()
+        else
+            StopNoclip()
+        end
+    end
+})
+
+LocalPlayerNoclip.CharacterAdded:Connect(function()
+    if NoclipEnabled then
+        task.wait(1)
+        StartNoclip()
+    end
+end)
+
+local PlayersFlyWalk = game:GetService("Players")
+local RunServiceFlyWalk = game:GetService("RunService")
+local LocalPlayerFlyWalk = PlayersFlyWalk.LocalPlayer
+local CharacterFlyWalk = LocalPlayerFlyWalk.Character or LocalPlayerFlyWalk.CharacterAdded:Wait()
+local HumanoidRootPartFlyWalk = CharacterFlyWalk:WaitForChild("HumanoidRootPart")
+local FlyWalkEnabled = false
+local FlyWalkHeight = 100
+local FlyWalkConnection = nil
+local FlyWalkRayParams = RaycastParams.new()
+FlyWalkRayParams.FilterType = Enum.RaycastFilterType.Blacklist
+FlyWalkRayParams.FilterDescendantsInstances = { CharacterFlyWalk }
+
+Tabs.Main:Toggle({
+    ["Title"] = "Fly Walk",
+    ["Value"] = false,
+    ["Callback"] = function(State)
+        FlyWalkEnabled = State
+        if State then
+            startFloating()
+        else
+            stopFloating()
+        end
+    end
+})
+
+Tabs.Main:Slider({
+    ["Title"] = "Fly Walk Height",
+    ["Value"] = {
+        ["Min"] = 3,
+        ["Max"] = 300,
+        ["Default"] = 100
+    },
+    ["Callback"] = function(Value)
+        FlyWalkHeight = Value
+    end
+})
+
+local function UpdateFlyWalkPosition()
+    if FlyWalkEnabled and (HumanoidRootPartFlyWalk and HumanoidRootPartFlyWalk.Parent) then
+        local CurrentPosition = HumanoidRootPartFlyWalk.Position
+        local RayResult = workspace:Raycast(CurrentPosition, Vector3.new(0, -1000, 0), FlyWalkRayParams)
+        if RayResult then
+            local TargetY = RayResult.Position.Y + FlyWalkHeight + 3
+            local CurrentCFrame = HumanoidRootPartFlyWalk.CFrame
+            HumanoidRootPartFlyWalk.CFrame = CFrame.new(CurrentCFrame.Position.X, TargetY, CurrentCFrame.Position.Z) * CFrame.fromOrientation(CurrentCFrame:ToOrientation())
+        end
+    end
+end
+
+function startFloating()
+    if FlyWalkConnection then
+        FlyWalkConnection:Disconnect()
+    end
+    FlyWalkConnection = RunServiceFlyWalk.Heartbeat:Connect(UpdateFlyWalkPosition)
+end
+
+function stopFloating()
+    if FlyWalkConnection then
+        FlyWalkConnection:Disconnect()
+        FlyWalkConnection = nil
+    end
+end
+
+LocalPlayerFlyWalk.CharacterAdded:Connect(function(NewCharacter)
+    CharacterFlyWalk = NewCharacter
+    HumanoidRootPartFlyWalk = CharacterFlyWalk:WaitForChild("HumanoidRootPart")
+    FlyWalkRayParams.FilterDescendantsInstances = { CharacterFlyWalk }
+    if FlyWalkEnabled then
+        task.wait(1)
+        startFloating()
+    end
+end)
+
+Tabs.Misc:Section({
+    ["Title"] = "Universal Scripts",
+    ["Icon"] = "flame"
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "Inf Yield",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+    end
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "Dex Explorer",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Classic-Dex-Explorer-21009"))()
+    end
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "Remote Spy",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/SimpleSpySource.lua"))()
+    end
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "Keyboard",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+    end
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "Anim Logger",
+    ["Locked"] = false,
+    ["Callback"] = function() end
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "f3x",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/refs/heads/main/f3x.lua"))()
+    end
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "Fly V3",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/xuSMWfDu"))()
+    end
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "VFX Logger",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/2uXfJqdU"))()
+    end
+})
+
+Tabs.Misc:Section({
+    ["Title"] = "Player",
+    ["Icon"] = "star"
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "ServerHop",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastefy.app/uTXUoORd/raw"))()
+    end
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "Rejoin",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        game:GetService("TeleportService"):Teleport(game.PlaceId)
+    end
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "Reset",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastefy.app/YPv8xrYN/raw"))()
+    end
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "Fixcam",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastefy.app/IrvnCaF2/raw"))()
+    end
+})
+
+local function GetTeamZoneName()
+    local TeamZoneMap = {
+        ["black"] = "BlackZone",
+        ["blue"] = "Really blueZone",
+        ["green"] = "CamoZone",
+        ["red"] = "Really redZone",
+        ["white"] = "WhiteZone",
+        ["yellow"] = "New YellerZone",
+        ["magenta"] = "MagentaZone"
+    }
+    local ZoneName = TeamZoneMap[LocalPlayerFlyWalk.Team.Name]
+    local Zone = ZoneName and workspace:FindFirstChild(ZoneName)
+    if Zone then
+        return Zone.Name
+    end
+end
+
+Tabs.Global:Input({
+    ["Title"] = "Fake Gold",
+    ["Desc"] = "Fake gold you cant use only client side",
+    ["Placeholder"] = "How Many Golds You Want?",
+    ["Numeric"] = true,
+    ["Callback"] = function(Value)
+        if Value and Value ~= "" then
+            PlayersFlyWalk.LocalPlayer.Data.Gold.Value = tonumber(Value)
+        end
+    end
+})
+
+Tabs.Global:Toggle({
+    ["Title"] = "Force Share Blocks",
+    ["Desc"] = "Forces to share Blocks Constantly Sends Requests To Owner of team And Forces To Accept it",
+    ["Value"] = false,
+    ["Callback"] = function(State)
+        workspace.SettingFunction:InvokeServer("ShareBlocks", State)
+    end
+})
+
+Tabs.Global:Button({
+    ["Title"] = "Disable Quest Build Zone",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        workspace:FindFirstChild(GetTeamZoneName()).QuestNum.Value = 0
+    end
+})
+
+Tabs.Global:Button({
+    ["Title"] = "Max Click Detector Distance",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        for _, Descendant in ipairs(game:GetDescendants()) do
+            if Descendant:IsA("ClickDetector") then
+                Descendant.MaxActivationDistance = 100069
+            end
+        end
+    end
+})
+
+Tabs.Global:Button({
+    ["Title"] = "Color All Blocks",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        local TeamName = LocalPlayerFlyWalk.Team.Name
+        local TeamLeader = game:GetService("Teams"):FindFirstChild(TeamName).TeamLeader.Value
+        if not PlayersFlyWalk.LocalPlayer.Settings.ShareBlocks.Value then
+            TeamLeader = LocalPlayerFlyWalk.Name
+        end
+        local BlocksFolder = game.Workspace.Blocks:FindFirstChild(TeamLeader)
+        local BlocksToColor = {}
+        for _, Block in ipairs(BlocksFolder:GetChildren()) do
+            local ColorData = { Block, (Color3.new(math.random(0, 1000) / 1000, math.random(0, 1000) / 1000, math.random(0, 1000) / 1000)) }
+            table.insert(BlocksToColor, ColorData)
+            if #BlocksToColor >= 10000 then
+                game:GetService("Players").LocalPlayer.Backpack.PaintingTool.RF:InvokeServer(BlocksToColor)
+                BlocksToColor = {}
+            end
+        end
+        if #BlocksToColor > 0 then
+            game:GetService("Players").LocalPlayer.Backpack.PaintingTool.RF:InvokeServer(BlocksToColor)
+        end
+    end
+})
+
+Tabs.Global:Button({
+    ["Title"] = "Delete All Blocks",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        local TeamName = LocalPlayerFlyWalk.Team.Name
+        local TeamLeader = game:GetService("Teams"):FindFirstChild(TeamName).TeamLeader.Value
+        if not PlayersFlyWalk.LocalPlayer.Settings.ShareBlocks.Value then
+            TeamLeader = LocalPlayerFlyWalk.Name
+        end
+        local BlocksFolder = game.Workspace.Blocks:FindFirstChild(TeamLeader)
+        for _, Block in ipairs(BlocksFolder:GetChildren()) do
+            local DeleteTool = PlayersFlyWalk.LocalPlayer.Backpack:FindFirstChild("DeleteTool")
+            if DeleteTool then
+                DeleteTool = PlayersFlyWalk.LocalPlayer.Backpack.DeleteTool:FindFirstChild("RF")
+            end
+            if not DeleteTool then
+                break
+            end
+            task.spawn(function()
+                DeleteTool:InvokeServer(Block)
+            end)
+        end
+    end
+})
+
+Tabs.Global:Button({
+    ["Title"] = "Remove All Textures",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        for _, Descendant in ipairs(game:GetDescendants()) do
+            if Descendant:IsA("Texture") or Descendant:IsA("Decal") then
+                Descendant:Destroy()
+            end
+            if Descendant:IsA("BasePart") then
+                Descendant.Material = Enum.Material.SmoothPlastic
+            end
+        end
+    end
+})
+
+Tabs.Global:Section({
+    ["Title"] = "Auto Quest",
+    ["Icon"] = "sword"
+})
+
+Tabs.Global:Button({
+    ["Title"] = "Auto Cloud Quest",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        local ZoneName = GetTeamZoneName()
+        workspace.QuestMakerEvent:FireServer(1)
+        workspace:FindFirstChild(ZoneName):WaitForChild("Quest")
+        firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart"), workspace:FindFirstChild(ZoneName).Quest.Cloud.Part1, 0)
+    end
+})
+
+Tabs.Global:Button({
+    ["Title"] = "Auto Target Quest",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        local ZoneName = GetTeamZoneName()
+        workspace.QuestMakerEvent:FireServer(2)
+        workspace:FindFirstChild(ZoneName):WaitForChild("Quest")
+        firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart"), workspace:FindFirstChild(ZoneName).Quest.Target.Part.TouchInterest.Parent, 0)
+    end
+})
+
+Tabs.Global:Button({
+    ["Title"] = "Auto Ramp Quest",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        local ZoneName = GetTeamZoneName()
+        workspace.QuestMakerEvent:FireServer(3)
+        workspace:FindFirstChild(ZoneName):WaitForChild("Quest")
+        firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart"), workspace:FindFirstChild(ZoneName).Quest.Ramp:GetChildren()[20].TouchInterest.Parent, 0)
+    end
+})
+
+Tabs.Global:Button({
+    ["Title"] = "Auto Butter Quest",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        local ZoneName = GetTeamZoneName()
+        workspace.QuestMakerEvent:FireServer(4)
+        workspace:FindFirstChild(ZoneName):WaitForChild("Quest")
+        local ButterPart = workspace:FindFirstChild(ZoneName)
+        if ButterPart then
+            ButterPart = workspace:FindFirstChild(ZoneName).Quest
+            if ButterPart then
+                ButterPart = workspace:FindFirstChild(ZoneName).Quest.Butter
+                if ButterPart then
+                    ButterPart = workspace:FindFirstChild(ZoneName).Quest.Butter.PPart
+                end
+            end
+        end
+        while ButterPart do
+            local ClickDetector = ButterPart:FindFirstChild("ClickDetector")
+            if ClickDetector then
+                fireclickdetector(ClickDetector)
+            end
+            task.wait()
+            ButterPart = workspace:FindFirstChild(ZoneName) and (workspace:FindFirstChild(ZoneName).Quest and workspace:FindFirstChild(ZoneName).Quest.Butter)
+            if ButterPart then
+                ButterPart = workspace:FindFirstChild(ZoneName).Quest.Butter.PPart
+            end
+        end
+    end
+})
+
+Tabs.Global:Section({
+    ["Title"] = "Event Games",
+    ["Icon"] = "box"
+})
+
+Tabs.Global:Button({
+    ["Title"] = "Goto Inner Cloud Event Game",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        game:GetService("TeleportService"):Teleport(1930863474)
+    end
+})
+
+Tabs.Global:Button({
+    ["Title"] = "Goto Christmas Event Game",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        game:GetService("TeleportService"):Teleport(1930866268)
+    end
+})
+
+Tabs.Global:Button({
+    ["Title"] = "Goto Halloween Event Game",
+    ["Desc"] = "YOU WILL GET KICKED WHEN YOU JOIN IT, need to try with a client-sided anti kick or something to bypass it",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        game:GetService("TeleportService"):Teleport(1930665568)
+    end
+})
+
+Tabs.TP:Button({
+    ["Title"] = "White Team",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(-49.8510132, -9.7000021, -520.37085, -1, 0, 0, 0, 1, 0, 0, 0, -1))
+    end
+})
+
+Tabs.TP:Button({
+    ["Title"] = "Black Team",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(-503.82843, -9.7000021, -69.433342, 0, 0, -1, 0, 1, 0, 1, 0, 0))
+    end
+})
+
+Tabs.TP:Button({
+    ["Title"] = "Red Team",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(396.697418, -9.7000021, -64.7801361, 0, 0, 1, 0, 1, 0, -1, 0, 0))
+    end
+})
+
+Tabs.TP:Button({
+    ["Title"] = "Blue Team",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(396.697418, -9.7000021, 300.219849, 0, 0, 1, 0, 1, 0, -1, 0, 0))
+    end
+})
+
+Tabs.TP:Button({
+    ["Title"] = "Purple Team",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(396.697418, -9.7000021, 647.219849, 0, 0, 1, 0, 1, 0, -1, 0, 0))
+    end
+})
+
+Tabs.TP:Button({
+    ["Title"] = "Yellow Team",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(-503.82843, -9.7000021, 640.56665, 0, 0, -1, 0, 1, 0, 1, 0, 0))
+    end
+})
+
+Tabs.TP:Button({
+    ["Title"] = "Green Team",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(-503.82843, -9.7000021, 293.56665, 0, 0, -1, 0, 1, 0, 1, 0, 0))
+    end
+})
+
+Tabs.TP:Button({
+    ["Title"] = "Secret Room",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(178.36814880371094, -1.1945335865020752, 1161.209228515625)
+    end
+})
+
+Tabs.TP:Button({
+    ["Title"] = "Treasure",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-56, -358, 9478)
+    end
+})
+
+Tabs.Global:Section({
+    ["Title"] = "Webhook",
+    ["Icon"] = "webhook"
+})
+
+local function SendWebhookStats()
+    if webhookSettings.url ~= "" then
+        local CurrentTime = os.time()
+        local ElapsedTime = CurrentTime - farmStats.startTime
+        local GoldEarned = LocalPlayerFlyWalk.Data.Gold.Value - farmStats.startGold
+        local BlocksEarned = LocalPlayerFlyWalk.Data.GoldBlock.Value - farmStats.startBlocks
+        local GoldPerHour = math.floor(GoldEarned / (ElapsedTime / 3600))
+        local EmbedData = {
+            ["title"] = "VexonHub Farming Report",
+            ["description"] = (webhookSettings.userID ~= "" and "<@" .. webhookSettings.userID .. "> " or "") .. "**Build a Boat Stats**",
+            ["color"] = 8388863,
+            ["fields"] = {
+                {
+                    ["name"] = "Farming Time",
+                    ["value"] = FormatTime(ElapsedTime),
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Gold Earned",
+                    ["value"] = GoldEarned,
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Gold Blocks",
+                    ["value"] = BlocksEarned,
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Rate/Hour",
+                    ["value"] = GoldPerHour .. "/h",
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Player",
+                    ["value"] = "[" .. LocalPlayerFlyWalk.Name .. "](https://www.roblox.com/users/" .. LocalPlayerFlyWalk.UserId .. "/profile)",
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Account Age",
+                    ["value"] = LocalPlayerFlyWalk.AccountAge .. " days",
+                    ["inline"] = true
+                }
+            },
+            ["footer"] = {
+                ["text"] = "Script By TheVex0n"
+            },
+            ["thumbnail"] = {
+                ["url"] = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. LocalPlayerFlyWalk.UserId .. "&width=420&height=420&format=png"
+            }
+        }
+        local Success, _ = pcall(function()
+            local RequestData = {
+                ["Url"] = webhookSettings.url,
+                ["Method"] = "POST",
+                ["Headers"] = {
+                    ["Content-Type"] = "application/json"
+                },
+                ["Body"] = HttpService:JSONEncode({
+                    ["embeds"] = { EmbedData },
+                    ["username"] = "VexonHub",
+                    ["avatar_url"] = "https://dbl-discord.usercontent.prism.gg/icons/1221601803192238100/74ee254a0b467bdb06e268bf902d761a.png"
+                })
+            }
+            return request(RequestData)
+        end)
+        if Success then
+            webhookSettings.lastSendTime = CurrentTime
+        end
+    end
+end
+
+game:GetService("RunService")
+local PlayersWebhook = game:GetService("Players")
+game:GetService("HttpService")
+local LocalPlayerWebhook = PlayersWebhook.LocalPlayer
+
+local farmStats = {
+    ["startTime"] = os.time(),
+    ["startGold"] = LocalPlayerWebhook.Data.Gold.Value,
+    ["startBlocks"] = LocalPlayerWebhook.Data.GoldBlock.Value,
+    ["running"] = false
+}
+
+local webhookSettings = {
+    ["url"] = "",
+    ["userID"] = "",
+    ["interval"] = 5,
+    ["enabled"] = false,
+    ["lastSendTime"] = 0
+}
+
+Tabs.Webhook:Input({
+    ["Title"] = "Webhook URL",
+    ["Desc"] = "Enter Discord webhook URL for sending text to your Discord Channel",
+    ["Placeholder"] = "Your Webhook Here",
+    ["Numeric"] = false,
+    ["Callback"] = function(Value)
+        webhookSettings.url = Value
+    end
+})
+
+Tabs.Webhook:Input({
+    ["Title"] = "User ID to Ping",
+    ["Desc"] = "Optional: User ID to mention when statistics send",
+    ["Placeholder"] = "Your User ID Here",
+    ["Numeric"] = false,
+    ["Callback"] = function(Value)
+        webhookSettings.userID = Value
+    end
+})
+
+Tabs.Webhook:Slider({
+    ["Title"] = "Send Interval",
+    ["Desc"] = "Minutes between webhooks Messages (1440 min = 24 hours)",
+    ["Value"] = {
+        ["Min"] = 1,
+        ["Max"] = 1440,
+        ["Default"] = 60
+    },
+    ["Callback"] = function(Value)
+        webhookSettings.interval = Value
+    end
+})
+
+Tabs.Webhook:Toggle({
+    ["Title"] = "Enable Auto Send Webhook Statistics",
+    ["Value"] = false,
+    ["Callback"] = function(State)
+        webhookSettings.enabled = State
+    end
+})
+
+Tabs.Webhook:Button({
+    ["Title"] = "Test Webhook",
+    ["Desc"] = "Send webhook immediately for testing",
+    ["Locked"] = false,
+    ["Callback"] = SendWebhookStats
+})
+
+Tabs.Fling:Button({
+    ["Title"] = "Fix fling teleport bug",
+    ["Callback"] = function()
+        local RootPart = game:GetService("Players").LocalPlayer.Character
+        if RootPart then
+            RootPart = RootPart:FindFirstChild("HumanoidRootPart")
+        end
+        if RootPart then
+            if getgenv().OldPos then
+                getgenv().OldPos = RootPart.CFrame
+                game.StarterGui:SetCore("SendNotification", {
+                    ["Title"] = "VexonHub",
+                    ["Text"] = "Teleport bug fixed!",
+                    ["Icon"] = "http://www.roblox.com/asset/?id=84519376661277",
+                    ["Duration"] = 5
+                })
+            else
+                game.StarterGui:SetCore("SendNotification", {
+                    ["Title"] = "VexonHub",
+                    ["Text"] = "Didint find any teleport bug?",
+                    ["Icon"] = "http://www.roblox.com/asset/?id=84519376661277",
+                    ["Duration"] = 5
+                })
+            end
+        end
+    end
+})
+
+local StarterGuiFling = game:GetService("StarterGui")
+local PlayersFling = game:GetService("Players")
+local RunServiceFling = game:GetService("RunService")
+local LocalPlayerFling = PlayersFling.LocalPlayer
+local CameraFling = workspace.CurrentCamera
+local OriginalCameraSubject = CameraFling.CameraSubject
+local SelectedPlayer = nil
+local DeathNotifyConnection = nil
+local OrbitHeartbeatConnection = nil
+local OrbitRenderConnection = nil
+local ESPRenderConnection = nil
+local ESPBillboards = {}
+local ESPEnabled = false
+
+local PlayerActions = {
+    ["teleport"] = false,
+    ["fling"] = false,
+    ["view"] = false,
+    ["aimLockCam"] = false,
+    ["aimLockChar"] = false,
+    ["orbit"] = false,
+    ["notifyOnDeath"] = false
+}
+
+local function SendFlingNotification(Title, Text, Icon, Duration)
+    StarterGuiFling:SetCore("SendNotification", {
+        ["Title"] = Title or "VexonHub",
+        ["Text"] = Text,
+        ["Icon"] = Icon or "rbxassetid://84519376661277",
+        ["Duration"] = Duration or 5
+    })
+end
+
+local function AimCameraAtPlayer(Player)
+    if Player then
+        Player = Player.Character
+    end
+    if Player then
+        Player = Player:FindFirstChild("Head")
+    end
+    if Player then
+        CameraFling.CFrame = CFrame.new(CameraFling.CFrame.Position, Player.Position)
+    end
+end
+
+local function AimCharacterAtPlayer(Player)
+    local MyRootPart = LocalPlayerFling.Character
+    if MyRootPart then
+        MyRootPart = MyRootPart:FindFirstChild("HumanoidRootPart")
+    end
+    if Player then
+        Player = Player.Character
+    end
+    if Player then
+        Player = Player:FindFirstChild("HumanoidRootPart")
+    end
+    if MyRootPart and Player then
+        MyRootPart.CFrame = CFrame.new(MyRootPart.Position, Player.Position)
+    end
+end
+
+local function SetupDeathNotification()
+    if DeathNotifyConnection then
+        DeathNotifyConnection:Disconnect()
+        DeathNotifyConnection = nil
+    end
+    if PlayerActions.notifyOnDeath and SelectedPlayer then
+        local TargetCharacter = SelectedPlayer.Character or SelectedPlayer.CharacterAdded:Wait()
+        if TargetCharacter then
+            TargetCharacter = TargetCharacter:FindFirstChildOfClass("Humanoid")
+        end
+        if TargetCharacter then
+            DeathNotifyConnection = TargetCharacter.Died:Connect(function()
+                SendFlingNotification("VexonHub", SelectedPlayer.DisplayName .. " Died")
+            end)
+        end
+    end
+end
+
+local function SelectTargetPlayer(PlayerName)
+    if DeathNotifyConnection then
+        DeathNotifyConnection:Disconnect()
+        DeathNotifyConnection = nil
+    end
+    SelectedPlayer = nil
+    if not PlayerName or PlayerName == "" then
+        SendFlingNotification("VexonHub", "No One Selected")
+        return
+    end
+    local LowerName = string.lower(PlayerName)
+    local FoundPlayer = nil
+    for _, Player in ipairs(PlayersFling:GetPlayers()) do
+        if string.find(string.lower(Player.Name), LowerName, 1, true) or string.find(string.lower(Player.DisplayName), LowerName, 1, true) then
+            FoundPlayer = Player
+            break
+        end
+    end
+    if FoundPlayer then
+        SelectedPlayer = FoundPlayer
+        SendFlingNotification("VexonHub", "Selected: " .. FoundPlayer.DisplayName, "https://www.roblox.com/headshot-thumbnail/image?userId=" .. FoundPlayer.UserId .. "&width=420&height=420&format=png", 10)
+        SetupDeathNotification()
+    else
+        SendFlingNotification("VexonHub", "Player Not Found...")
+    end
+end
+
+function createEspForPlayer(Player)
+    local Head = Player.Character
+    if Head then
+        Head = Player.Character:FindFirstChild("Head")
+    end
+    if Head then
+        local Billboard = Instance.new("BillboardGui")
+        Billboard.Name = "ESP_Billboard"
+        Billboard.Size = UDim2.new(0, 200, 0, 50)
+        Billboard.Adornee = Head
+        Billboard.AlwaysOnTop = true
+        local Frame = Instance.new("Frame")
+        Frame.Size = UDim2.new(1, 0, 1, 0)
+        Frame.BackgroundColor3 = Color3.new(0.8, 0, 0)
+        Frame.BackgroundTransparency = 0.6
+        Frame.Parent = Billboard
+        local Corner = Instance.new("UICorner")
+        Corner.CornerRadius = UDim.new(0, 8)
+        Corner.Parent = Frame
+        local Label = Instance.new("TextLabel")
+        Label.Size = UDim2.new(1, 0, 1, 0)
+        Label.BackgroundTransparency = 1
+        Label.TextColor3 = Color3.new(1, 1, 1)
+        Label.Text = Player.DisplayName
+        Label.Font = Enum.Font.SourceSansBold
+        Label.TextSize = 16
+        Label.Parent = Frame
+        ESPBillboards[Player] = {
+            ["billboard"] = Billboard
+        }
+        Billboard.Parent = LocalPlayerFling.PlayerGui
+    end
+end
+
+function updateEspForPlayer(Player)
+    local Data = ESPBillboards[Player]
+    if Data and Data.billboard then
+        local Head = Player.Character
+        if Head then
+            Head = Head:FindFirstChild("Head")
+        end
+        if Head and Data.billboard.Adornee ~= Head then
+            Data.billboard.Adornee = Head
+        end
+    end
+end
+
+function removeEspForPlayer(Player)
+    if ESPBillboards[Player] then
+        if ESPBillboards[Player].billboard then
+            ESPBillboards[Player].billboard:Destroy()
+        end
+        ESPBillboards[Player] = nil
+    end
+end
+
+function runEspLoop()
+    for _, Player in ipairs(PlayersFling:GetPlayers()) do
+        if Player == LocalPlayerFling or not Player.Character or not Player.Character:FindFirstChild("Head") then
+            if ESPBillboards[Player] then
+                removeEspForPlayer(Player)
+            end
+        elseif ESPBillboards[Player] then
+            updateEspForPlayer(Player)
+        else
+            createEspForPlayer(Player)
+        end
+    end
+end
+
+Tabs.Fling:Section({
+    ["Title"] = "Player Selection",
+    ["Icon"] = "eye"
+})
+
+Tabs.Fling:Input({
+    ["Title"] = "Select Player",
+    ["Desc"] = "Enter Player Name To Select Target",
+    ["Placeholder"] = "PlayerName",
+    ["Callback"] = function(Text)
+        SelectTargetPlayer(Text)
+    end
+})
+
+Tabs.Fling:Section({
+    ["Title"] = "Player Actions"
+})
+
+Tabs.Fling:Button({
+    ["Title"] = "Teleport to Player",
+    ["Callback"] = function()
+        if SelectedPlayer then
+            local MyRootPart = LocalPlayerFling.Character
+            if MyRootPart then
+                MyRootPart = MyRootPart:FindFirstChild("HumanoidRootPart")
+            end
+            local TargetRootPart = SelectedPlayer.Character
+            if TargetRootPart then
+                TargetRootPart = TargetRootPart:FindFirstChild("HumanoidRootPart")
+            end
+            if MyRootPart and TargetRootPart then
+                MyRootPart.CFrame = TargetRootPart.CFrame
+            else
+                SendFlingNotification("VexonHub", "Could not find character to teleport.")
+            end
+        else
+            SendFlingNotification("VexonHub", "No One Selected")
+        end
+    end
+})
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Loop Teleport",
+    ["Value"] = PlayerActions.teleport,
+    ["Callback"] = function(State)
+        PlayerActions.teleport = State
+        if State then
+            if SelectedPlayer then
+                task.spawn(function()
+                    while PlayerActions.teleport and (SelectedPlayer and SelectedPlayer.Parent) do
+                        local MyRootPart = LocalPlayerFling.Character
+                        if MyRootPart then
+                            MyRootPart = MyRootPart:FindFirstChild("HumanoidRootPart")
+                        end
+                        local TargetRootPart = SelectedPlayer.Character
+                        if TargetRootPart then
+                            TargetRootPart = TargetRootPart:FindFirstChild("HumanoidRootPart")
+                        end
+                        if not (MyRootPart and TargetRootPart) then
+                            PlayerActions.teleport = false
+                            break
+                        end
+                        MyRootPart.CFrame = TargetRootPart.CFrame
+                        task.wait()
+                    end
+                end)
+            else
+                SendFlingNotification("VexonHub", "No One Selected")
+                PlayerActions.teleport = false
+            end
+        else
+            return
+        end
+    end
+})
+
+Tabs.Fling:Button({
+    ["Title"] = "Fling Player",
+    ["Callback"] = function()
+        if SelectedPlayer then
+            miniFling(SelectedPlayer)
+        else
+            SendFlingNotification("VexonHub", "No One Selected")
+        end
+    end
+})
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Loop Fling",
+    ["Value"] = PlayerActions.fling,
+    ["Callback"] = function(State)
+        PlayerActions.fling = State
+        if State then
+            if SelectedPlayer then
+                task.spawn(function()
+                    while PlayerActions.fling and (SelectedPlayer and SelectedPlayer.Parent) do
+                        miniFling(SelectedPlayer)
+                        task.wait(0.5)
+                    end
+                end)
+            else
+                SendFlingNotification("VexonHub", "No One Selected")
+                PlayerActions.fling = false
+            end
+        else
+            return
+        end
+    end
+})
+
+Tabs.Fling:Button({
+    ["Title"] = "View Player (3 sec)",
+    ["Callback"] = function()
+        if SelectedPlayer then
+            local TargetHumanoid = SelectedPlayer.Character
+            if TargetHumanoid then
+                TargetHumanoid = TargetHumanoid:FindFirstChildOfClass("Humanoid")
+            end
+            if TargetHumanoid then
+                CameraFling.CameraSubject = TargetHumanoid
+                task.delay(3, function()
+                    if CameraFling.CameraSubject == TargetHumanoid then
+                        CameraFling.CameraSubject = OriginalCameraSubject
+                    end
+                end)
+            else
+                SendFlingNotification("VexonHub", "Could not find the player's character to view.")
+            end
+        else
+            SendFlingNotification("VexonHub", "No One Selected")
+        end
+    end
+})
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Loop View",
+    ["Value"] = PlayerActions.view,
+    ["Callback"] = function(State)
+        PlayerActions.view = State
+        if State then
+            if SelectedPlayer then
+                task.spawn(function()
+                    while PlayerActions.view and (SelectedPlayer and SelectedPlayer.Parent) do
+                        local TargetHumanoid = SelectedPlayer.Character
+                        if TargetHumanoid then
+                            TargetHumanoid = TargetHumanoid:FindFirstChildOfClass("Humanoid")
+                        end
+                        if TargetHumanoid then
+                            CameraFling.CameraSubject = TargetHumanoid
+                        end
+                        task.wait(0.1)
+                    end
+                    CameraFling.CameraSubject = OriginalCameraSubject
+                end)
+            else
+                SendFlingNotification("VexonHub", "No One Selected")
+                PlayerActions.view = false
+            end
+        else
+            CameraFling.CameraSubject = OriginalCameraSubject
+            return
+        end
+    end
+})
+
+Tabs.Fling:Toggle({
+    ["Title"] = "AimLock (Camera)",
+    ["Value"] = PlayerActions.aimLockCam,
+    ["Callback"] = function(State)
+        PlayerActions.aimLockCam = State
+        if State then
+            if SelectedPlayer then
+                task.spawn(function()
+                    while PlayerActions.aimLockCam and (SelectedPlayer and SelectedPlayer.Parent) do
+                        AimCameraAtPlayer(SelectedPlayer)
+                        RunServiceFling.RenderStepped:Wait()
+                    end
+                end)
+            else
+                SendFlingNotification("VexonHub", "No One Selected")
+                PlayerActions.aimLockCam = false
+            end
+        else
+            return
+        end
+    end
+})
+
+Tabs.Fling:Toggle({
+    ["Title"] = "AimLock (Character)",
+    ["Value"] = PlayerActions.aimLockChar,
+    ["Callback"] = function(State)
+        PlayerActions.aimLockChar = State
+        if State then
+            if SelectedPlayer then
+                task.spawn(function()
+                    while PlayerActions.aimLockChar and (SelectedPlayer and SelectedPlayer.Parent) do
+                        AimCharacterAtPlayer(SelectedPlayer)
+                        RunServiceFling.Heartbeat:Wait()
+                    end
+                end)
+            else
+                SendFlingNotification("VexonHub", "No One Selected")
+                PlayerActions.aimLockChar = false
+            end
+        else
+            return
+        end
+    end
+})
+
+Tabs.Fling:Toggle({
+    ["Title"] = "ESP",
+    ["Value"] = ESPEnabled,
+    ["Callback"] = function(State)
+        ESPEnabled = State
+        if ESPEnabled then
+            if not ESPRenderConnection then
+                ESPRenderConnection = RunServiceFling.RenderStepped:Connect(runEspLoop)
+            end
+        else
+            if ESPRenderConnection then
+                ESPRenderConnection:Disconnect()
+                ESPRenderConnection = nil
+            end
+            for Player, _ in pairs(ESPBillboards) do
+                removeEspForPlayer(Player)
+            end
+            table.clear(ESPBillboards)
+        end
+    end
+})
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Orbit Player",
+    ["Value"] = PlayerActions.orbit,
+    ["Callback"] = function(State)
+        PlayerActions.orbit = State
+        if OrbitHeartbeatConnection then
+            OrbitHeartbeatConnection:Disconnect()
+            OrbitHeartbeatConnection = nil
+        end
+        if OrbitRenderConnection then
+            OrbitRenderConnection:Disconnect()
+            OrbitRenderConnection = nil
+        end
+        if State then
+            if SelectedPlayer then
+                task.spawn(function()
+                    local OrbitAngle = 0
+                    local OrbitSpeed = 8
+                    local OrbitRadius = 10
+                    OrbitHeartbeatConnection = RunServiceFling.Heartbeat:Connect(function()
+                        if PlayerActions.orbit and (SelectedPlayer and SelectedPlayer.Parent) then
+                            local MyRootPart = LocalPlayerFling.Character
+                            if MyRootPart then
+                                MyRootPart = MyRootPart:FindFirstChild("HumanoidRootPart")
+                            end
+                            local TargetRootPart = SelectedPlayer.Character
+                            if TargetRootPart then
+                                TargetRootPart = TargetRootPart:FindFirstChild("HumanoidRootPart")
+                            end
+                            if MyRootPart and TargetRootPart then
+                                OrbitAngle = OrbitAngle + OrbitSpeed
+                                MyRootPart.CFrame = CFrame.new(TargetRootPart.Position) * CFrame.Angles(0, math.rad(OrbitAngle), 0) * CFrame.new(OrbitRadius, 0, 0)
+                            else
+                                PlayerActions.orbit = false
+                            end
+                        else
+                            if OrbitHeartbeatConnection then
+                                OrbitHeartbeatConnection:Disconnect()
+                                OrbitHeartbeatConnection = nil
+                            end
+                            if OrbitRenderConnection then
+                                OrbitRenderConnection:Disconnect()
+                                OrbitRenderConnection = nil
+                            end
+                            return
+                        end
+                    end)
+                    OrbitRenderConnection = RunServiceFling.RenderStepped:Connect(function()
+                        if PlayerActions.orbit and (SelectedPlayer and SelectedPlayer.Parent) then
+                            local MyRootPart = LocalPlayerFling.Character
+                            if MyRootPart then
+                                MyRootPart = MyRootPart:FindFirstChild("HumanoidRootPart")
+                            end
+                            local TargetRootPart = SelectedPlayer.Character
+                            if TargetRootPart then
+                                TargetRootPart = TargetRootPart:FindFirstChild("HumanoidRootPart")
+                            end
+                            if MyRootPart and TargetRootPart then
+                                MyRootPart.CFrame = CFrame.new(MyRootPart.Position, TargetRootPart.Position)
+                            else
+                                PlayerActions.orbit = false
+                            end
+                        else
+                            if OrbitHeartbeatConnection then
+                                OrbitHeartbeatConnection:Disconnect()
+                                OrbitHeartbeatConnection = nil
+                            end
+                            if OrbitRenderConnection then
+                                OrbitRenderConnection:Disconnect()
+                                OrbitRenderConnection = nil
+                            end
+                            return
+                        end
+                    end)
+                end)
+            else
+                SendFlingNotification("VexonHub", "No One Selected")
+                PlayerActions.orbit = false
+            end
+        else
+            return
+        end
+    end
+})
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Notify On Death",
+    ["Value"] = PlayerActions.notifyOnDeath,
+    ["Callback"] = function(State)
+        PlayerActions.notifyOnDeath = State
+        SetupDeathNotification()
+    end
+})
+
+PlayersFling.PlayerRemoving:Connect(function(Player)
+    if SelectedPlayer and Player == SelectedPlayer then
+        SendFlingNotification("VexonHub", Player.DisplayName .. " left the game")
+        SelectedPlayer = nil
+        for Key, _ in pairs(PlayerActions) do
+            PlayerActions[Key] = false
+        end
+    end
+    removeEspForPlayer(Player)
+end)
+
+Tabs.Fling:Section({
+    ["Title"] = "Fling",
+    ["Icon"] = "utensils"
+})
+
+local FlingAuraEnabled = false
+local FlingAuraPlayer = game.Players.LocalPlayer
+game:GetService("RunService")
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Fling Aura",
+    ["Value"] = false,
+    ["Callback"] = function(State)
+        FlingAuraEnabled = State
+        if State then
+            task.spawn(function()
+                while FlingAuraEnabled do
+                    if FlingAuraPlayer.Character and FlingAuraPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                        for _, Player in pairs(game.Players:GetPlayers()) do
+                            if Player ~= FlingAuraPlayer and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+                                local TargetRootPart = Player.Character.HumanoidRootPart
+                                if (FlingAuraPlayer.Character.HumanoidRootPart.Position - TargetRootPart.Position).Magnitude <= 10 then
+                                    miniFling(Player)
+                                end
+                            end
+                        end
+                    end
+                    task.wait(0.5)
+                end
+            end)
+        end
+    end
+})
+
+FlingAuraPlayer.CharacterAdded:Connect(function()
+    FlingAuraEnabled = false
+end)
+
+local PlayersClickFling = game:GetService("Players")
+local UserInputServiceClick = game:GetService("UserInputService")
+local LocalPlayerClickFling = PlayersClickFling.LocalPlayer
+local MouseClickFling = LocalPlayerClickFling:GetMouse()
+local CameraClickFling = workspace.CurrentCamera
+local ClickFlingEnabled = false
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Click Fling",
+    ["Value"] = false,
+    ["Callback"] = function(State)
+        ClickFlingEnabled = State
+    end
+})
+
+local function GetPlayerFromPart(Part)
+    if Part and Part.Parent and Part.Parent:IsA("Model") then
+        local _ = PlayersClickFling.GetPlayerFromCharacter
+        local _ = Part.Parent
+    end
+end
+
+MouseClickFling.Button1Down:Connect(function()
+    if ClickFlingEnabled then
+        local TargetPlayer = GetPlayerFromPart(MouseClickFling.Target)
+        if TargetPlayer and TargetPlayer ~= LocalPlayerClickFling then
+            miniFling(TargetPlayer)
+        end
+    end
+end)
+
+UserInputServiceClick.TouchTap:Connect(function(TouchPositions, GameProcessed)
+    if ClickFlingEnabled and not GameProcessed then
+        local TouchPosition = TouchPositions[1]
+        local CameraPosition = CameraClickFling.CFrame.Position
+        local RayDirection = CameraClickFling:ViewportPointToRay(TouchPosition.X, TouchPosition.Y).Direction * 500
+        local RayParams = RaycastParams.new()
+        RayParams.FilterDescendantsInstances = { LocalPlayerClickFling.Character }
+        RayParams.FilterType = Enum.RaycastFilterType.Blacklist
+        local RayResult = workspace:Raycast(CameraPosition, RayDirection, RayParams)
+        local HitInstance
+        if RayResult then
+            HitInstance = RayResult.Instance
+        end
+        local TargetPlayer = GetPlayerFromPart(HitInstance)
+        if TargetPlayer and TargetPlayer ~= LocalPlayerClickFling then
+            miniFling(TargetPlayer)
+        end
+    end
+end)
+
+local FlingAllEnabled = false
+local PlayersFlingAll = game:GetService("Players")
+local LocalPlayerFlingAll = PlayersFlingAll.LocalPlayer
+local OriginalRootPartFlingAll = (LocalPlayerFlingAll.Character or LocalPlayerFlingAll.CharacterAdded:Wait()):FindFirstChild("HumanoidRootPart")
+local SavedCFrameFlingAll
+if OriginalRootPartFlingAll then
+    SavedCFrameFlingAll = OriginalRootPartFlingAll.CFrame
+else
+    SavedCFrameFlingAll = OriginalRootPartFlingAll
+end
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Fling All (Buggy?)",
+    ["Value"] = false,
+    ["Callback"] = function(State)
+        FlingAllEnabled = State
+        if State then
+            task.spawn(function()
+                while FlingAllEnabled do
+                    for _, Player in pairs(PlayersFlingAll:GetPlayers()) do
+                        if Player ~= LocalPlayerFlingAll then
+                            miniFling(Player)
+                        end
+                    end
+                    task.wait(0.5)
+                end
+            end)
+        elseif SavedCFrameFlingAll and OriginalRootPartFlingAll then
+            OriginalRootPartFlingAll.CFrame = SavedCFrameFlingAll
+        end
+    end
+})
+
+local LocalPlayerTouchFling = game.Players.LocalPlayer
+game:GetService("UserInputService")
+
+local TouchFlingEnabled
+if game:GetService("ReplicatedStorage"):FindFirstChild("juisdfj0i32i0eidsuf0iok") then
+    TouchFlingEnabled = false
+else
+    local Decal = Instance.new("Decal")
+    Decal.Name = "juisdfj0i32i0eidsuf0iok"
+    Decal.Parent = game:GetService("ReplicatedStorage")
+    TouchFlingEnabled = false
+end
+
+local function TouchFlingLoop()
+    local PlayerCharacter = nil
+    local RootPart = nil
+    local ToggleValue = 0.1
+    while TouchFlingEnabled do
+        game:GetService("RunService").Heartbeat:Wait()
+        local CurrentPlayer = game.Players.LocalPlayer
+        while TouchFlingEnabled and not (PlayerCharacter and (PlayerCharacter.Parent and (RootPart and RootPart.Parent))) do
+            game:GetService("RunService").Heartbeat:Wait()
+            PlayerCharacter = CurrentPlayer.Character
+            RootPart = PlayerCharacter:FindFirstChild("HumanoidRootPart") or (PlayerCharacter:FindFirstChild("Torso") or PlayerCharacter:FindFirstChild("UpperTorso"))
+        end
+        if TouchFlingEnabled then
+            local CurrentVelocity = RootPart.Velocity
+            RootPart.Velocity = CurrentVelocity * 10000 + Vector3.new(0, 10000, 0)
+            game:GetService("RunService").RenderStepped:Wait()
+            if PlayerCharacter and (PlayerCharacter.Parent and (RootPart and RootPart.Parent)) then
+                RootPart.Velocity = CurrentVelocity
+            end
+            game:GetService("RunService").Stepped:Wait()
+            if PlayerCharacter and (PlayerCharacter.Parent and (RootPart and RootPart.Parent)) then
+                RootPart.Velocity = CurrentVelocity + Vector3.new(0, ToggleValue, 0)
+                ToggleValue = ToggleValue * -1
+            end
+        end
+    end
+end
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Touch Fling",
+    ["Value"] = false,
+    ["Callback"] = function(State)
+        if State then
+            TouchFlingEnabled = true
+            coroutine.wrap(TouchFlingLoop)()
+        else
+            TouchFlingEnabled = false
+        end
+    end
+})
+
+local AntiFlingEnabled = false
+local AntiFlingConnections = {}
+
+local function DisablePlayerCollision(Player)
+    if AntiFlingEnabled and Player.Character then
+        for _, Descendant in pairs(Player.Character:GetDescendants()) do
+            if Descendant:IsA("BasePart") and Descendant.CanCollide then
+                Descendant.CanCollide = false
+            end
+        end
+    end
+end
+
+local function EnableAllPlayerCollisions()
+    for _, Player in pairs(game.Players:GetPlayers()) do
+        if Player ~= game.Players.LocalPlayer and Player.Character then
+            for _, Descendant in pairs(Player.Character:GetDescendants()) do
+                if Descendant:IsA("BasePart") then
+                    Descendant.CanCollide = true
+                end
+            end
+        end
+    end
+end
+
+local function StartAntiFling()
+    for _, Player in pairs(game.Players:GetPlayers()) do
+        if Player ~= game.Players.LocalPlayer then
+            local Connection = game:GetService("RunService").Stepped:Connect(function()
+                DisablePlayerCollision(Player)
+            end)
+            table.insert(AntiFlingConnections, Connection)
+        end
+    end
+    game.Players.PlayerAdded:Connect(function(NewPlayer)
+        if NewPlayer ~= game.Players.LocalPlayer then
+            local Connection = game:GetService("RunService").Stepped:Connect(function()
+                DisablePlayerCollision(NewPlayer)
+            end)
+            table.insert(AntiFlingConnections, Connection)
+        end
+    end)
+end
+
+local function StopAntiFling()
+    for _, Connection in pairs(AntiFlingConnections) do
+        Connection:Disconnect()
+    end
+    table.clear(AntiFlingConnections)
+    EnableAllPlayerCollisions()
+end
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Anti Fling",
+    ["Value"] = false,
+    ["Callback"] = function(State)
+        AntiFlingEnabled = State
+        if State then
+            StartAntiFling()
+        else
+            StopAntiFling()
+        end
+    end
+})
+
+local CustomFlingPower = 1000
+
+local CustomTouchFlingEnabled
+if game:GetService("ReplicatedStorage"):FindFirstChild("juisdfj0i32i0eidsuf0iok") then
+    CustomTouchFlingEnabled = false
+else
+    local Decal = Instance.new("Decal")
+    Decal.Name = "juisdfj0i32i0eidsuf0iok"
+    Decal.Parent = game:GetService("ReplicatedStorage")
+    CustomTouchFlingEnabled = false
+end
+
+local function CustomTouchFlingLoop()
+    local PlayerCharacter = nil
+    local RootPart = nil
+    local ToggleValue = 0.1
+    while CustomTouchFlingEnabled do
+        game:GetService("RunService").Heartbeat:Wait()
+        local CurrentPlayer = game.Players.LocalPlayer
+        while CustomTouchFlingEnabled and not (PlayerCharacter and (PlayerCharacter.Parent and (RootPart and RootPart.Parent))) do
+            game:GetService("RunService").Heartbeat:Wait()
+            PlayerCharacter = CurrentPlayer.Character
+            RootPart = PlayerCharacter:FindFirstChild("HumanoidRootPart") or (PlayerCharacter:FindFirstChild("Torso") or PlayerCharacter:FindFirstChild("UpperTorso"))
+        end
+        if CustomTouchFlingEnabled then
+            local CurrentVelocity = RootPart.Velocity
+            RootPart.Velocity = CurrentVelocity * CustomFlingPower + Vector3.new(0, 100, 0)
+            game:GetService("RunService").RenderStepped:Wait()
+            if PlayerCharacter and (PlayerCharacter.Parent and (RootPart and RootPart.Parent)) then
+                RootPart.Velocity = CurrentVelocity
+            end
+            game:GetService("RunService").Stepped:Wait()
+            if PlayerCharacter and (PlayerCharacter.Parent and (RootPart and RootPart.Parent)) then
+                RootPart.Velocity = CurrentVelocity + Vector3.new(0, ToggleValue, 0)
+                ToggleValue = ToggleValue * -1
+            end
+        end
+    end
+end
+
+Tabs.Fling:Toggle({
+    ["Title"] = "Costum Touch Fling Power",
+    ["Value"] = false,
+    ["Callback"] = function(State)
+        if State then
+            CustomTouchFlingEnabled = true
+            coroutine.wrap(CustomTouchFlingLoop)()
+        else
+            CustomTouchFlingEnabled = false
+        end
+    end
+})
+
+Tabs.Fling:Slider({
+    ["Title"] = "Fling Power Value",
+    ["Value"] = {
+        ["Min"] = 1,
+        ["Max"] = 10000,
+        ["Default"] = 100
+    },
+    ["Callback"] = function(Value)
+        CustomFlingPower = Value
+    end
+})
+
+Tabs.Tools:Section({
+    ["Title"] = "Universal Scripts",
+    ["Icon"] = "utensils"
+})
+
+Tabs.Tools:Button({
+    ["Title"] = "Hitbox Extender",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/AAPVdev/scripts/refs/heads/main/UI_LimbExtender.lua"))()
+    end
+})
+
+Tabs.Misc:Button({
+    ["Title"] = "f3x (client)",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/refs/heads/main/f3x.lua"))()
+    end
+})
+
+Tabs.Tools:Button({
+    ["Title"] = "TP Tool (Normal)",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastefy.app/ZLpXLAeF/raw"))()
+    end
+})
+
+Tabs.Tools:Button({
+    ["Title"] = "Run Tool",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastefy.app/6DahLoA3/raw"))()
+    end
+})
+
+Tabs.Tools:Button({
+    ["Title"] = "Super Run Tool",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://pastefy.app/uN8jb9GF/raw"))()
+    end
+})
+
+Tabs.Tools:Button({
+    ["Title"] = "VexonFly | Invincible Fly (R15)",
+    ["Locked"] = false,
+    ["Callback"] = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/DiosDi/VexonHub/refs/heads/main/VexonFly"))()
+    end
+})
+
+Info = Tabs.Info
+
+if not ui then
+    ui = {}
+end
+
+if not ui.Creator then
+    ui.Creator = {}
+end
+
+function ui.Creator.Request(RequestData)
+    local HttpService = game:GetService("HttpService")
+    local Success, Result = pcall(function()
+        if not HttpService.RequestAsync then
+            return {
+                ["Body"] = HttpService:GetAsync(RequestData.Url),
+                ["StatusCode"] = 200,
+                ["Success"] = true
+            }
+        end
+        local Response = HttpService:RequestAsync({
+            ["Url"] = RequestData.Url,
+            ["Method"] = RequestData.Method or "GET",
+            ["Headers"] = RequestData.Headers or {}
+        })
+        return {
+            ["Body"] = Response.Body,
+            ["StatusCode"] = Response.StatusCode,
+            ["Success"] = Response.Success
+        }
+    end)
+    if Success then
+        return Result
+    end
+    error("HTTP Request failed: " .. tostring(Result))
+end
+
+local DiscordInviteCode = "mdJKdwbKjE"
+local DiscordApiUrl = "https://discord.com/api/v10/invites/" .. DiscordInviteCode .. "?with_counts=true&with_expiration=true"
+
+;(function()
+    local Success, DiscordData = pcall(function()
+        local RequestParams = {
+            ["Url"] = DiscordApiUrl,
+            ["Method"] = "GET",
+            ["Headers"] = {
+                ["User-Agent"] = "RobloxBot/1.0",
+                ["Accept"] = "application/json"
+            }
+        }
+        return game:GetService("HttpService"):JSONDecode(ui.Creator.Request(RequestParams).Body)
+    end)
+    if Success and (DiscordData and DiscordData.guild) then
+        local DiscordParagraph = Info:Paragraph({
+            ["Title"] = DiscordData.guild.name,
+            ["Desc"] = " <font color=\"#52525b\">●</font> Member Count : " .. tostring(DiscordData.approximate_member_count) .. "\n <font color=\"#16a34a\">●</font> Online Count : " .. tostring(DiscordData.approximate_presence_count),
+            ["Image"] = "https://cdn.discordapp.com/icons/" .. DiscordData.guild.id .. "/" .. DiscordData.guild.icon .. ".png?size=1024",
+            ["ImageSize"] = 42
+        })
+        Info:Button({
+            ["Title"] = "Update Info",
+            ["Callback"] = function()
+                local UpdateSuccess, UpdateData = pcall(function()
+                    local UpdateParams = {
+                        ["Url"] = DiscordApiUrl,
+                        ["Method"] = "GET"
+                    }
+                    return game:GetService("HttpService"):JSONDecode(ui.Creator.Request(UpdateParams).Body)
+                end)
+                if UpdateSuccess and (UpdateData and UpdateData.guild) then
+                    DiscordParagraph:SetDesc(" <font color=\"#52525b\">●</font> Member Count : " .. tostring(UpdateData.approximate_member_count) .. "\n <font color=\"#16a34a\">●</font> Online Count : " .. tostring(UpdateData.approximate_presence_count))
+                    WindUI:Notify({
+                        ["Title"] = "Discord Info Updated",
+                        ["Content"] = "Successfully refreshed Discord statistics",
+                        ["Duration"] = 2,
+                        ["Icon"] = "refresh-cw"
+                    })
+                else
+                    WindUI:Notify({
+                        ["Title"] = "Update Failed",
+                        ["Content"] = "Could not refresh Discord info",
+                        ["Duration"] = 3,
+                        ["Icon"] = "alert-triangle"
+                    })
+                end
+            end
+        })
+        Info:Button({
+            ["Title"] = "Copy Discord Invite",
+            ["Callback"] = function()
+                setclipboard("https://discord.gg/" .. DiscordInviteCode)
+                WindUI:Notify({
+                    ["Title"] = "Copied!",
+                    ["Content"] = "Discord invite copied to clipboard",
+                    ["Duration"] = 2,
+                    ["Icon"] = "clipboard-check"
+                })
+            end
+        })
+    else
+        Info:Paragraph({
+            ["Title"] = "Error fetching Discord Info",
+            ["Desc"] = "Unable to load Discord information. Check your internet connection.",
+            ["Image"] = "triangle-alert",
+            ["ImageSize"] = 26,
+            ["Color"] = "Red"
+        })
+        print("Discord API Error:", DiscordData)
+    end
+end)()
+
+Info:Divider()
+
+Info:Section({
+    ["Title"] = "VexonHub",
+    ["TextXAlignment"] = "Center",
+    ["TextSize"] = 17
+})
+
+Info:Divider()
+
+Info:Paragraph({
+    ["Title"] = "Owner:",
+    ["Desc"] = "TheVex0n",
+    ["Image"] = "rbxassetid://84519376661277",
+    ["ImageSize"] = 30,
+    ["Thumbnail"] = "",
+    ["ThumbnailSize"] = 0,
+    ["Locked"] = false
+})
+
+Info:Paragraph({
+    ["Title"] = "Discord",
+    ["Desc"] = "Join our discord for more info and stuff",
+    ["Image"] = "rbxassetid://84519376661277",
+    ["ImageSize"] = 30,
+    ["Thumbnail"] = "",
+    ["ThumbnailSize"] = 0,
+    ["Locked"] = false,
+    ["Buttons"] = {
+        {
+            ["Icon"] = "copy",
+            ["Title"] = "Copy Link",
+            ["Callback"] = function()
+                setclipboard("https://discord.gg/mdJKdwbKjE")
+            end
+        }
+    }
+})
+
+RunServiceFling.Heartbeat:Connect(function(_)
+    if getgenv().AF then
+        if not farmStats.running then
+            farmStats.running = true
+            farmStats.startTime = os.time()
+            farmStats.startGold = LocalPlayerTouchFling.Data.Gold.Value
+            farmStats.startBlocks = LocalPlayerTouchFling.Data.GoldBlock.Value
+        end
+        if webhookSettings.enabled and os.time() - webhookSettings.lastSendTime >= webhookSettings.interval * 60 then
+            SendWebhookStats()
+        end
+    else
+        farmStats.running = false
+    end
+end)
+
+loadstring(game:HttpGet("https://pastefy.app/hcVkWhQF/raw"))()
