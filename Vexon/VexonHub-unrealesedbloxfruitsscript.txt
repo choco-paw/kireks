@@ -1,0 +1,3787 @@
+-- VEXON HUB - ULTIMATE BLOX FRUITS SCRIPT
+-- Completely restructured and enhanced with unique features
+
+-- World Detection System
+local VexonWorld = {
+    First = game.PlaceId == 2753915549 or game.PlaceId == 85211729168715,
+    Second = game.PlaceId == 4442272183 or game.PlaceId == 79091703265657,
+    Third = game.PlaceId == 7449423635 or game.PlaceId == 100117331123089
+}
+
+-- VexonHub Configuration System
+getgenv().VexonConfig = getgenv().VexonConfig or {
+    VisualEffects = true,
+    PerformanceMode = false,
+    AutoSaveSettings = true,
+    NotificationDuration = 3,
+    MaxNotifications = 5,
+    CurrentTheme = "VexonDark",
+    KeySystem = {
+        ToggleUI = Enum.KeyCode.RightControl,
+        FastMode = Enum.KeyCode.LeftShift,
+        EmergencyStop = Enum.KeyCode.X
+    }
+}
+
+-- VexonHub Settings (for UI configuration)
+getgenv().VexonHubSettings = getgenv().VexonHubSettings or {
+    TransparencyEnabled = false,
+    Theme = "Dark"
+}
+
+-- Global Variables (Renamed for uniqueness)
+_G.VexonAutoFarm = false
+_G.VexonMaterialFarm = false
+_G.VexonWorldTravel = false
+_G.VexonRaidMode = false
+_G.VexonAwakening = false
+_G.VexonSaberQuest = false
+_G.VexonBartiloQuest = false
+_G.VexonRengokuQuest = false
+_G.VexonBossHunter = false
+_G.VexonAllBossMode = false
+_G.VexonBossHop = false
+_G.VexonAutoClick = false
+_G.VexonHakiAuto = false
+_G.VexonObservationHaki = false
+_G.VexonSuperhumanMode = false
+_G.VexonFruitStorage = false
+_G.VexonFruitPurchase = false
+_G.VexonFruitBuyMoney = false
+_G.VexonFruitConsumption = false
+_G.VexonStatsUpgrade = false
+_G.VexonCodeRedemption = false
+_G.VexonDungeonAuto = false
+_G.VexonIslandHop = false
+_G.VexonSeaBeastHunter = false
+_G.VexonFactoryRaid = false
+_G.VexonCastleRaid = false
+_G.VexonTyrantMode = false
+_G.VexonKatakuriQuest = false
+_G.VexonSoulReaperQuest = false
+_G.VexonBoneExchange = false
+_G.VexonPrayerMode = false
+_G.VexonLuckTrial = false
+_G.VexonMirageIsland = false
+_G.VexonPrehistoricIsland = false
+_G.VexonKitsuneIsland = false
+_G.VexonPirateRaid = false
+_G.VexonMasteryFarm = false
+_G.VexonPlayerHunter = false
+_G.VexonAimbotSystem = false
+_G.VexonSpectateMode = false
+_G.VexonTeleportSystem = false
+
+-- New Missing Features from Analysis
+_G.VexonInfiniteAbility = false
+_G.VexonNoClipMode = false
+_G.VexonFlyMode = false
+_G.VexonSpeedBoost = false
+_G.VexonJumpPower = false
+_G.VexonWalkSpeed = false
+_G.VexonAutoLegendarySword = false
+_G.VexonAutoHakiColor = false
+_G.VexonAutoKen = false
+_G.VexonAutoObservation = false
+
+-- Weapon & Selection Variables
+_G.VexonWeaponSelect = "Melee"
+_G.VexonBossTarget = ""
+_G.VexonFruitDealerSelect = ""
+_G.VexonStatsSelect = "Melee"
+_G.VexonDungeonSelect = ""
+_G.VexonRaidSelect = ""
+_G.VexonMasterySelect = "Melee"
+_G.VexonTargetMode = "Closest"
+_G.VexonClickInterval = 0.1
+_G.VexonStatsPoints = 1
+
+-- ESP Variables (Renamed)
+local VexonPlayerESP = false
+local VexonChestESP = false
+local VexonFruitESP = false
+local VexonFlowerESP = false
+local VexonIslandESP = false
+local VexonMirageESP = false
+local VexonPrehistoricESP = false
+local VexonKitsuneESP = false
+local VexonBerryESP = false
+local VexonRealFruitESP = false
+local VexonGearESP = false
+local VexonInfiniteAbility = false
+
+-- Local Variables
+local VexonSelectedMonster = ""
+local VexonSelectedMaterial = ""
+local VexonSkillPosition = nil
+local VexonCurrentMonster = ""
+
+-- Safe WindUI loader with fallback
+local WindUI
+local uiLoaded = false
+
+-- Try to load WindUI with error handling
+local function loadWindUI()
+    local success, result = pcall(function()
+        return loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
+    end)
+    
+    if success then
+        WindUI = result
+        
+        -- Add default themes FIRST before setting any theme
+        WindUI:AddTheme({
+            Name = "Dark",
+            Accent = "#18181b",
+            Dialog = "#18181b", 
+            Outline = "#FFFFFF",
+            Text = "#FFFFFF",
+            Placeholder = "#999999",
+            Background = "#0e0e10",
+            Button = "#52525b",
+            Icon = "#a1a1aa",
+        })
+
+        WindUI:AddTheme({
+            Name = "Light",
+            Accent = "#f4f4f5",
+            Dialog = "#f4f4f5",
+            Outline = "#000000", 
+            Text = "#000000",
+            Placeholder = "#666666",
+            Background = "#ffffff",
+            Button = "#e4e4e7",
+            Icon = "#52525b",
+        })
+
+        WindUI:AddTheme({
+            Name = "Blue",
+            Accent = "#1e40af",
+            Dialog = "#1e3a8a",
+            Outline = "#93c5fd", 
+            Text = "#f0f9ff",
+            Placeholder = "#60a5fa",
+            Background = "#1e293b",
+            Button = "#3b82f6",
+            Icon = "#93c5fd",
+        })
+        
+        -- Add more themes as needed
+        WindUI:AddTheme({
+            Name = "Green",
+            Accent = "#059669",
+            Dialog = "#047857",
+            Outline = "#6ee7b7", 
+            Text = "#ecfdf5",
+            Placeholder = "#34d399",
+            Background = "#064e3b",
+            Button = "#10b981",
+            Icon = "#6ee7b7",
+        })
+        
+        WindUI:AddTheme({
+            Name = "Purple",
+            Accent = "#7c3aed",
+            Dialog = "#6d28d9",
+            Outline = "#c4b5fd", 
+            Text = "#faf5ff",
+            Placeholder = "#a78bfa",
+            Background = "#581c87",
+            Button = "#8b5cf6",
+            Icon = "#c4b5fd",
+        })
+        
+        WindUI:SetNotificationLower(true)
+        uiLoaded = true
+        print("WindUI loaded successfully")
+        return true
+    else
+        warn("Failed to load WindUI, using fallback UI:", result)
+        return false
+    end
+end
+
+-- Try to load WindUI
+uiLoaded = loadWindUI()
+
+-- Global variables
+_G.AutoFarm = false
+_G.AutoFarmMaterial = false
+_G.AutoNewWorld = false
+_G.AutoRaid = false
+_G.AutoAwaken = false
+_G.AutoSaber = false
+_G.AutoBartilo = false
+_G.AutoRengoku = false
+_G.AutoBoss = false
+_G.AutoAllBoss = false
+_G.AutoBossHop = false
+_G.AutoClick = false
+_G.AutoHaki = false
+_G.AutoKen = false
+_G.SuperhumanClick = false
+_G.AutoStoreFruit = false
+_G.AutoBuyFruit = false
+_G.AutoBuyFruitMoney = false
+_G.AutoEatFruit = false
+_G.AutoStats = false
+_G.AutoRedeem = false
+_G.AutoDungeon = false
+_G.AutoNextIsland = false
+_G.AutoSeaBeast = false
+_G.AutoFactory = false
+_G.AutoCastle = false
+_G.AutoTyrant = false
+_G.AutoKatakuri = false
+_G.AutoSoulReaper = false
+_G.AutoBoneTrade = false
+_G.AutoPray = false
+_G.AutoTryLuck = false
+_G.AutoMirageIsland = false
+_G.AutoPrehistoricIsland = false
+_G.AutoKitsuneIsland = false
+_G.AutoPirateRaid = false
+_G.AutoMasteryFarm = false
+_G.AutoPlayerFarm = false
+_G.AimbotEnabled = false
+_G.SpectateEnabled = false
+_G.TeleportEnabled = false
+
+_G.SelectWeapon = "Melee"
+_G.SelectBoss = ""
+_G.SelectFruitDealer = ""
+_G.SelectStats = "Melee"
+_G.SelectDungeon = ""
+_G.SelectRaid = ""
+_G.SelectMastery = "Melee"
+_G.SelectTarget = "Closest"
+_G.ClickDelay = 0.1
+_G.PointStats = 1
+
+local SelectMonster = ""
+local SelectMaterial = ""
+local ESPPlayer = false
+local ChestESP = false
+local DevilFruitESP = false
+local FlowerESP = false
+local IslandESP = false
+local MirageIslandESP = false
+local PrehistoricIslandESP = false
+local KitsuneIslandESP = false
+local BerryESP = false
+local RealFruitESP = false
+local GearESP = false
+local InfAbility = false
+local PositionSkillMasteryDevilFruit = nil
+local MonFarm = ""
+
+-- Create UI Window
+local Window
+if uiLoaded then
+    Window = WindUI:CreateWindow({
+        Title = "VexonHub - Blox Fruits",
+        Icon = "sword",
+        Author = "VexonHub",
+        Folder = "VexonHub",
+        Size = UDim2.fromOffset(550, 400),
+        Transparent = getgenv().VexonHubSettings.TransparencyEnabled,
+        Theme = "Dark", -- Use exact theme name that exists
+        Resizable = true,
+        SideBarWidth = 160,
+        BackgroundImageTransparency = 0.8,
+        HideSearchBar = false,
+        ScrollBarEnabled = true,
+        NewElements = true,
+        ToggleKey = Enum.KeyCode.RightControl,
+        OnClose = function()
+            print("Window closed")
+        end
+    })
+end
+
+-- Create tabs if UI loaded
+local Tabs = {}
+if uiLoaded then
+    Tabs.Farming = Window:Tab({Title = "Farming", Icon = "tractor", Desc = "Auto Farm & Leveling"})
+    Tabs.Material = Window:Tab({Title = "Materials", Icon = "package", Desc = "Auto Farm Materials"})
+    Tabs.Raid = Window:Tab({Title = "Raid", Icon = "swords", Desc = "Fruit Raids & Awakening"})
+    Tabs.Quest = Window:Tab({Title = "Quest", Icon = "scroll", Desc = "Auto Quests & Items"})
+    Tabs.Teleport = Window:Tab({Title = "Teleport", Icon = "map-pin", Desc = "Teleport Locations"})
+    Tabs.ESP = Window:Tab({Title = "ESP", Icon = "eye", Desc = "Visual Features"})
+    Tabs.Misc = Window:Tab({Title = "Misc", Icon = "settings", Desc = "Other Features"})
+    Tabs.Boss = Window:Tab({Title = "Boss", Icon = "skull", Desc = "Auto Boss Farming"})
+    Tabs.Fighting = Window:Tab({Title = "Combat", Icon = "fist", Desc = "Combat & PvP Features"})
+    Tabs.DevilFruit = Window:Tab({Title = "Devil Fruit", Icon = "apple", Desc = "Fruit Features"})
+    Tabs.Stats = Window:Tab({Title = "Stats", Icon = "trending-up", Desc = "Auto Stats Upgrades"})
+    Tabs.Dungeon = Window:Tab({Title = "Dungeon", Icon = "castle", Desc = "Auto Dungeon"})
+    Tabs.Island = Window:Tab({Title = "Island", Icon = "map", Desc = "Island Features"})
+    Tabs.SeaEvents = Window:Tab({Title = "Sea Events", Icon = "waves", Desc = "Sea Event Farming"})
+    Tabs.Mastery = Window:Tab({Title = "Mastery", Icon = "star", Desc = "Mastery Farming"})
+    Tabs.AdvancedBoss = Window:Tab({Title = "Advanced Boss", Icon = "crown", Desc = "Elite Boss Farming"})
+    Tabs.Settings = Window:Tab({Title = "Settings", Icon = "cog", Desc = "UI Settings"})
+    
+    print("All tabs created successfully")
+end
+
+-- Hook functions (optional - can be removed if causing issues)
+pcall(function()
+    local rs = game:GetService("ReplicatedStorage")
+    if rs:FindFirstChild("Effect") and rs.Effect:FindFirstChild("Container") then
+        local container = rs.Effect.Container
+        if container:FindFirstChild("Death") then
+            -- hookfunction(require(container.Death), function() end) -- Commented out to prevent potential issues
+        end
+        if container:FindFirstChild("Respawn") then
+            -- hookfunction(require(container.Respawn), function() end) -- Commented out to prevent potential issues
+        end
+    end
+end)
+
+-- ADVANCED VEXON FUNCTIONS - COMPLETE SET
+
+-- Infinite Ability System
+function VexonInfiniteAbility()
+    pcall(function()
+        local player = game.Players.LocalPlayer
+        local character = player.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+            if not character.HumanoidRootPart:FindFirstChild("VexonAgility") then
+                local particle = Instance.new("ParticleEmitter")
+                particle.Name = "VexonAgility"
+                particle.Parent = character.HumanoidRootPart
+                particle.Acceleration = Vector3.new(0, 0, 0)
+                particle.Color = ColorSequence.new(Color3.new(1, 1, 1))
+                particle.Lifetime = NumberRange.new(1, 2)
+                particle.Rate = 100
+                particle.Size = NumberSequence.new({
+                    NumberSequenceKeypoint.new(0, 0),
+                    NumberSequenceKeypoint.new(0.1, 1),
+                    NumberSequenceKeypoint.new(1, 4)
+                })
+                particle.RotSpeed = NumberRange.new(9999, 99999)
+                particle.Rotation = NumberRange.new(0, 0)
+                particle.Speed = NumberRange.new(30, 30)
+                particle.SpreadAngle = Vector2.new(0, 0, 0, 0)
+                particle.Texture = ""
+                particle.VelocityInheritance = 0
+                particle.Enabled = true
+            end
+        end
+    end)
+end
+
+-- No Clip System
+function VexonNoClip()
+    pcall(function()
+        local player = game.Players.LocalPlayer
+        local character = player.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+            if not character.HumanoidRootPart:FindFirstChild("VexonBodyClip") then
+                local bodyClip = Instance.new("BodyVelocity")
+                bodyClip.Name = "VexonBodyClip"
+                bodyClip.Parent = character.HumanoidRootPart
+                bodyClip.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+                bodyClip.P = 1500
+                bodyClip.Velocity = Vector3.new(0, 0, 0)
+            end
+        end
+    end)
+end
+
+-- Fly System
+function VexonFly()
+    pcall(function()
+        local player = game.Players.LocalPlayer
+        local character = player.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+            if not character.HumanoidRootPart:FindFirstChild("VexonFly") then
+                local flyPart = Instance.new("BodyVelocity")
+                flyPart.Name = "VexonFly"
+                flyPart.Parent = character.HumanoidRootPart
+                flyPart.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+                flyPart.Velocity = Vector3.new(0, 50, 0)
+            end
+        end
+    end)
+end
+
+-- Speed Boost System
+function VexonSpeedBoost()
+    pcall(function()
+        local player = game.Players.LocalPlayer
+        local character = player.Character
+        if character and character:FindFirstChild("Humanoid") then
+            character.Humanoid.WalkSpeed = 120
+            character.Humanoid.JumpPower = 80
+        end
+    end)
+end
+
+-- Auto Legendary Sword Purchase
+function VexonAutoLegendarySword()
+    pcall(function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer", "Buy")
+    end)
+end
+
+-- Auto Haki Color Purchase
+function VexonAutoHakiColor()
+    pcall(function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ColorsDealer", "2")
+    end)
+end
+
+-- Auto Ken (Observation Haki)
+function VexonAutoKen()
+    pcall(function()
+        local player = game.Players.LocalPlayer
+        if player.Character and player.Character:FindFirstChild("Humanoid") then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Ken", true)
+        end
+    end)
+end
+
+-- Auto Observation Haki
+function VexonAutoObservation()
+    pcall(function()
+        local player = game.Players.LocalPlayer
+        if player.Character and player.Character:FindFirstChild("Humanoid") then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Observation", true)
+        end
+    end)
+end
+
+-- Auto Fruit Storage
+function VexonAutoStoreFruit()
+    pcall(function()
+        local player = game.Players.LocalPlayer
+        for _, item in pairs(player.Backpack:GetChildren()) do
+            if item.Name:find("Fruit") then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit", item)
+            end
+        end
+    end)
+end
+
+-- Auto Fruit Purchase with Money
+function VexonAutoBuyFruitMoney()
+    pcall(function()
+        local fruits = {"Bomb", "Spike", "Chop", "Spring", "Kilo", "Smoke", "Spin", "Flame", "Falcon", "Ice", "Sand", "Dark", "Diamond", "Light", "Rubber", "Barrier", "Magma", "Quake", "Buddha", "Love", "Spider", "Sound", "Phoenix", "Portal", "Blade", "Rumble", "Dough", "Shadow", "Venom", "Control", "Spirit", "Dragon"}
+        local randomFruit = fruits[math.random(1, #fruits)]
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Cousin", "BuyFruit", randomFruit)
+    end)
+end
+
+-- Auto Eat Fruit
+function VexonAutoEatFruit()
+    pcall(function()
+        local player = game.Players.LocalPlayer
+        local character = player.Character
+        if character and character:FindFirstChild("Humanoid") then
+            local fruit = player.Backpack:FindFirstChild(game.Players.LocalPlayer.Data.DevilFruit.Value)
+            if fruit then
+                character.Humanoid:EquipTool(fruit)
+                wait(0.5)
+                fruit:Activate()
+            end
+        end
+    end)
+end
+
+-- Auto Stats Upgrade
+function VexonAutoStats()
+    pcall(function()
+        local player = game.Players.LocalPlayer
+        local stats = {"Melee", "Defense", "Sword", "Gun", "Demon Fruit", "Blox Fruit"}
+        local selectedStat = _G.VexonStatsSelect or "Melee"
+        
+        if player.Data and player.Data.Points and player.Data.Points.Value > 0 then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint", selectedStat, _G.VexonStatsPoints or 1)
+        end
+    end)
+end
+
+-- Auto Code Redemption
+function VexonAutoRedeem()
+    pcall(function()
+        local codes = {"fudd10", "Sub2Secret", "Enyu_is_Pro", "Starmanhealer", "TantaiGaming", "StrawHatMaine", "Axiore", "TantaiGaming", "JCWK", "Bluxxy", "Fngg4s", "Sub2Secret", "Sub2SecretBoss", "1m_favs", "Sub2Gale", "Sub2Boss", "Sub2Fer999", "Magicbus", "kittgaming", "Reel", "25kcode", "fudd10_v2", "Fuuk10", "Bignews", "UPD16", "3BVISITS", "THEGREATACE", "ADMIN", "SECRET", "FUDD10", "TONY", "POWER", "RESET", "4YEARS", "GAMER_ROBOT", "EXP_5B", "UPD15", "UPD14", "TWEETROBLOX", "2MVISITS", "DEVSCOOKING", "UPD13", "UPD12", "1MFAVS", "NEWUPD", "HOLIDAY", "THX4MILLION", "STARHEAL", "SUB2GAMER", "SUB2GAMERROBLOX", "3MVISITS", "FUD", "JOHNROBLOX", "MAGICBUS", "SUB2HALLOW", "SUB2ZERO", "Sub2Uncle", "Sub2Uncle2", "Sub2DaRealGames", "Sub2Official", "Sub2Maro", "Sub2Captain", "Sub2Jb", "Sub2Fer", "Sub2Snow", "Sub2Tam", "Sub2Skill", "Sub2SkillIssue", "Sub2Pray", "Sub2Noob", "Sub2Pro"}
+        
+        for _, code in pairs(codes) do
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("RedeemCode", code)
+            wait(0.1)
+        end
+    end)
+end
+
+-- Auto Click System
+function VexonAutoClick()
+    pcall(function()
+        game:GetService("VirtualUser"):CaptureController()
+        game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+    end)
+end
+
+-- Superhuman Click System
+function VexonSuperhumanClick()
+    pcall(function()
+        local player = game.Players.LocalPlayer
+        local character = player.Character
+        if character and character:FindFirstChild("Humanoid") then
+            local combatTools = {"Combat", "Black Leg", "Electro", "Fishman Karate", "Dragon Claw", "Superhuman", "Death Step", "Sharkman Karate", "Electric Claw", "Dragon Talon", "God Human"}
+            
+            for _, toolName in pairs(combatTools) do
+                local tool = player.Backpack:FindFirstChild(toolName) or character:FindFirstChild(toolName)
+                if tool then
+                    character.Humanoid:EquipTool(tool)
+                    wait(0.5)
+                    for i = 1, 5 do
+                        tool:Activate()
+                        wait(0.1)
+                    end
+                end
+            end
+        end
+    end)
+end
+
+-- Dynamic Quest Detection System (Update-Proof)
+local DynamicQuestChecker = {
+    currentQuests = {},
+    
+    scanQuestNPCs = function(self)
+        pcall(function()
+            self.currentQuests = {}
+            for _, npc in pairs(game.Workspace:GetDescendants()) do
+                if npc:IsA("Model") and npc:FindFirstChild("HumanoidRootPart") then
+                    -- Check if NPC has quest functionality
+                    local prompt = npc:FindFirstChildOfClass("ProximityPrompt")
+                    if prompt and prompt.ActionText:find("Quest") then
+                        local npcName = npc.Name
+                        local level = npc:FindFirstChild("Level") and npc.Level.Value or 0
+                        table.insert(self.currentQuests, {
+                            name = npcName,
+                            level = level,
+                            position = npc.HumanoidRootPart.CFrame,
+                            prompt = prompt
+                        })
+                    end
+                end
+            end
+        end)
+    end,
+    
+    getBestQuest = function(self, playerLevel)
+        self:scanQuestNPCs()
+        local bestQuest = nil
+        local levelDiff = math.huge
+        
+        for _, quest in pairs(self.currentQuests) do
+            local diff = math.abs(quest.level - playerLevel)
+            if diff < levelDiff and quest.level <= playerLevel + 50 then
+                levelDiff = diff
+                bestQuest = quest
+            end
+        end
+        
+        return bestQuest
+    end
+}
+
+-- Complete Quest Checker System (Enhanced)
+local QuestChecker = {
+    PlayerLevel = 0,
+    
+    updateLevel = function(self)
+        pcall(function()
+            local playerData = game.Players.LocalPlayer.Data
+            if playerData and playerData.Level then
+                self.PlayerLevel = playerData.Level.Value
+            end
+        end)
+    end,
+    
+    getCurrentQuest = function(self)
+        self:updateLevel()
+        local level = self.PlayerLevel
+        
+        -- Try dynamic detection first (update-proof)
+        local dynamicQuest = DynamicQuestChecker:getBestQuest(level)
+        if dynamicQuest then
+            return dynamicQuest.name, 1, dynamicQuest.name, dynamicQuest.position
+        end
+        
+        -- Fallback to hardcoded quests (might need updates)
+        -- World 1 Quests
+        if VexonWorld.First then
+            if level >= 1 and level <= 9 then
+                return "BanditQuest1", 1, "Bandit", CFrame.new(1059.37195, 15.4495068, 1550.4231)
+            elseif level >= 10 and level <= 14 then
+                return "JungleQuest", 1, "Monkey", CFrame.new(-1598.08911, 35.5501175, 153.377838)
+            elseif level >= 15 and level <= 29 then
+                return "JungleQuest", 2, "Gorilla", CFrame.new(-1598.08911, 35.5501175, 153.377838)
+            elseif level >= 30 and level <= 39 then
+                return "BuggyQuest1", 1, "Pirate", CFrame.new(-1141.07483, 4.10001802, 3831.5498)
+            elseif level >= 40 and level <= 59 then
+                return "BuggyQuest1", 2, "Brute", CFrame.new(-1141.07483, 4.10001802, 3831.5498)
+            elseif level >= 60 and level <= 74 then
+                return "DesertQuest", 1, "Desert Bandit", CFrame.new(894.488647, 5.14000702, 4392.43359)
+            elseif level >= 75 and level <= 89 then
+                return "DesertQuest", 2, "Desert Officer", CFrame.new(894.488647, 5.14000702, 4392.43359)
+            elseif level >= 90 and level <= 99 then
+                return "SnowQuest", 1, "Snow Bandit", CFrame.new(1389.74451, 88.1519318, -1298.90796)
+            elseif level >= 100 and level <= 119 then
+                return "SnowQuest", 2, "Snowman", CFrame.new(1389.74451, 88.1519318, -1298.90796)
+            elseif level >= 120 and level <= 149 then
+                return "MarineQuest2", 1, "Chief Petty Officer", CFrame.new(-5039.58643, 27.3500385, 4324.68018)
+            elseif level >= 150 and level <= 174 then
+                return "SkyQuest", 1, "Sky Bandit", CFrame.new(-4839.53027, 716.368591, -2619.44165)
+            elseif level >= 175 and level <= 189 then
+                return "SkyQuest", 2, "Dark Master", CFrame.new(-4839.53027, 716.368591, -2619.44165)
+            elseif level >= 190 and level <= 209 then
+                return "PrisonerQuest", 1, "Prisoner", CFrame.new(5308.93115, 1.65517521, 475.120514)
+            elseif level >= 210 and level <= 249 then
+                return "PrisonerQuest", 2, "Dangerous Prisoner", CFrame.new(5308.93115, 1.65517521, 475.120514)
+            elseif level >= 250 and level <= 274 then
+                return "ColosseumQuest", 1, "Toga Warrior", CFrame.new(-1580.04663, 6.35000277, -2986.47534)
+            elseif level >= 275 and level <= 299 then
+                return "ColosseumQuest", 2, "Gladiator", CFrame.new(-1580.04663, 6.35000277, -2986.47534)
+            elseif level >= 300 and level <= 324 then
+                return "MagmaQuest", 1, "Military Soldier", CFrame.new(-5313.37012, 10.9500084, 8515.29395)
+            elseif level >= 325 and level <= 374 then
+                return "MagmaQuest", 2, "Military Spy", CFrame.new(-5313.37012, 10.9500084, 8515.29395)
+            elseif level >= 375 and level <= 399 then
+                return "FishmanQuest", 1, "Fishman Warrior", CFrame.new(61122.65234375, 18.497442245483, 1569.3997802734)
+            elseif level >= 400 and level <= 449 then
+                return "FishmanQuest", 2, "Fishman Commando", CFrame.new(61122.65234375, 18.497442245483, 1569.3997802734)
+            elseif level >= 450 and level <= 474 then
+                return "SkyExp1Quest", 1, "God's Guard", CFrame.new(-4721.88867, 843.874695, -1949.96643)
+            elseif level >= 475 and level <= 524 then
+                return "SkyExp1Quest", 2, "Shanda", CFrame.new(-7859.09814, 5544.19043, -381.476196)
+            elseif level >= 525 and level <= 549 then
+                return "SkyExp2Quest", 1, "Royal Squad", CFrame.new(-7906.81592, 5634.6626, -1411.99194)
+            elseif level >= 550 and level <= 624 then
+                return "SkyExp2Quest", 2, "Royal Soldier", CFrame.new(-7906.81592, 5634.6626, -1411.99194)
+            elseif level >= 625 and level <= 649 then
+                return "FountainQuest", 1, "Galley Pirate", CFrame.new(5259.81982, 37.3500175, 4050.0293)
+            elseif level >= 650 then
+                return "FountainQuest", 2, "Galley Captain", CFrame.new(5259.81982, 37.3500175, 4050.0293)
+            end
+        -- World 2 Quests
+        elseif VexonWorld.Second then
+            if level >= 700 and level <= 724 then
+                return "Area1Quest", 1, "Raider", CFrame.new(-429.543518, 71.7699966, 1836.18188)
+            elseif level >= 725 and level <= 774 then
+                return "Area1Quest", 2, "Mercenary", CFrame.new(-429.543518, 71.7699966, 1836.18188)
+            elseif level >= 775 and level <= 799 then
+                return "Area2Quest", 1, "Swan Pirate", CFrame.new(638.43811, 71.769989, 918.282898)
+            elseif level >= 800 and level <= 874 then
+                return "Area2Quest", 2, "Factory Staff", CFrame.new(632.698608, 73.1055908, 918.666321)
+            elseif level >= 875 and level <= 899 then
+                return "MarineQuest3", 1, "Marine Lieutenant", CFrame.new(-2440.79639, 71.7140732, -3216.06812)
+            elseif level >= 900 and level <= 949 then
+                return "MarineQuest3", 2, "Marine Captain", CFrame.new(-2440.79639, 71.7140732, -3216.06812)
+            elseif level >= 950 and level <= 974 then
+                return "ZombieQuest", 1, "Zombie", CFrame.new(-5497.06152, 47.5923004, -795.237061)
+            elseif level >= 975 and level <= 999 then
+                return "ZombieQuest", 2, "Vampire", CFrame.new(-5497.06152, 47.5923004, -795.237061)
+            elseif level >= 1000 and level <= 1049 then
+                return "SnowMountainQuest", 1, "Snow Trooper", CFrame.new(609.858826, 400.119904, -5372.25928)
+            elseif level >= 1050 and level <= 1099 then
+                return "SnowMountainQuest", 2, "Winter Warrior", CFrame.new(609.858826, 400.119904, -5372.25928)
+            elseif level >= 1100 and level <= 1124 then
+                return "IceSideQuest", 1, "Lab Subordinate", CFrame.new(-6064.06885, 15.2422857, -4902.97852)
+            elseif level >= 1125 and level <= 1174 then
+                return "IceSideQuest", 2, "Horned Warrior", CFrame.new(-6064.06885, 15.2422857, -4902.97852)
+            elseif level >= 1175 and level <= 1199 then
+                return "FireSideQuest", 1, "Magma Ninja", CFrame.new(-5428.03174, 15.0622921, -5299.43457)
+            elseif level >= 1200 and level <= 1249 then
+                return "FireSideQuest", 2, "Lava Pirate", CFrame.new(-5428.03174, 15.0622921, -5299.43457)
+            elseif level >= 1250 and level <= 1274 then
+                return "ShipQuest1", 1, "Ship Deckhand", CFrame.new(1037.80127, 125.092171, 32911.6016)
+            elseif level >= 1275 and level <= 1299 then
+                return "ShipQuest1", 2, "Ship Engineer", CFrame.new(1037.80127, 125.092171, 32911.6016)
+            elseif level >= 1300 and level <= 1324 then
+                return "ShipQuest2", 1, "Ship Steward", CFrame.new(968.80957, 125.092171, 33244.125)
+            elseif level >= 1325 and level <= 1349 then
+                return "ShipQuest2", 2, "Ship Officer", CFrame.new(968.80957, 125.092171, 33244.125)
+            elseif level >= 1350 and level <= 1374 then
+                return "FrostQuest", 1, "Arctic Warrior", CFrame.new(5667.6582, 26.7997818, -6486.08984)
+            elseif level >= 1375 and level <= 1424 then
+                return "FrostQuest", 2, "Snow Lurker", CFrame.new(5667.6582, 26.7997818, -6486.08984)
+            elseif level >= 1425 and level <= 1449 then
+                return "ForgottenQuest", 1, "Sea Soldier", CFrame.new(-3054.44458, 235.544281, -10142.8193)
+            elseif level >= 1450 then
+                return "ForgottenQuest", 2, "Water Fighter", CFrame.new(-3054.44458, 235.544281, -10142.8193)
+            end
+        -- World 3 Quests
+        elseif VexonWorld.Third then
+            if level >= 1500 and level <= 1524 then
+                return "PiratePortQuest", 1, "Pirate Millionaire", CFrame.new(-450.104645, 107.681458, 5950.72607)
+            elseif level >= 1525 and level <= 1574 then
+                return "PiratePortQuest", 2, "Pistol Billionaire", CFrame.new(-450.104645, 107.681458, 5950.72607)
+            elseif level >= 1575 and level <= 1599 then
+                return "DragonCrewQuest", 1, "Dragon Crew Warrior", CFrame.new(6750.4931640625, 127.44916534423828, -711.0308837890625)
+            elseif level >= 1600 and level <= 1624 then
+                return "DragonCrewQuest", 2, "Dragon Crew Archer", CFrame.new(6750.4931640625, 127.44916534423828, -711.0308837890625)
+            elseif level >= 1625 and level <= 1649 then
+                return "VenomCrewQuest", 1, "Hydra Enforcer", CFrame.new(5206.40185546875, 1004.10498046875, 748.3504638671875)
+            elseif level >= 1650 and level <= 1699 then
+                return "VenomCrewQuest", 2, "Venomous Assailant", CFrame.new(5206.40185546875, 1004.10498046875, 748.3504638671875)
+            elseif level >= 1700 and level <= 1724 then
+                return "MarineTreeIsland", 1, "Marine Commodore", CFrame.new(2481.09228515625, 74.27049255371094, -6779.640625)
+            elseif level >= 1725 and level <= 1774 then
+                return "MarineTreeIsland", 2, "Marine Rear Admiral", CFrame.new(2481.09228515625, 74.27049255371094, -6779.640625)
+            elseif level >= 1775 and level <= 1799 then
+                return "DeepForestIsland3", 1, "Fishman Raider", CFrame.new(-10581.6563, 330.872955, -8761.18652)
+            elseif level >= 1800 and level <= 1824 then
+                return "DeepForestIsland3", 2, "Fishman Captain", CFrame.new(-10581.6563, 330.872955, -8761.18652)
+            elseif level >= 1825 and level <= 1849 then
+                return "DeepForestIsland", 1, "Forest Pirate", CFrame.new(-13234.04, 331.488495, -7625.40137)
+            elseif level >= 1850 and level <= 1899 then
+                return "DeepForestIsland", 2, "Jungle Pirate", CFrame.new(-12680.3818, 389.971039, -9902.01953)
+            elseif level >= 1900 and level <= 1924 then
+                return "DeepForestIsland2", 1, "Musketeer Pirate", CFrame.new(-12680.3818, 389.971039, -9902.01953)
+            elseif level >= 1925 and level <= 1974 then
+                return "DeepForestIsland2", 2, "Reborn Skeleton", CFrame.new(-12680.3818, 389.971039, -9902.01953)
+            elseif level >= 1975 and level <= 1999 then
+                return "HauntedQuest1", 1, "Living Zombie", CFrame.new(-9479.2168, 141.215088, 5566.09277)
+            elseif level >= 2000 and level <= 2024 then
+                return "HauntedQuest1", 2, "Demonic Soul", CFrame.new(-9479.2168, 141.215088, 5566.09277)
+            elseif level >= 2025 and level <= 2049 then
+                return "HauntedQuest2", 1, "Posessed Mummy", CFrame.new(-9516.99316, 172.017181, 6078.46533)
+            elseif level >= 2050 then
+                return "NutsIslandQuest", 2, "Peanut Scout", CFrame.new(-2104.3908691406, 38.104167938232, -10194.21875)
+            end
+        end
+        
+        return nil, 1, "Bandit", CFrame.new(1059.37195, 15.4495068, 1550.4231)
+    end,
+    
+    hasActiveQuest = function(self)
+        local mainGui = game.Players.LocalPlayer.PlayerGui.Main
+        return mainGui and mainGui.Quest and mainGui.Quest.Visible == true
+    end,
+    
+    startQuest = function(self, questName, questLevel)
+        pcall(function()
+            local remote = game:GetService("ReplicatedStorage").Remotes.CommF_
+            if remote then
+                -- Try multiple quest start methods (update-proof)
+                local success1 = remote:InvokeServer("StartQuest", questName, questLevel)
+                if not success1 then
+                    -- Try alternative method
+                    local success2 = remote:InvokeServer("StartQuest", {Name = questName, Level = questLevel})
+                    if not success2 then
+                        -- Try with NPC interaction
+                        for _, npc in pairs(game.Workspace:GetDescendants()) do
+                            if npc.Name == questName and npc:FindFirstChildOfClass("ProximityPrompt") then
+                                fireproximityprompt(npc:FindFirstChildOfClass("ProximityPrompt"))
+                                break
+                            end
+                        end
+                    end
+                end
+            end
+        end)
+    end
+}
+
+-- Helper function for notifications
+function sendNotification(title, content, duration, icon)
+    if uiLoaded and WindUI and WindUI.Notify then
+        pcall(function()
+            WindUI:Notify({
+                Title = title,
+                Content = content,
+                Duration = duration,
+                Icon = icon
+            })
+        end)
+    else
+        print("[VexonHub]", title .. ": " .. content)
+    end
+end
+
+-- Now create UI elements after the helper functions are defined
+if uiLoaded then
+    -- Farming Tab Setup
+    Tabs.Farming:Section({ Title = "Auto Farm Settings", Icon = "cog" })
+
+    -- Farming Type Selection
+    local farmingTypes = {"Level Farm", "Fruit Mastery No Quest", "Fruit Mastery", "Bone Mastery", "Cake Mastery"}
+    Tabs.Farming:Dropdown({
+        Title = "Farming Mode",
+        Desc = "Select the type of farming to perform",
+        Values = farmingTypes,
+        Callback = function(value)
+            _G.selectFruitFarm = value
+            sendNotification("VexonHub", "Farming Mode: " .. value, 2, "settings")
+        end
+    })
+
+    -- Health Threshold for Skills
+    Tabs.Farming:Slider({
+        Title = "Skill Activation Health %",
+        Desc = "Use skills when enemy health drops below this percentage",
+        Min = 10,
+        Max = 100,
+        Default = 25,
+        Callback = function(value)
+            KillPercent = value
+        end
+    })
+
+    -- Skill Toggles
+    Tabs.Farming:Section({ Title = "Skill Settings", Icon = "zap" })
+
+    Tabs.Farming:Toggle({
+        Title = "Use Skill Z",
+        Desc = "Automatically use Z skill",
+        Value = true,
+        Callback = function(state)
+            SkillZ = state
+        end
+    })
+
+    Tabs.Farming:Toggle({
+        Title = "Use Skill X",
+        Desc = "Automatically use X skill",
+        Value = false,
+        Callback = function(state)
+            SkillX = state
+        end
+    })
+
+    Tabs.Farming:Toggle({
+        Title = "Use Skill C",
+        Desc = "Automatically use C skill",
+        Value = false,
+        Callback = function(state)
+            SkillC = state
+        end
+    })
+
+    Tabs.Farming:Toggle({
+        Title = "Use Skill V",
+        Desc = "Automatically use V skill",
+        Value = false,
+        Callback = function(state)
+            SkillV = state
+        end
+    })
+
+    Tabs.Farming:Toggle({
+        Title = "Use Skill F",
+        Desc = "Automatically use F skill",
+        Value = false,
+        Callback = function(state)
+            SkillF = state
+        end
+    })
+
+    Tabs.Farming:Toggle({
+        Title = "Auto Farm Level",
+        Desc = "Automatically farm monsters for levels",
+        Value = false,
+        Callback = function(state)
+            _G.AutoFarm = state
+            if state then
+                sendNotification("VexonHub", "Auto Farm Enabled", 2, "play")
+                spawn(autoFarmLoop)
+            else
+                sendNotification("VexonHub", "Auto Farm Disabled", 2, "stop")
+            end
+        end
+    })
+
+    -- Advanced Farming Toggle
+    Tabs.Farming:Toggle({
+        Title = "Auto Farm Fruits",
+        Desc = "Advanced fruit farming with mastery",
+        Value = false,
+        Callback = function(state)
+            _G.AutoFarmFruits = state
+            if state then
+                sendNotification("VexonHub", "Fruit Farming Enabled", 2, "apple")
+                spawn(fruitMasteryLoop)
+            else
+                sendNotification("VexonHub", "Fruit Farming Disabled", 2, "apple")
+            end
+        end
+    })
+
+    -- Chest Farming Toggle
+    Tabs.Farming:Toggle({
+        Title = "Auto Farm Chest",
+        Desc = "Automatically find and collect chests",
+        Value = false,
+        Callback = function(state)
+            _G.FarmChest = state
+            if state then
+                sendNotification("VexonHub", "Chest Farming Enabled", 2, "box")
+                spawn(chestFarmingLoop)
+            else
+                sendNotification("VexonHub", "Chest Farming Disabled", 2, "box")
+            end
+        end
+    })
+
+    -- Berry Farming Toggle
+    Tabs.Farming:Toggle({
+        Title = "Auto Farm Berries",
+        Desc = "Automatically collect berries",
+        Value = false,
+        Callback = function(state)
+            _G.CollectBerry = state
+            if state then
+                sendNotification("VexonHub", "Berry Farming Enabled", 2, "cherry")
+                spawn(berryFarmingLoop)
+            else
+                sendNotification("VexonHub", "Berry Farming Disabled", 2, "cherry")
+            end
+        end
+    })
+    
+    Tabs.Farming:Dropdown({
+        Title = "Select Monster",
+        Desc = "Choose monster to farm",
+        Values = {"Bandit", "Monkey", "Gorilla", "Pirate", "Brute", "Desert Bandit", "Desert Officer", "Snow Bandit", "Snowman", "Chief Petty Officer"},
+        Callback = function(value)
+            SelectMonster = value
+        end
+    })
+    
+    Tabs.Farming:Toggle({
+        Title = "Auto New World",
+        Desc = "Auto travel to new world when ready",
+        Value = false,
+        Callback = function(state)
+            _G.AutoNewWorld = state
+            if state then
+                spawn(autoNewWorldLoop)
+            end
+        end
+    })
+    
+    -- Weapon Selection
+    Tabs.Farming:Section({ Title = "Weapon Selection", Icon = "sword" })
+    
+    local weaponTypes = {"Melee", "Sword", "Gun", "Fruit"}
+    Tabs.Farming:Dropdown({
+        Title = "Weapon Type",
+        Desc = "Select weapon type for auto farm",
+        Values = weaponTypes,
+        Callback = function(value)
+            _G.SelectWeapon = value
+        end
+    })
+    
+    -- Material Farm Tab
+    Tabs.Material:Section({ Title = "Material Farming", Icon = "package" })
+    
+    Tabs.Material:Toggle({
+        Title = "Auto Farm Material",
+        Desc = "Automatically farm materials",
+        Value = false,
+        Callback = function(state)
+            _G.AutoFarmMaterial = state
+            if state then
+                sendNotification("VexonHub", "Material Farming Enabled", 2, "package")
+                spawn(autoMaterialLoop)
+            else
+                sendNotification("VexonHub", "Material Farming Disabled", 2, "package")
+            end
+        end
+    })
+    
+    Tabs.Material:Dropdown({
+        Title = "Select Material",
+        Desc = "Choose material to farm",
+        Values = {"Radiactive Material", "Leather + Scrap Metal", "Magma Ore", "Fish Tail", "Angel Wings", "Mystic Droplet", "Vampire Fang", "Gunpowder", "Mini Tusk", "Conjured Cocoa"},
+        Callback = function(value)
+            SelectMaterial = value
+        end
+    })
+    
+    -- Boss Tab
+    Tabs.Boss:Section({ Title = "Auto Boss", Icon = "crown" })
+    
+    Tabs.Boss:Toggle({
+        Title = "Auto Boss",
+        Desc = "Automatically farm bosses",
+        Value = false,
+        Callback = function(state)
+            _G.AutoBoss = state
+            if state then
+                sendNotification("VexonHub", "Auto Boss Farming Enabled", 2, "skull")
+                spawn(autoBossLoop)
+            end
+        end
+    })
+    
+    local bossList = {
+        "The Gorilla King", "Bobby", "Yeti", "Vice Admiral", "Warden", "Chief Warden", "Swan",
+        "Magma Admiral", "Fishman Lord", "Wysper", "Thunder God", "Cyborg", "Saber Expert",
+        "Darkbeard", "Ice Admiral", "Awakened Ice Admiral", "Cursed Captain", "Tide Keeper",
+        "Dough King", "Cake Queen"
+    }
+    
+    Tabs.Boss:Dropdown({
+        Title = "Select Boss",
+        Desc = "Choose boss to farm",
+        Values = bossList,
+        Callback = function(value)
+            _G.SelectBoss = value
+        end
+    })
+    
+    Tabs.Boss:Toggle({
+        Title = "Auto Farm Boss Hop",
+        Desc = "Hop server if boss not found",
+        Value = false,
+        Callback = function(state)
+            _G.AutoBossHop = state
+        end
+    })
+    
+    Tabs.Boss:Toggle({
+        Title = "Auto All Boss",
+        Desc = "Automatically farm all bosses in order",
+        Value = false,
+        Callback = function(state)
+            _G.AutoAllBoss = state
+            if state then
+                spawn(autoAllBossLoop)
+            end
+        end
+    })
+    
+    -- Quest Tab
+    Tabs.Quest:Section({ Title = "Auto Quest", Icon = "scroll" })
+
+    Tabs.Quest:Toggle({
+        Title = "Auto Saber",
+        Desc = "Auto complete Saber quest",
+        Value = false,
+        Callback = function(state)
+            _G.AutoSaber = state
+            if state then
+                sendNotification("VexonHub", "Auto Saber Quest Enabled", 2, "sword")
+                spawn(autoSaberLoop)
+            else
+                sendNotification("VexonHub", "Auto Saber Quest Disabled", 2, "sword")
+            end
+        end
+    })
+
+    Tabs.Quest:Toggle({
+        Title = "Auto Bartilo",
+        Desc = "Auto complete Bartilo quest",
+        Value = false,
+        Callback = function(state)
+            _G.AutoBartilo = state
+            if state then
+                sendNotification("VexonHub", "Auto Bartilo Quest Enabled", 2, "scroll")
+                spawn(autoBartiloLoop)
+            else
+                sendNotification("VexonHub", "Auto Bartilo Quest Disabled", 2, "scroll")
+            end
+        end
+    })
+
+    Tabs.Quest:Toggle({
+        Title = "Auto Rengoku",
+        Desc = "Auto complete Rengoku quest",
+        Value = false,
+        Callback = function(state)
+            _G.AutoRengoku = state
+            if state then
+                sendNotification("VexonHub", "Auto Rengoku Quest Enabled", 2, "scroll")
+                spawn(autoRengokuLoop)
+            else
+                sendNotification("VexonHub", "Auto Rengoku Quest Disabled", 2, "scroll")
+            end
+        end
+    })
+
+    -- ESP Tab
+    Tabs.ESP:Section({ Title = "Player ESP", Icon = "user" })
+
+    Tabs.ESP:Toggle({
+        Title = "Player ESP",
+        Desc = "Show player names and health",
+        Value = false,
+        Callback = function(state)
+            ESPPlayer = state
+            if state then
+                spawn(function()
+                    while ESPPlayer do
+                        UpdatePlayerChams()
+                        task.wait(1)
+                    end
+                end)
+                sendNotification("VexonHub", "Player ESP Enabled", 2, "eye")
+            else
+                sendNotification("VexonHub", "Player ESP Disabled", 2, "eye-off")
+            end
+        end
+    })
+
+    Tabs.ESP:Section({ Title = "Item ESP", Icon = "package" })
+
+    Tabs.ESP:Toggle({
+        Title = "Chest ESP",
+        Desc = "Show chests through walls",
+        Value = false,
+        Callback = function(state)
+            ChestESP = state
+            if state then
+                spawn(function()
+                    while ChestESP do
+                        UpdateChestESP()
+                        task.wait(1)
+                    end
+                end)
+                sendNotification("VexonHub", "Chest ESP Enabled", 2, "box")
+            else
+                sendNotification("VexonHub", "Chest ESP Disabled", 2, "box")
+            end
+        end
+    })
+
+    Tabs.ESP:Toggle({
+        Title = "Devil Fruit ESP",
+        Desc = "Show devil fruits through walls",
+        Value = false,
+        Callback = function(state)
+            DevilFruitESP = state
+            if state then
+                spawn(function()
+                    while DevilFruitESP do
+                        UpdateDevilChams()
+                        task.wait(1)
+                    end
+                end)
+                sendNotification("VexonHub", "Devil Fruit ESP Enabled", 2, "apple")
+            else
+                sendNotification("VexonHub", "Devil Fruit ESP Disabled", 2, "apple")
+            end
+        end
+    })
+
+    Tabs.ESP:Toggle({
+        Title = "Berry ESP",
+        Desc = "Show berry bushes through walls",
+        Value = false,
+        Callback = function(state)
+            BerryESP = state
+            if state then
+                spawn(function()
+                    while BerryESP do
+                        UpdateBerriesESP()
+                        task.wait(1)
+                    end
+                end)
+                sendNotification("VexonHub", "Berry ESP Enabled", 2, "cherry")
+            else
+                sendNotification("VexonHub", "Berry ESP Disabled", 2, "cherry")
+            end
+        end
+    })
+
+    Tabs.ESP:Toggle({
+        Title = "Flower ESP",
+        Desc = "Show flowers through walls",
+        Value = false,
+        Callback = function(state)
+            FlowerESP = state
+            if state then
+                spawn(function()
+                    while FlowerESP do
+                        UpdateFlowerChams()
+                        task.wait(1)
+                    end
+                end)
+                sendNotification("VexonHub", "Flower ESP Enabled", 2, "flower")
+            else
+                sendNotification("VexonHub", "Flower ESP Disabled", 2, "flower")
+            end
+        end
+    })
+
+    Tabs.ESP:Section({ Title = "Island ESP", Icon = "map" })
+
+    Tabs.ESP:Toggle({
+        Title = "Island ESP",
+        Desc = "Show island names",
+        Value = false,
+        Callback = function(state)
+            IslandESP = state
+            if state then
+                spawn(function()
+                    while IslandESP do
+                        UpdateIslandESP()
+                        task.wait(1)
+                    end
+                end)
+                sendNotification("VexonHub", "Island ESP Enabled", 2, "map")
+            else
+                sendNotification("VexonHub", "Island ESP Disabled", 2, "map")
+            end
+        end
+    })
+
+    Tabs.ESP:Toggle({
+        Title = "Mirage Island ESP",
+        Desc = "Show mirage islands",
+        Value = false,
+        Callback = function(state)
+            MirageIslandESP = state
+            if state then
+                spawn(function()
+                    while MirageIslandESP do
+                        UpdateIslandMirageESP()
+                        task.wait(1)
+                    end
+                end)
+                sendNotification("VexonHub", "Mirage Island ESP Enabled", 2, "eye")
+            else
+                sendNotification("VexonHub", "Mirage Island ESP Disabled", 2, "eye-off")
+            end
+        end
+    })
+
+    Tabs.ESP:Toggle({
+        Title = "Prehistoric Island ESP",
+        Desc = "Show prehistoric islands",
+        Value = false,
+        Callback = function(state)
+            PrehistoricIslandESP = state
+            if state then
+                spawn(function()
+                    while PrehistoricIslandESP do
+                        UpdatePrehistoricIslandESP()
+                        task.wait(1)
+                    end
+                end)
+                sendNotification("VexonHub", "Prehistoric Island ESP Enabled", 2, "eye")
+            else
+                sendNotification("VexonHub", "Prehistoric Island ESP Disabled", 2, "eye-off")
+            end
+        end
+    })
+
+        Tabs.ESP:Toggle({
+            Title = "Kitsune Island ESP",
+            Desc = "Show kitsune islands",
+            Value = false,
+            Callback = function(state)
+                KitsuneIslandESP = state
+                if state then
+                    spawn(function()
+                        while KitsuneIslandESP do
+                            UpdateIslandKisuneESP()
+                            task.wait(1)
+                        end
+                    end)
+                    sendNotification("VexonHub", "Kitsune Island ESP Enabled", 2, "eye")
+                else
+                    sendNotification("VexonHub", "Kitsune Island ESP Disabled", 2, "eye-off")
+                end
+            end
+        })
+
+        -- Raid Tab
+        Tabs.Raid:Section({ Title = "Raid Settings", Icon = "swords" })
+
+        local raidChips = {"Flame", "Ice", "Sand", "Dark", "Light", "Magma", "Quake", "Buddha", "Spider", "Phoenix", "Rumble", "Dough"}
+        Tabs.Raid:Dropdown({
+            Title = "Select Raid Chip",
+            Desc = "Choose raid chip to use",
+            Values = raidChips,
+            Callback = function(value)
+                _G.SelectRaid = value
+            end
+        })
+
+        Tabs.Raid:Toggle({
+            Title = "Auto Buy Chip",
+            Desc = "Automatically buy selected raid chip",
+            Value = false,
+            Callback = function(state)
+                _G.AutoBuyChip = state
+            end
+        })
+
+        Tabs.Raid:Toggle({
+            Title = "Auto Start Raid",
+            Desc = "Automatically start raid with selected chip",
+            Value = false,
+            Callback = function(state)
+                _G.AutoStartRaid = state
+            end
+        })
+    
+    -- Raid Tab
+    Tabs.Raid = Window:Tab({Title = "Raid", Icon = "swords", Desc = "Fruit Raids & Awakening"})
+    Tabs.Raid:Section({ Title = "Raid Settings", Icon = "cog" })
+
+    local raidChips = {"Flame","Ice","Sand","Dark","Light","Magma","Quake","Buddha","Spider","Phoenix","Rumble","Dough"}
+    Tabs.Raid:Dropdown({
+        Title = "Select Raid Chip",
+        Desc = "Choose raid chip type",
+        Values = raidChips,
+        Callback = function(value)
+            _G.SelectChip = value
+            sendNotification("VexonHub", "Selected Raid Chip: " .. value, 2, "swords")
+        end
+    })
+
+    Tabs.Raid:Toggle({
+        Title = "Auto Buy Chip",
+        Desc = "Automatically buy selected raid chip",
+        Value = false,
+        Callback = function(state)
+            _G.AutoBuyChip = state
+            if state then
+                sendNotification("VexonHub", "Auto Buy Chip Enabled", 2, "shopping-cart")
+            else
+                sendNotification("VexonHub", "Auto Buy Chip Disabled", 2, "x")
+            end
+        end
+    })
+
+    Tabs.Raid:Toggle({
+        Title = "Auto Start Raid",
+        Desc = "Automatically start raid when chip is available",
+        Value = false,
+        Callback = function(state)
+            _G.StartRaid = state
+            if state then
+                sendNotification("VexonHub", "Auto Start Raid Enabled", 2, "play")
+                spawn(autoStartRaid)
+            else
+                sendNotification("VexonHub", "Auto Start Raid Disabled", 2, "stop")
+            end
+        end
+    })
+
+    Tabs.Raid:Toggle({
+        Title = "Auto Farm Raid",
+        Desc = "Automatically farm raid enemies",
+        Value = false,
+        Callback = function(state)
+            _G.Dungeon = state
+            if state then
+                sendNotification("VexonHub", "Auto Farm Raid Enabled", 2, "sword")
+                spawn(autoRaidFarm)
+            else
+                sendNotification("VexonHub", "Auto Farm Raid Disabled", 2, "stop")
+            end
+        end
+    })
+
+    Tabs.Raid:Toggle({
+        Title = "Awakener Fruit",
+        Desc = "Automatically awaken fruits",
+        Value = false,
+        Callback = function(state)
+            AutoAwakenAbilities = state
+            if state then
+                sendNotification("VexonHub", "Auto Fruit Awakening Enabled", 2, "zap")
+            else
+                sendNotification("VexonHub", "Auto Fruit Awakening Disabled", 2, "x")
+            end
+        end
+    })
+
+    -- Shop Tab
+    Tabs.Shop = Window:Tab({Title = "Shop", Icon = "shopping-bag", Desc = "Auto Buy Items"})
+    Tabs.Shop:Section({ Title = "Abilities", Icon = "zap" })
+
+    Tabs.Shop:Toggle({
+        Title = "Auto Buy Abilities",
+        Desc = "Automatically buy Geppo, Buso, Soru",
+        Value = false,
+        Callback = function(state)
+            Abilities = state
+            if state then
+                sendNotification("VexonHub", "Auto Buy Abilities Enabled", 2, "shopping-bag")
+            else
+                sendNotification("VexonHub", "Auto Buy Abilities Disabled", 2, "x")
+            end
+        end
+    })
+
+    Tabs.Shop:Section({ Title = "Fighting Styles", Icon = "fist" })
+
+    Tabs.Shop:Button({
+        Title = "Buy Black Leg",
+        Desc = "Buy Black Leg fighting style",
+        Callback = function()
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBlackLeg")
+            sendNotification("VexonHub", "Bought Black Leg", 2, "check")
+        end
+    })
+
+    Tabs.Shop:Button({
+        Title = "Buy Electro",
+        Desc = "Buy Electro fighting style",
+        Callback = function()
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectro")
+            sendNotification("VexonHub", "Bought Electro", 2, "check")
+        end
+    })
+
+    Tabs.Shop:Button({
+        Title = "Buy Fishman Karate",
+        Desc = "Buy Fishman Karate fighting style",
+        Callback = function()
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyFishmanKarate")
+            sendNotification("VexonHub", "Bought Fishman Karate", 2, "check")
+        end
+    })
+
+    Tabs.Shop:Button({
+        Title = "Buy Dragon Claw",
+        Desc = "Buy Dragon Claw fighting style",
+        Callback = function()
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","DragonClaw","1")
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","DragonClaw","2")
+            sendNotification("VexonHub", "Bought Dragon Claw", 2, "check")
+        end
+    })
+
+    Tabs.Shop:Button({
+        Title = "Buy Superhuman",
+        Desc = "Buy Superhuman fighting style",
+        Callback = function()
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySuperhuman")
+            sendNotification("VexonHub", "Bought Superhuman", 2, "check")
+        end
+    })
+
+    Tabs.Shop:Button({
+        Title = "Buy Death Step",
+        Desc = "Buy Death Step fighting style",
+        Callback = function()
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDeathStep")
+            sendNotification("VexonHub", "Bought Death Step", 2, "check")
+        end
+    })
+
+    Tabs.Shop:Button({
+        Title = "Buy Sharkman Karate",
+        Desc = "Buy Sharkman Karate fighting style",
+        Callback = function()
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate",true)
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate")
+            sendNotification("VexonHub", "Bought Sharkman Karate", 2, "check")
+        end
+    })
+
+    Tabs.Shop:Button({
+        Title = "Buy Electric Claw",
+        Desc = "Buy Electric Claw fighting style",
+        Callback = function()
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectricClaw")
+            sendNotification("VexonHub", "Bought Electric Claw", 2, "check")
+        end
+    })
+
+    Tabs.Shop:Button({
+        Title = "Buy Dragon Talon",
+        Desc = "Buy Dragon Talon fighting style",
+        Callback = function()
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDragonTalon")
+            sendNotification("VexonHub", "Bought Dragon Talon", 2, "check")
+        end
+    })
+
+    Tabs.Shop:Button({
+        Title = "Buy God Human",
+        Desc = "Buy God Human fighting style",
+        Callback = function()
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyGodhuman")
+            sendNotification("VexonHub", "Bought God Human", 2, "check")
+        end
+    })
+
+    Tabs.Shop:Button({
+        Title = "Buy Sanguine Art",
+        Desc = "Buy Sanguine Art fighting style",
+        Callback = function()
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySanguineArt", true)
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySanguineArt")
+            sendNotification("VexonHub", "Bought Sanguine Art", 2, "check")
+        end
+    })
+
+    -- Fruit Management Tab
+    Tabs.Fruit = Window:Tab({Title = "Fruit", Icon = "apple", Desc = "Fruit Management"})
+    Tabs.Fruit:Section({ Title = "Fruit Storage", Icon = "package" })
+
+    Tabs.Fruit:Toggle({
+        Title = "Auto Store Fruits",
+        Desc = "Automatically store fruits in inventory",
+        Value = false,
+        Callback = function(state)
+            _G.AutoStoreFruit = state
+            if state then
+                sendNotification("VexonHub", "Auto Store Fruits Enabled", 2, "package")
+            else
+                sendNotification("VexonHub", "Auto Store Fruits Disabled", 2, "x")
+            end
+        end
+    })
+
+    Tabs.Fruit:Toggle({
+        Title = "Auto Random Fruits",
+        Desc = "Automatically buy random fruits",
+        Value = false,
+        Callback = function(state)
+            _G.RandomAuto = state
+            if state then
+                sendNotification("VexonHub", "Auto Random Fruits Enabled", 2, "shuffle")
+            else
+                sendNotification("VexonHub", "Auto Random Fruits Disabled", 2, "x")
+            end
+        end
+    })
+
+    Tabs.Fruit:Toggle({
+        Title = "Auto Tween Fruits",
+        Desc = "Automatically teleport to fruits",
+        Value = false,
+        Callback = function(state)
+            _G.TweenFruit = state
+            if state then
+                sendNotification("VexonHub", "Auto Tween Fruits Enabled", 2, "map-pin")
+            else
+                sendNotification("VexonHub", "Auto Tween Fruits Disabled", 2, "x")
+            end
+        end
+    })
+
+    Tabs.Fruit:Toggle({
+        Title = "Auto Grab Fruits",
+        Desc = "Automatically grab fruits",
+        Value = false,
+        Callback = function(state)
+            _G.Grabfruit = state
+            if state then
+                sendNotification("VexonHub", "Auto Grab Fruits Enabled", 2, "hand")
+            else
+                sendNotification("VexonHub", "Auto Grab Fruits Disabled", 2, "x")
+            end
+        end
+    })
+
+    Tabs.Fruit:Button({
+        Title = "Grab All Fruits",
+        Desc = "Grab all fruits in the area",
+        Callback = function()
+            for i,v in pairs(game.Workspace:GetChildren()) do
+                if v:IsA("Tool") then
+                    v.Handle.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                end
+            end
+            sendNotification("VexonHub", "Grabbed All Fruits", 2, "check")
+        end
+    })
+
+    -- Stats Tab
+    Tabs.Stats = Window:Tab({Title = "Stats", Icon = "trending-up", Desc = "Auto Stats Upgrades"})
+    Tabs.Stats:Section({ Title = "Auto Stats", Icon = "bar-chart" })
+
+    Tabs.Stats:Toggle({
+        Title = "Auto Melee",
+        Desc = "Automatically upgrade melee stat",
+        Value = false,
+        Callback = function(state)
+            melee = state
+            if state then
+                sendNotification("VexonHub", "Auto Melee Enabled", 2, "sword")
+            else
+                sendNotification("VexonHub", "Auto Melee Disabled", 2, "x")
+            end
+        end
+    })
+
+    Tabs.Stats:Toggle({
+        Title = "Auto Defense",
+        Desc = "Automatically upgrade defense stat",
+        Value = false,
+        Callback = function(state)
+            defense = state
+            if state then
+                sendNotification("VexonHub", "Auto Defense Enabled", 2, "shield")
+            else
+                sendNotification("VexonHub", "Auto Defense Disabled", 2, "x")
+            end
+        end
+    })
+
+    Tabs.Stats:Toggle({
+        Title = "Auto Sword",
+        Desc = "Automatically upgrade sword stat",
+        Value = false,
+        Callback = function(state)
+            sword = state
+            if state then
+                sendNotification("VexonHub", "Auto Sword Enabled", 2, "sword")
+            else
+                sendNotification("VexonHub", "Auto Sword Disabled", 2, "x")
+            end
+        end
+    })
+
+    Tabs.Stats:Toggle({
+        Title = "Auto Gun",
+        Desc = "Automatically upgrade gun stat",
+        Value = false,
+        Callback = function(state)
+            gun = state
+            if state then
+                sendNotification("VexonHub", "Auto Gun Enabled", 2, "crosshair")
+            else
+                sendNotification("VexonHub", "Auto Gun Disabled", 2, "x")
+            end
+        end
+    })
+
+    Tabs.Stats:Toggle({
+        Title = "Auto Devil Fruit",
+        Desc = "Automatically upgrade devil fruit stat",
+        Value = false,
+        Callback = function(state)
+            demonfruit = state
+            if state then
+                sendNotification("VexonHub", "Auto Devil Fruit Enabled", 2, "apple")
+            else
+                sendNotification("VexonHub", "Auto Devil Fruit Disabled", 2, "x")
+            end
+        end
+    })
+
+    Tabs.Stats:Slider({
+        Title = "Points per Upgrade",
+        Desc = "Number of stat points to use per upgrade",
+        Min = 1,
+        Max = 100,
+        Default = 1,
+        Callback = function(value)
+            _G.PointStats = value
+        end
+    })
+
+    -- Misc Tab
+    Tabs.Misc = Window:Tab({Title = "Misc", Icon = "settings", Desc = "Miscellaneous Features"})
+    Tabs.Misc:Section({ Title = "Codes", Icon = "ticket" })
+
+    local x2Code = {
+        "KITTGAMING", "ENYU_IS_PRO", "FUDD10", "BIGNEWS", "THEGREATACE",
+        "SUB2GAMERROBOT_EXP1", "STRAWHATMAIME", "SUB2OFFICIALNOOBIE",
+        "SUB2NOOBMASTER123", "SUB2DAIGROCK", "AXIORE", "TANTAIGAMIMG",
+        "STRAWHATMAINE", "JCWK", "FUDD10_V2", "SUB2FER999", "MAGICBIS",
+        "TY_FOR_WATCHING", "STARCODEHEO"
+    }
+
+    Tabs.Misc:Button({
+        Title = "Redeem All Codes",
+        Desc = "Redeem all available codes",
+        Callback = function()
+            function RedeemCode(value)
+                game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(value)
+            end
+            for i,v in pairs(x2Code) do
+                RedeemCode(v)
+            end
+            sendNotification("VexonHub", "Redeemed All Codes", 2, "check")
+        end
+    })
+
+    Tabs.Misc:Section({ Title = "Performance", Icon = "zap" })
+
+    Tabs.Misc:Button({
+        Title = "FPS Boost",
+        Desc = "Optimize game for better FPS",
+        Callback = function()
+            local decalsyeeted = true
+            local g = game
+            local w = g.Workspace
+            local l = g.Lighting
+            local t = w.Terrain
+            settings().Rendering.QualityLevel = "Level01"
+            for i, v in pairs(g:GetDescendants()) do
+                if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+                    v.Material = "Plastic"
+                    v.Reflectance = 0
+                elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
+                    v.Transparency = 1
+                elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+                    v.Lifetime = NumberRange.new(0)
+                elseif v:IsA("Explosion") then
+                    v.BlastPressure = 1
+                    v.BlastRadius = 1
+                elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") then
+                    v.Enabled = false
+                end
+            end
+            sendNotification("VexonHub", "FPS Boost Applied", 2, "zap")
+        end
+    })
+
+    Tabs.Misc:Button({
+        Title = "Remove Fog",
+        Desc = "Remove atmospheric fog",
+        Callback = function()
+            game:GetService("Lighting").BaseAtmosphere:Destroy()
+            game:GetService("Lighting").Sky:Destroy()
+            game.Lighting.FogEnd = 9e9
+            sendNotification("VexonHub", "Fog Removed", 2, "eye")
+        end
+    })
+
+    Tabs.Misc:Button({
+        Title = "Remove Lava",
+        Desc = "Remove lava from maps",
+        Callback = function()
+            for i,v in pairs(game.Workspace:GetDescendants()) do
+                if v.Name == "Lava" then
+                    v:Destroy()
+                end
+            end
+            for i,v in pairs(game.ReplicatedStorage:GetDescendants()) do
+                if v.Name == "Lava" then
+                    v:Destroy()
+                end
+            end
+            sendNotification("VexonHub", "Lava Removed", 2, "fire")
+        end
+    })
+
+    Tabs.Misc:Section({ Title = "Server", Icon = "server" })
+
+    Tabs.Misc:Button({
+        Title = "Rejoin Server",
+        Desc = "Rejoin the current server",
+        Callback = function()
+            game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
+        end
+    })
+
+    Tabs.Misc:Button({
+        Title = "Server Hop",
+        Desc = "Hop to a different server",
+        Callback = function()
+            while wait() do
+                local module = loadstring(game:HttpGet"https://roblox.relzscript.xyz/Hop.lua")()
+                module:Teleport(game.PlaceId, "Singapore")
+            end
+        end
+    })
+
+    -- Settings Tab
+    Tabs.Settings:Section({ Title = "UI Settings", Icon = "palette" })
+    
+    local themes = {"Dark", "Light", "Blue", "Green", "Purple"}
+    
+    Tabs.Settings:Dropdown({
+        Title = "Theme",
+        Desc = "Change UI theme",
+        Values = themes,
+        Callback = function(value)
+            pcall(function()
+                WindUI:SetTheme(value)
+                getgenv().VexonHubSettings.Theme = value
+                sendNotification("VexonHub", "Applied " .. value .. " theme", 2, "palette")
+            end)
+        end
+    })
+    
+    Tabs.Settings:Toggle({
+        Title = "Transparency",
+        Desc = "Toggle window transparency",
+        Value = getgenv().VexonHubSettings.TransparencyEnabled,
+        Callback = function(state)
+            getgenv().VexonHubSettings.TransparencyEnabled = state
+            pcall(function()
+                Window:ToggleTransparency(state)
+            end)
+            sendNotification("VexonHub", state and "Transparency Enabled" or "Transparency Disabled", 2, state and "eye-off" or "eye")
+        end
+    })
+end
+
+-- Core Functions
+function MaterialMon()
+    -- Enhanced material detection based on Redz Hub logic
+    if _G.SelectMaterial == "Radiactive Material" then
+        return "Factory Staff", CFrame.new(-105.889565, 72.8076935, -670.247986, -0.965929747, 0, -0.258804798, 0, 1, 0, 0.258804798, 0, -0.965929747)
+    elseif _G.SelectMaterial == "Leather + Scrap Metal" then
+        if VexonWorld.First then
+            return "Pirate", CFrame.new(-967.433105, 13.5999937, 4034.24707, -0.258864403, 0, -0.965913713, 0, 1, 0, 0.965913713, 0, -0.258864403)
+        elseif VexonWorld.Second then
+            return "Mercenary", CFrame.new(-986.774475, 72.8755951, 1088.44653, -0.656062722, 0, 0.754706323, 0, 1, 0, -0.754706323, 0, -0.656062722)
+        elseif VexonWorld.Third then
+            return "Pirate Millionaire", CFrame.new(-118.809372, 55.4874573, 5649.17041, -0.965929747, 0, 0.258804798, 0, 1, 0, -0.258804798, 0, -0.965929747)
+        end
+    elseif _G.SelectMaterial == "Magma Ore" then
+        if VexonWorld.First then
+            return "Military Soldier", CFrame.new(-5565.60156, 9.10001755, 8327.56934, -0.838688731, 0, -0.544611216, 0, 1, 0, 0.544611216, 0, -0.838688731)
+        elseif VexonWorld.Second then
+            return "Lava Pirate", CFrame.new(-5158.77051, 14.4791956, -4654.2627, -0.848060489, 0, -0.529899538, 0, 1, 0, 0.529899538, 0, -0.848060489)
+        end
+    elseif _G.SelectMaterial == "Fish Tail" then
+        if VexonWorld.First then
+            return "Fishman Warrior", CFrame.new(60943.9023, 17.9492188, 1744.11133, 0.826706648, 0, -0.562633216, 0, 1, 0, 0.562633216, 0, 0.826706648)
+        elseif VexonWorld.Third then
+            return "Fishman Captain", CFrame.new(-10828.1064, 331.825989, -9049.14648, -0.0912091732, 0, 0.995831788, 0, 1, 0, -0.995831788, 0, -0.0912091732)
+        end
+    elseif _G.SelectMaterial == "Angel Wings" then
+        return "Royal Soldier", CFrame.new(-7759.45898, 5606.93652, -1862.70276, -0.866007447, 0, -0.500031412, 0, 1, 0, 0.500031412, 0, -0.866007447)
+    elseif _G.SelectMaterial == "Mystic Droplet" then
+        return "Water Fighter", CFrame.new(-3331.70459, 239.138336, -10553.3564, -0.29242146, 0, 0.95628953, 0, 1, 0, -0.95628953, 0, -0.29242146)
+    elseif _G.SelectMaterial == "Vampire Fang" then
+        return "Vampire", CFrame.new(-6132.39453, 9.00769424, -1466.16919, -0.927179813, 0, -0.374617696, 0, 1, 0, 0.374617696, 0, -0.927179813)
+    elseif _G.SelectMaterial == "Gunpowder" then
+        return "Pistol Billionaire", CFrame.new(-185.693283, 84.7088699, 6103.62744, 0.90629667, 0, -0.422642082, 0, 1, 0, 0.422642082, 0, 0.90629667)
+    elseif _G.SelectMaterial == "Mini Tusk" then
+        return "Mythological Pirate", CFrame.new(-13456.0498, 469.433228, -7039.96436, 0, 0, 1, 0, 1, 0, -1, 0, 0)
+    elseif _G.SelectMaterial == "Conjured Cocoa" then
+        return "Chocolate Bar Battler", CFrame.new(582.828674, 25.5824986, -12550.7041, -0.766061664, 0, -0.642767608, 0, 1, 0, 0.642767608, 0, -0.766061664)
+    end
+    return nil, nil
+end
+
+function CheckBossQuest()
+    if _G.SelectBoss == "The Gorilla King" then
+        return "The Gorilla King", CFrame.new(-1129.8836669921875, 40.46354675292969, -525.4237060546875)
+    elseif _G.SelectBoss == "Bobby" then
+        return "Bobby", CFrame.new(-1140.083740234375, 14.809885025024414, 4322.92138671875)
+    elseif _G.SelectBoss == "Magma Admiral" then
+        return "Magma Admiral", CFrame.new(-5313.37012, 10.9500084, 8515.29395)
+    end
+    return nil, nil
+end
+
+function hopServer()
+    pcall(function()
+        local PlaceID = game.PlaceId
+        local HttpService = game:GetService("HttpService")
+        local TeleportService = game:GetService("TeleportService")
+        
+        local servers = {}
+        local page = 1
+        
+        while #servers < 10 and page <= 5 do
+            local success, result = pcall(function()
+                return HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. PlaceID .. "/servers/Public?sortOrder=Asc&limit=100&cursor=" .. tostring(page)))
+            end)
+            
+            if success and result and result.data then
+                for _, server in pairs(result.data) do
+                    if server.id and server.playing < server.maxPlayers then
+                        table.insert(servers, server.id)
+                    end
+                end
+                page = page + 1
+            else
+                break
+            end
+        end
+        
+        if #servers > 0 then
+            TeleportService:TeleportToPlaceInstance(PlaceID, servers[1], game.Players.LocalPlayer)
+        end
+    end)
+end
+
+function AutoHaki()
+    pcall(function()
+        local player = game.Players.LocalPlayer
+        if player.Character and not player.Character:FindFirstChild("HasBuso") then
+            local remote = game:GetService("ReplicatedStorage").Remotes.CommF_
+            if remote then
+                remote:InvokeServer("Buso")
+            end
+        end
+    end)
+end
+
+function EquipWeapon(ToolSe)
+    pcall(function()
+        local player = game.Players.LocalPlayer
+        local backpack = player.Backpack
+        local character = player.Character
+        
+        if backpack:FindFirstChild(ToolSe) then
+            local tool = backpack:FindFirstChild(ToolSe)
+            if character and character:FindFirstChild("Humanoid") then
+                character.Humanoid:EquipTool(tool)
+            end
+        end
+    end)
+end
+
+function topos(Pos)
+    pcall(function()
+        local player = game.Players.LocalPlayer
+        local character = player.Character
+        local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
+
+        if humanoidRootPart and Pos then
+            local distance = (humanoidRootPart.Position - Pos.Position).Magnitude
+            if distance < 50 then
+                humanoidRootPart.CFrame = Pos
+            else
+                local speed = math.min(300, distance / 2)
+                local tweenInfo = TweenInfo.new(distance/speed, Enum.EasingStyle.Linear)
+                local tween = game:GetService("TweenService"):Create(humanoidRootPart, tweenInfo, {CFrame = Pos})
+                tween:Play()
+            end
+        end
+    end)
+end
+
+-- Vexon Teleport Function
+function VexonTeleport(Pos)
+    pcall(function()
+        local player = game.Players.LocalPlayer
+        local character = player.Character
+        local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
+
+        if humanoidRootPart and Pos then
+            local distance = (humanoidRootPart.Position - Pos.Position).Magnitude
+            if distance < 100 then
+                humanoidRootPart.CFrame = Pos
+            else
+                local speed = math.min(500, distance / 1.5)
+                local tweenInfo = TweenInfo.new(distance/speed, Enum.EasingStyle.Linear)
+                local tween = game:GetService("TweenService"):Create(humanoidRootPart, tweenInfo, {CFrame = Pos})
+                tween:Play()
+                tween.Completed:Wait()
+            end
+        end
+    end)
+end
+
+-- Vexon Equip Weapon Function
+function VexonEquipWeapon(weaponName)
+    pcall(function()
+        local player = game.Players.LocalPlayer
+        local backpack = player.Backpack
+        local character = player.Character
+        
+        if weaponName and weaponName ~= "" then
+            -- Try to find weapon in backpack
+            local weapon = backpack:FindFirstChild(weaponName)
+            if weapon then
+                -- Equip weapon
+                if character and character:FindFirstChild("Humanoid") then
+                    character.Humanoid:EquipTool(weapon)
+                end
+            else
+                -- Try to find weapon in character
+                weapon = character:FindFirstChild(weaponName)
+                if weapon and weapon:IsA("Tool") then
+                    weapon.Parent = backpack
+                    task.wait(0.1)
+                    if character:FindFirstChild("Humanoid") then
+                        character.Humanoid:EquipTool(weapon)
+                    end
+                end
+            end
+        end
+    end)
+end
+
+-- Vexon Auto Haki Function
+function VexonAutoHaki()
+    pcall(function()
+        local player = game.Players.LocalPlayer
+        local character = player.Character
+        
+        if character and character:FindFirstChild("Humanoid") then
+            -- Enable Buso Haki if not active
+            if not character:FindFirstChild("HasBuso") then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+            end
+            
+            -- Enable Geppo if needed
+            local humanoid = character:FindFirstChild("Humanoid")
+            if humanoid and humanoid.Jump == true then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Geppo")
+            end
+        end
+    end)
+end
+
+function TPB(Pos)
+    pcall(function()
+        local TweenService = game:GetService("TweenService")
+        local tweenInfo = TweenInfo.new((game:GetService("Workspace").Boats.PirateBrigade.VehicleSeat.CFrame.Position - Pos.Position).Magnitude / 300, Enum.EasingStyle.Linear)
+        local tween = TweenService:Create(game:GetService("Workspace").Boats.PirateBrigade.VehicleSeat, tweenInfo, {CFrame = Pos})
+        tween:Play()
+        return {
+            Stop = function()
+                tween:Cancel()
+            end
+        }
+    end)
+end
+
+-- Main Loops
+function autoFarmLoop()
+    while _G.AutoFarm and task.wait() do
+        pcall(function()
+            if not QuestChecker:hasActiveQuest() then
+                local questName, questLevel, monsterName, questCFrame = QuestChecker:getCurrentQuest()
+                if questName and questCFrame then
+                    QuestChecker:startQuest(questName, questLevel)
+                    topos(questCFrame)
+                end
+            else
+                local questName, questLevel, monsterName, questCFrame = QuestChecker:getCurrentQuest()
+                local targetMonster = SelectMonster ~= "" and SelectMonster or monsterName
+                
+                if targetMonster and game:GetService("Workspace").Enemies:FindFirstChild(targetMonster) then
+                    for _, enemy in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if enemy.Name == targetMonster and enemy:FindFirstChild("HumanoidRootPart") 
+                           and enemy:FindFirstChild("Humanoid") and enemy.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                pcall(function()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    topos(enemy.HumanoidRootPart.CFrame * CFrame.new(0, 30, 5))
+                                    enemy.HumanoidRootPart.CanCollide = false
+                                    enemy.Humanoid.WalkSpeed = 0
+                                    if enemy:FindFirstChild("Head") then
+                                        enemy.Head.CanCollide = false
+                                    end
+                                    game:GetService("VirtualUser"):CaptureController()
+                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                                end)
+                            until not _G.AutoFarm or not enemy.Parent or enemy.Humanoid.Health <= 0
+                        end
+                    end
+                else
+                    local _, _, _, questCFrame = QuestChecker:getCurrentQuest()
+                    if questCFrame then
+                        topos(questCFrame)
+                    end
+                end
+            end
+        end)
+    end
+end
+
+function autoMaterialLoop()
+    while _G.AutoFarmMaterial and task.wait() do
+        pcall(function()
+            local materialMonster, materialPos = MaterialMon()
+            if materialMonster and materialPos then
+                if game:GetService("Workspace").Enemies:FindFirstChild(materialMonster) then
+                    for _, enemy in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if enemy.Name == materialMonster and enemy:FindFirstChild("HumanoidRootPart") 
+                           and enemy:FindFirstChild("Humanoid") and enemy.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                pcall(function()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    topos(enemy.HumanoidRootPart.CFrame * CFrame.new(0, 30, 5))
+                                    enemy.HumanoidRootPart.CanCollide = false
+                                    enemy.Humanoid.WalkSpeed = 0
+                                    if enemy:FindFirstChild("Head") then
+                                        enemy.Head.CanCollide = false
+                                    end
+                                    game:GetService("VirtualUser"):CaptureController()
+                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                                end)
+                            until not _G.AutoFarmMaterial or not enemy.Parent or enemy.Humanoid.Health <= 0
+                        end
+                    end
+                else
+                    topos(materialPos)
+                end
+            end
+        end)
+    end
+end
+
+function autoBossLoop()
+    while _G.AutoBoss and task.wait() do
+        pcall(function()
+            local bossName, bossCFrame = CheckBossQuest()
+            if bossName and bossCFrame then
+                if game:GetService("Workspace").Enemies:FindFirstChild(bossName) then
+                    for _, enemy in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if enemy.Name == bossName and enemy:FindFirstChild("HumanoidRootPart") 
+                           and enemy:FindFirstChild("Humanoid") and enemy.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                pcall(function()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    topos(enemy.HumanoidRootPart.CFrame * CFrame.new(0, 30, 5))
+                                    enemy.HumanoidRootPart.CanCollide = false
+                                    enemy.Humanoid.WalkSpeed = 0
+                                    if enemy:FindFirstChild("Head") then
+                                        enemy.Head.CanCollide = false
+                                    end
+                                    game:GetService("VirtualUser"):CaptureController()
+                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                                end)
+                            until not _G.AutoBoss or not enemy.Parent or enemy.Humanoid.Health <= 0
+                        end
+                    end
+                else
+                    topos(bossCFrame)
+                end
+            end
+        end)
+    end
+end
+
+function autoHakiLoop()
+    while _G.AutoHaki and task.wait(10) do
+        AutoHaki()
+    end
+end
+
+function autoClickLoop()
+    while _G.AutoClick and task.wait(_G.ClickDelay) do
+        pcall(function()
+            game:GetService("VirtualUser"):CaptureController()
+            game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+        end)
+    end
+end
+
+-- Fruit Mastery Farming Loop
+function fruitMasteryLoop()
+    while _G.AutoFarmFruits and task.wait() do
+        pcall(function()
+            if _G.selectFruitFarm == "Fruit Mastery No Quest" then
+                CheckQuest()
+                topos(CFrameQuest)
+                for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
+                        if v.Name == Mon then
+                            repeat wait(_G.Fast_Delay or 0.1)
+                                if v.Humanoid.Health <= v.Humanoid.MaxHealth * KillPercent / 100 then
+                                    _G.UseSkill = true
+                                else
+                                    _G.UseSkill = false
+                                    bringmob = true
+                                    AutoHaki()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                    v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                    v.HumanoidRootPart.Transparency = 1
+                                    v.Humanoid.WalkSpeed = 0
+                                    v.HumanoidRootPart.CanCollide = false
+                                    FarmPos = v.HumanoidRootPart.CFrame
+                                    MonFarm = v.Name
+                                end
+                            until not _G.AutoFarmFruits or not _G.selectFruitFarm == "Fruit Mastery No Quest" or not v.Parent or v.Humanoid.Health == 0
+                             bringmob = false
+                            _G.UseSkill = false
+                        end
+                    end
+                end
+            elseif _G.selectFruitFarm == "Fruit Mastery" then
+                CheckQuest()
+                if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                    topos(CFrameQuest)
+                end
+                if (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, LevelQuest)
+                end
+                if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+                    if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
+                        for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
+                                if v.Name == Mon then
+                                    repeat wait(_G.Fast_Delay or 0.1)
+                                        if v.Humanoid.Health <= v.Humanoid.MaxHealth * KillPercent / 100 then
+                                            _G.UseSkill = true
+                                        else
+                                            _G.UseSkill = false
+                                            bringmob = true
+                                            AutoHaki()
+                                            EquipWeapon(_G.SelectWeapon)
+                                            topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                            v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                            v.HumanoidRootPart.Transparency = 1
+                                            v.Humanoid.WalkSpeed = 0
+                                            v.HumanoidRootPart.CanCollide = false
+                                            FarmPos = v.HumanoidRootPart.CFrame
+                                            MonFarm = v.Name
+                                        end
+                                    until not _G.AutoFarmFruits or not _G.selectFruitFarm == "Fruit Mastery" or not v.Parent or v.Humanoid.Health == 0
+                                    bringmob = false
+                                    _G.UseSkill = false
+                                end
+                            end
+                        end
+                    end
+                end
+            elseif _G.selectFruitFarm == "Bone Mastery" then
+                pcall(function()
+                    local boneframe = CFrame.new(-9508.5673828125, 142.1398468017578, 5737.3603515625)
+                    topos(boneframe)
+                end)
+                for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
+                        if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
+                            repeat wait(_G.Fast_Delay or 0.1)
+                                if v.Humanoid.Health <= v.Humanoid.MaxHealth * KillPercent / 100 then
+                                    _G.UseSkill = true
+                                else
+                                    _G.UseSkill = false
+                                    bringmob = true
+                                    AutoHaki()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                    v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                    v.HumanoidRootPart.Transparency = 1
+                                    v.Humanoid.WalkSpeed = 0
+                                    v.HumanoidRootPart.CanCollide = false
+                                    FarmPos = v.HumanoidRootPart.CFrame
+                                    MonFarm = v.Name
+                                end
+                            until not _G.AutoFarmFruits or not _G.selectFruitFarm == "Bone Mastery" or not v.Parent or v.Humanoid.Health == 0
+                            bringmob = false
+                            _G.UseSkill = false
+                        end
+                    end
+                end
+            elseif _G.selectFruitFarm == "Cake Mastery" then
+                pcall(function()
+                    local cakepos = CFrame.new(-2130.80712890625, 69.95634460449219, -12327.83984375)
+                    topos(cakepos)
+                end)
+                for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
+                        if v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker" then
+                            repeat wait(_G.Fast_Delay or 0.1)
+                                if v.Humanoid.Health <= v.Humanoid.MaxHealth * KillPercent / 100 then
+                                    _G.UseSkill = true
+                                else
+                                    _G.UseSkill = false
+                                    bringmob = true
+                                    AutoHaki()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                    v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                    v.HumanoidRootPart.Transparency = 1
+                                    v.Humanoid.WalkSpeed = 0
+                                    v.HumanoidRootPart.CanCollide = false
+                                    FarmPos = v.HumanoidRootPart.CFrame
+                                    MonFarm = v.Name
+                                end
+                            until not _G.AutoFarmFruits or not _G.selectFruitFarm == "Cake Mastery" or not v.Parent or v.Humanoid.Health == 0
+                            bringmob = false
+                            _G.UseSkill = false
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end
+
+-- Skill Usage Function
+spawn(function()
+    while task.wait() do
+        if _G.UseSkill then
+            pcall(function()
+                for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                 if v.Name == MonFarm
+                 and v:FindFirstChild("Humanoid")
+                 and v:FindFirstChild("HumanoidRootPart")
+                 and v.Humanoid.Health <= v.Humanoid.MaxHealth * KillPercent / 100 then
+                 repeat
+                 game:GetService("RunService").Heartbeat:Wait()
+                 EquipWeapon(game.Players.LocalPlayer.Data.DevilFruit.Value)
+                 topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                 PositionSkillMasteryDevilFruit = v.HumanoidRootPart.Position
+                 local char = game.Players.LocalPlayer.Character
+                 local fruitName = game.Players.LocalPlayer.Data.DevilFruit.Value
+                 local fruit = char:FindFirstChild(fruitName)
+                 if fruit then
+                 fruit.MousePos.Value = PositionSkillMasteryDevilFruit
+                 local DevilFruitMastery = fruit.Level.Value
+                 if SkillZ and DevilFruitMastery >= 1 then
+                 game:service("VirtualInputManager"):SendKeyEvent(true, "Z", false, game)
+                 wait()
+                 game:service("VirtualInputManager"):SendKeyEvent(false, "Z", false, game)
+                 end
+                 if SkillX and DevilFruitMastery >= 1 then
+                 game:service("VirtualInputManager"):SendKeyEvent(true, "X", false, game)
+                 wait()
+                 game:service("VirtualInputManager"):SendKeyEvent(false, "X", false, game)
+                 end
+                 if SkillC and DevilFruitMastery >= 1 then
+                 game:service("VirtualInputManager"):SendKeyEvent(true, "C", false, game)
+                 wait()
+                 game:service("VirtualInputManager"):SendKeyEvent(false, "C", false, game)
+                 end
+                 if SkillV and DevilFruitMastery >= 1 then
+                 game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game)
+                 wait()
+                 game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
+                 end
+                 if SkillF and DevilFruitMastery >= 1 then
+                 game:service("VirtualInputManager"):SendKeyEvent(true, "F", false, game)
+                 wait()
+                game:service("VirtualInputManager"):SendKeyEvent(false, "F", false, game)
+                end
+               end
+             until not _G.AutoFarmFruits or not _G.UseSkill or v.Humanoid.Health == 0
+             end
+            end
+           end)
+          end
+         end
+       end)
+
+-- ESP Functions
+function UpdateIslandESP()
+    for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].Locations:GetChildren()) do
+        pcall(function()
+            if IslandESP then
+                if v.Name ~= "Sea" then
+                    local bill = v:FindFirstChild('BillboardGui')
+                    if not bill then
+                        bill = Instance.new('BillboardGui',v)
+                        bill.Name = 'BillboardGui'
+                        bill.ExtentsOffset = Vector3.new(0, 1, 0)
+                        bill.Size = UDim2.new(1,200,1,30)
+                        bill.Adornee = v
+                        bill.AlwaysOnTop = true
+                        local name = Instance.new('TextLabel',bill)
+                        name.Font = "GothamBold"
+                        name.FontSize = "Size14"
+                        name.TextWrapped = true
+                        name.Size = UDim2.new(1,0,1,0)
+                        name.TextYAlignment = 'Top'
+                        name.BackgroundTransparency = 1
+                        name.TextStrokeTransparency = 0.5
+                        name.TextColor3 = Color3.fromRGB(7, 236, 240)
+                        name.Text = (v.Name)
+                        name.ZIndex = 10
+                    end
+                end
+            else
+                if v:FindFirstChild('BillboardGui') then
+                    v.BillboardGui:Destroy()
+                end
+            end
+        end)
+    end
+end
+
+function UpdatePlayerChams()
+    for i,v in pairs(game:GetService("Players"):GetChildren()) do
+        pcall(function()
+            if v ~= game:GetService("Players").LocalPlayer then
+                if ESPPlayer then
+                    if not v.Character.Head:FindFirstChild('BillboardGui') then
+                        local bill = Instance.new('BillboardGui',v.Character.Head)
+                        bill.Name = 'BillboardGui'
+                        bill.ExtentsOffset = Vector3.new(0, 1, 0)
+                        bill.Size = UDim2.new(1,200,1,30)
+                        bill.Adornee = v.Character.Head
+                        bill.AlwaysOnTop = true
+                        local name = Instance.new('TextLabel',bill)
+                        name.Font = "GothamBold"
+                        name.FontSize = "Size14"
+                        name.TextWrapped = true
+                        name.Size = UDim2.new(1,0,1,0)
+                        name.TextYAlignment = 'Top'
+                        name.BackgroundTransparency = 1
+                        name.TextStrokeTransparency = 0.5
+                        name.TextColor3 = Color3.fromRGB(255, 255, 255)
+                        name.Text = (v.Name ..' \n'.. round((game:GetService("Players").LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3) ..' Distance')
+                    else
+                        v.Character.Head.BillboardGui.TextLabel.Text = (v.Name ..' \n'.. round((game:GetService("Players").LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3) ..' Distance')
+                    end
+                else
+                    if v.Character.Head:FindFirstChild('BillboardGui') then
+                        v.Character.Head.BillboardGui:Destroy()
+                    end
+                end
+            end
+        end)
+    end
+end
+
+function UpdateChestESP()
+    for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+        pcall(function()
+            if string.find(v.Name,"Chest") then
+                if _G.ChestESP then
+                    if not v:FindFirstChild('BillboardGui') then
+                        local bill = Instance.new('BillboardGui',v)
+                        bill.Name = 'BillboardGui'
+                        bill.ExtentsOffset = Vector3.new(0, 1, 0)
+                        bill.Size = UDim2.new(1,200,1,30)
+                        bill.Adornee = v
+                        bill.AlwaysOnTop = true
+                        local name = Instance.new('TextLabel',bill)
+                        name.Font = "GothamBold"
+                        name.FontSize = "Size14"
+                        name.TextWrapped = true
+                        name.Size = UDim2.new(1,0,1,0)
+                        name.TextYAlignment = 'Top'
+                        name.BackgroundTransparency = 1
+                        name.TextStrokeTransparency = 0.5
+                        name.TextColor3 = Color3.fromRGB(0, 255, 0)
+                        name.Text = (v.Name ..' \n'.. round((game:GetService("Players").LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' Distance')
+                    else
+                        v.BillboardGui.TextLabel.Text = (v.Name ..' \n'.. round((game:GetService("Players").LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' Distance')
+                    end
+                else
+                    if v:FindFirstChild('BillboardGui') then
+                        v.BillboardGui:Destroy()
+                    end
+                end
+            end
+        end)
+    end
+end
+
+function UpdateDevilChams()
+    for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+        pcall(function()
+            if DevilFruitESP then
+                if string.find(v.Name, "Fruit") then
+                    if not v.Handle:FindFirstChild('BillboardGui') then
+                        local bill = Instance.new('BillboardGui',v.Handle)
+                        bill.Name = 'BillboardGui'
+                        bill.ExtentsOffset = Vector3.new(0, 1, 0)
+                        bill.Size = UDim2.new(1,200,1,30)
+                        bill.Adornee = v.Handle
+                        bill.AlwaysOnTop = true
+                        local name = Instance.new('TextLabel',bill)
+                        name.Font = "GothamBold"
+                        name.FontSize = "Size14"
+                        name.TextWrapped = true
+                        name.Size = UDim2.new(1,0,1,0)
+                        name.TextYAlignment = 'Top'
+                        name.BackgroundTransparency = 1
+                        name.TextStrokeTransparency = 0.5
+                        name.TextColor3 = Color3.fromRGB(255, 0, 0)
+                        name.Text = (v.Name ..' \n'.. round((game:GetService("Players").LocalPlayer.Character.Head.Position - v.Handle.Position).Magnitude/3) ..' Distance')
+                    else
+                        v.Handle.BillboardGui.TextLabel.Text = (v.Name ..' \n'.. round((game:GetService("Players").LocalPlayer.Character.Head.Position - v.Handle.Position).Magnitude/3) ..' Distance')
+                    end
+                end
+            else
+                if v.Handle:FindFirstChild('BillboardGui') then
+                    v.Handle.BillboardGui:Destroy()
+                end
+            end
+        end)
+    end
+end
+
+function UpdateBerriesESP()
+    for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+        pcall(function()
+            if Berry then
+                if v.Name == "BerryBush2" or v.Name == "BerryBush" then
+                    if not v:FindFirstChild('BillboardGui') then
+                        local bill = Instance.new('BillboardGui',v)
+                        bill.Name = 'BillboardGui'
+                        bill.ExtentsOffset = Vector3.new(0, 1, 0)
+                        bill.Size = UDim2.new(1,200,1,30)
+                        bill.Adornee = v
+                        bill.AlwaysOnTop = true
+                        local name = Instance.new('TextLabel',bill)
+                        name.Font = "GothamBold"
+                        name.FontSize = "Size14"
+                        name.TextWrapped = true
+                        name.Size = UDim2.new(1,0,1,0)
+                        name.TextYAlignment = 'Top'
+                        name.BackgroundTransparency = 1
+                        name.TextStrokeTransparency = 0.5
+                        name.TextColor3 = Color3.fromRGB(255, 255, 0)
+                        name.Text = (v.Name ..' \n'.. round((game:GetService("Players").LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' Distance')
+                    else
+                        v.BillboardGui.TextLabel.Text = (v.Name ..' \n'.. round((game:GetService("Players").LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' Distance')
+                    end
+                end
+            else
+                if v:FindFirstChild('BillboardGui') then
+                    v.BillboardGui:Destroy()
+                end
+            end
+        end)
+    end
+end
+
+function UpdateRealFruitChams()
+    for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+        pcall(function()
+            if RealFruitESP then
+                if v.Name == "Apple" or v.Name == "Banana" or v.Name == "Pineapple" then
+                    if not v.Handle:FindFirstChild('BillboardGui') then
+                        local bill = Instance.new('BillboardGui',v.Handle)
+                        bill.Name = 'BillboardGui'
+                        bill.ExtentsOffset = Vector3.new(0, 1, 0)
+                        bill.Size = UDim2.new(1,200,1,30)
+                        bill.Adornee = v.Handle
+                        bill.AlwaysOnTop = true
+                        local name = Instance.new('TextLabel',bill)
+                        name.Font = "GothamBold"
+                        name.FontSize = "Size14"
+                        name.TextWrapped = true
+                        name.Size = UDim2.new(1,0,1,0)
+                        name.TextYAlignment = 'Top'
+                        name.BackgroundTransparency = 1
+                        name.TextStrokeTransparency = 0.5
+                        name.TextColor3 = Color3.fromRGB(255, 165, 0)
+                        name.Text = (v.Name ..' \n'.. round((game:GetService("Players").LocalPlayer.Character.Head.Position - v.Handle.Position).Magnitude/3) ..' Distance')
+                    else
+                        v.Handle.BillboardGui.TextLabel.Text = (v.Name ..' \n'.. round((game:GetService("Players").LocalPlayer.Character.Head.Position - v.Handle.Position).Magnitude/3) ..' Distance')
+                    end
+                end
+            else
+                if v.Handle:FindFirstChild('BillboardGui') then
+                    v.Handle.BillboardGui:Destroy()
+                end
+            end
+        end)
+    end
+end
+
+function UpdateGeaESP()
+    for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+        pcall(function()
+            if GearESP then
+                if v.Name == "Gear" then
+                    if not v.Handle:FindFirstChild('BillboardGui') then
+                        local bill = Instance.new('BillboardGui',v.Handle)
+                        bill.Name = 'BillboardGui'
+                        bill.ExtentsOffset = Vector3.new(0, 1, 0)
+                        bill.Size = UDim2.new(1,200,1,30)
+                        bill.Adornee = v.Handle
+                        bill.AlwaysOnTop = true
+                        local name = Instance.new('TextLabel',bill)
+                        name.Font = "GothamBold"
+                        name.FontSize = "Size14"
+                        name.TextWrapped = true
+                        name.Size = UDim2.new(1,0,1,0)
+                        name.TextYAlignment = 'Top'
+                        name.BackgroundTransparency = 1
+                        name.TextStrokeTransparency = 0.5
+                        name.TextColor3 = Color3.fromRGB(255, 255, 255)
+                        name.Text = (v.Name ..' \n'.. round((game:GetService("Players").LocalPlayer.Character.Head.Position - v.Handle.Position).Magnitude/3) ..' Distance')
+                    else
+                        v.Handle.BillboardGui.TextLabel.Text = (v.Name ..' \n'.. round((game:GetService("Players").LocalPlayer.Character.Head.Position - v.Handle.Position).Magnitude/3) ..' Distance')
+                    end
+                end
+            else
+                if v.Handle:FindFirstChild('BillboardGui') then
+                    v.Handle.BillboardGui:Destroy()
+                end
+            end
+        end)
+    end
+end
+
+function UpdateFlowerChams()
+    for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+        pcall(function()
+            if FlowerESP then
+                if v.Name == "Flower2" or v.Name == "Flower1" then
+                    if not v:FindFirstChild('BillboardGui') then
+                        local bill = Instance.new('BillboardGui',v)
+                        bill.Name = 'BillboardGui'
+                        bill.ExtentsOffset = Vector3.new(0, 1, 0)
+                        bill.Size = UDim2.new(1,200,1,30)
+                        bill.Adornee = v
+                        bill.AlwaysOnTop = true
+                        local name = Instance.new('TextLabel',bill)
+                        name.Font = "GothamBold"
+                        name.FontSize = "Size14"
+                        name.TextWrapped = true
+                        name.Size = UDim2.new(1,0,1,0)
+                        name.TextYAlignment = 'Top'
+                        name.BackgroundTransparency = 1
+                        name.TextStrokeTransparency = 0.5
+                        name.TextColor3 = Color3.fromRGB(255, 192, 203)
+                        name.Text = (v.Name ..' \n'.. round((game:GetService("Players").LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' Distance')
+                    else
+                        v.BillboardGui.TextLabel.Text = (v.Name ..' \n'.. round((game:GetService("Players").LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' Distance')
+                    end
+                end
+            else
+                if v:FindFirstChild('BillboardGui') then
+                    v.BillboardGui:Destroy()
+                end
+            end
+        end)
+    end
+end
+
+function UpdateIslandMirageESP()
+    for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].Locations:GetChildren()) do
+        pcall(function()
+            if MirageIslandESP then
+                if v.Name == "Mirage Island" then
+                    local bill = v:FindFirstChild('BillboardGui')
+                    if not bill then
+                        bill = Instance.new('BillboardGui',v)
+                        bill.Name = 'BillboardGui'
+                        bill.ExtentsOffset = Vector3.new(0, 1, 0)
+                        bill.Size = UDim2.new(1,200,1,30)
+                        bill.Adornee = v
+                        bill.AlwaysOnTop = true
+                        local name = Instance.new('TextLabel',bill)
+                        name.Font = "GothamBold"
+                        name.FontSize = "Size14"
+                        name.TextWrapped = true
+                        name.Size = UDim2.new(1,0,1,0)
+                        name.TextYAlignment = 'Top'
+                        name.BackgroundTransparency = 1
+                        name.TextStrokeTransparency = 0.5
+                        name.TextColor3 = Color3.fromRGB(255, 0, 255)
+                        name.Text = (v.Name)
+                        name.ZIndex = 10
+                    end
+                end
+            else
+                if v:FindFirstChild('BillboardGui') then
+                    v.BillboardGui:Destroy()
+                end
+            end
+        end)
+    end
+end
+
+function UpdatePrehistoricIslandESP()
+    for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].Locations:GetChildren()) do
+        pcall(function()
+            if PrehistoricIslandESP then
+                if v.Name == "Prehistoric Island" then
+                    local bill = v:FindFirstChild('BillboardGui')
+                    if not bill then
+                        bill = Instance.new('BillboardGui',v)
+                        bill.Name = 'BillboardGui'
+                        bill.ExtentsOffset = Vector3.new(0, 1, 0)
+                        bill.Size = UDim2.new(1,200,1,30)
+                        bill.Adornee = v
+                        bill.AlwaysOnTop = true
+                        local name = Instance.new('TextLabel',bill)
+                        name.Font = "GothamBold"
+                        name.FontSize = "Size14"
+                        name.TextWrapped = true
+                        name.Size = UDim2.new(1,0,1,0)
+                        name.TextYAlignment = 'Top'
+                        name.BackgroundTransparency = 1
+                        name.TextStrokeTransparency = 0.5
+                        name.TextColor3 = Color3.fromRGB(0, 255, 255)
+                        name.Text = (v.Name)
+                        name.ZIndex = 10
+                    end
+                end
+            else
+                if v:FindFirstChild('BillboardGui') then
+                    v.BillboardGui:Destroy()
+                end
+            end
+        end)
+    end
+end
+
+function UpdateIslandKisuneESP()
+    for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].Locations:GetChildren()) do
+        pcall(function()
+            if KitsuneIslandEsp then
+                if v.Name == "Kitsune Island" then
+                    local bill = v:FindFirstChild('BillboardGui')
+                    if not bill then
+                        bill = Instance.new('BillboardGui',v)
+                        bill.Name = 'BillboardGui'
+                        bill.ExtentsOffset = Vector3.new(0, 1, 0)
+                        bill.Size = UDim2.new(1,200,1,30)
+                        bill.Adornee = v
+                        bill.AlwaysOnTop = true
+                        local name = Instance.new('TextLabel',bill)
+                        name.Font = "GothamBold"
+                        name.FontSize = "Size14"
+                        name.TextWrapped = true
+                        name.Size = UDim2.new(1,0,1,0)
+                        name.TextYAlignment = 'Top'
+                        name.BackgroundTransparency = 1
+                        name.TextStrokeTransparency = 0.5
+                        name.TextColor3 = Color3.fromRGB(255, 165, 0)
+                        name.Text = (v.Name)
+                        name.ZIndex = 10
+                    end
+                end
+            else
+                if v:FindFirstChild('BillboardGui') then
+                    v.BillboardGui:Destroy()
+                end
+            end
+        end)
+    end
+end
+
+function round(num)
+    return math.floor(num + 0.5)
+end
+
+-- Chest Farming Loop
+function chestFarmingLoop()
+    while _G.FarmChest and task.wait() do
+        pcall(function()
+            local Players = game:GetService("Players")
+            local Player = Players.LocalPlayer
+            local Character = Player.Character or Player.CharacterAdded:Wait()
+            local Position = Character:GetPivot().Position
+            local CollectionService = game:GetService("CollectionService")
+            local Chests = CollectionService:GetTagged("_ChestTagged")
+            local Distance, Nearest = math.huge
+            for i = 1, #Chests do
+                local Chest = Chests[i]
+                local Magnitude = (Chest:GetPivot().Position - Position).Magnitude
+                if (not Chest:GetAttribute("IsDisabled") and (Magnitude < Distance)) then
+                    Distance, Nearest = Magnitude, Chest
+                end
+            end
+            if Nearest then
+                local ChestPosition = Nearest:GetPivot().Position
+                local CFrameTarget = CFrame.new(ChestPosition)
+                topos(CFrameTarget)
+            end
+        end)
+    end
+end
+
+-- Berry Farming Loop
+function berryFarmingLoop()
+    while _G.CollectBerry and task.wait() do
+        pcall(function()
+            local Players = game:GetService("Players")
+            local Player = Players.LocalPlayer
+            local Character = Player.Character or Player.CharacterAdded:Wait()
+            local Position = Character:GetPivot().Position
+            local CollectionService = game:GetService("CollectionService")
+            local BerryBushes = CollectionService:GetTagged("BerryBush")
+            local Distance, NearestBush, NearestBerryName = math.huge, nil, nil
+
+            for _, Bush in ipairs(BerryBushes) do
+                for AttributeName, _ in pairs(Bush:GetAttributes()) do
+                    local Magnitude = (Bush.Parent:GetPivot().Position - Position).Magnitude
+                    if Magnitude < Distance then
+                        Distance = Magnitude
+                        NearestBush = Bush
+                        NearestBerryName = AttributeName
+                    end
+                end
+            end
+
+            if NearestBush and NearestBerryName then
+                local BushModel = NearestBush.Parent
+                local BushCenter = BushModel:GetPivot().Position
+
+                -- Move to bush center
+                topos(CFrame.new(BushCenter + Vector3.new(0, 2, 0)))
+                task.wait(0.5)
+
+                -- Find berry part
+                local BerryPart = BushModel:FindFirstChild(NearestBerryName)
+                if BerryPart and BerryPart:IsA("BasePart") then
+                    -- Move to berry position
+                    topos(BerryPart.CFrame + Vector3.new(0, 1, 0))
+                    task.wait(0.3)
+
+                    -- Press E to collect
+                    local VirtualInput = game:GetService("VirtualInputManager")
+                    VirtualInput:SendKeyEvent(true, Enum.KeyCode.E, false, game)
+                    task.wait(0.1)
+                    VirtualInput:SendKeyEvent(false, Enum.KeyCode.E, false, game)
+                end
+            else
+                if _G.CollectBerryHop then
+                    hopServer()
+                end
+            end
+        end)
+    end
+end
+
+-- Additional Utility Functions
+
+function StopTween(state)
+    if not state then
+        _G.StopTween = true
+        wait()
+        _G.StopTween = false
+    else
+        _G.StopTween = state
+    end
+end
+
+function hopServer()
+    local placeId = game.PlaceId
+    local servers = {}
+    
+    pcall(function()
+        local req = syn.request({
+            Url = "https://games.roblox.com/v1/games/" .. placeId .. "/servers/Public?sortOrder=Desc&limit=100"
+        })
+        local body = game.HttpService:JSONDecode(req.Body)
+        for i, v in pairs(body.data) do
+            if v.playing < v.maxPlayers and v.id ~= game.JobId then
+                table.insert(servers, v.id)
+            end
+        end
+    end)
+    
+    if #servers > 0 then
+        game:GetService("TeleportService"):TeleportToPlaceInstance(placeId, servers[math.random(1, #servers)])
+    end
+end
+
+function autoSeaBeastLoop()
+    while _G.VexonSeaBeastHunter and task.wait() do
+        pcall(function()
+            for _, beast in pairs(game.Workspace.Enemies:GetChildren()) do
+                if beast.Name:find("Sea") and beast:FindFirstChild("Humanoid") and beast.Humanoid.Health > 0 then
+                    repeat task.wait()
+                        VexonAutoHaki()
+                        VexonEquipWeapon(_G.VexonWeaponSelect)
+                        VexonTeleport(beast.HumanoidRootPart.CFrame * CFrame.new(0, 50, 0))
+                        game:GetService("VirtualUser"):CaptureController()
+                        game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                    until beast.Humanoid.Health <= 0 or not _G.VexonSeaBeastHunter
+                end
+            end
+        end)
+    end
+end
+
+function autoDungeonLoop()
+    while _G.VexonDungeonAuto and task.wait() do
+        pcall(function()
+            local player = game.Players.LocalPlayer
+            local character = player.Character
+            if not character or not character:FindFirstChild("HumanoidRootPart") then return end
+            
+            -- Find nearest dungeon entrance
+            for _, dungeon in pairs(game.Workspace:GetChildren()) do
+                if dungeon.Name:find("Dungeon") or dungeon.Name:find("Quest") then
+                    local entrance = dungeon:FindFirstChild("Entrance") or dungeon:FindFirstChild("Door")
+                    if entrance and entrance:IsA("Part") then
+                        -- Teleport to dungeon entrance
+                        character.HumanoidRootPart.CFrame = entrance.CFrame + Vector3.new(0, 5, 0)
+                        task.wait(1)
+                        
+                        -- Try to enter dungeon
+                        fireproximityprompt(entrance:FindFirstChildOfClass("ProximityPrompt"))
+                        break
+                    end
+                end
+            end
+            
+            -- Auto attack enemies in dungeon
+            for _, enemy in pairs(game.Workspace.Enemies:GetChildren()) do
+                if enemy:FindFirstChild("HumanoidRootPart") and enemy.Humanoid.Health > 0 then
+                    character.HumanoidRootPart.CFrame = enemy.HumanoidRootPart.CFrame * CFrame.new(0, 5, 5)
+                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                    task.wait(0.1)
+                    game:GetService("VirtualUser"):Button1Up(Vector2.new(1280, 672))
+                    break
+                end
+            end
+        end)
+    end
+end
+
+function autoFarmPlayerLoop()
+    while _G.VexonPlayerHunter and task.wait() do
+        pcall(function()
+            for _, player in pairs(game.Players:GetPlayers()) do
+                if player ~= game.Players.LocalPlayer and player.Character and player.Character:FindFirstChild("Humanoid") and player.Character.Humanoid.Health > 0 then
+                    if (player.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 1000 then
+                        repeat task.wait()
+                            VexonAutoHaki()
+                            VexonEquipWeapon(_G.VexonWeaponSelect)
+                            VexonTeleport(player.Character.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                            player.Character.HumanoidRootPart.CanCollide = false
+                            player.Character.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                            game:GetService("VirtualUser"):CaptureController()
+                            game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                        until player.Character.Humanoid.Health <= 0 or not _G.VexonPlayerHunter
+                    end
+                end
+            end
+        end)
+    end
+end
+
+function autoBossLoop()
+    while _G.VexonBossHunter and task.wait() do
+        pcall(function()
+            if _G.VexonBossTarget and _G.VexonBossTarget ~= "" then
+                for _, boss in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if boss.Name:find(_G.VexonBossTarget) and boss:FindFirstChild("Humanoid") and boss.Humanoid.Health > 0 then
+                        repeat task.wait()
+                            VexonAutoHaki()
+                            VexonEquipWeapon(_G.VexonWeaponSelect)
+                            VexonTeleport(boss.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                            boss.HumanoidRootPart.CanCollide = false
+                            boss.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                            game:GetService("VirtualUser"):CaptureController()
+                            game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                        until boss.Humanoid.Health <= 0 or not _G.VexonBossHunter
+                    end
+                end
+            end
+        end)
+    end
+end
+
+function autoMaterialLoop()
+    while _G.AutoFarmMaterial and task.wait() do
+        pcall(function()
+            local player = game.Players.LocalPlayer
+            local character = player.Character
+            if not character or not character:FindFirstChild("HumanoidRootPart") then return end
+            
+            -- Material farming locations and targets
+            local materialTargets = {
+                {name = "Angel Fish", location = CFrame.new(-10786.1, 4327.3, -8661.4)},
+                {name = "Fried Eel", location = CFrame.new(-10892.6, 4327.3, -8661.4)},
+                {name = "Wing", location = CFrame.new(-10999.1, 4327.3, -8661.4)},
+                {name = "Leather", location = CFrame.new(-11105.6, 4327.3, -8661.4)},
+                {name = "Scrap Metal", location = CFrame.new(-11212.1, 4327.3, -8661.4)},
+                {name = "Demonic Wisp", location = CFrame.new(-11318.6, 4327.3, -8661.4)}
+            }
+            
+            -- Check if near Cake Island (Third Sea)
+            local currentPos = character.HumanoidRootPart.Position
+            if (currentPos - Vector3.new(-10900, 4327, -8660)).Magnitude < 2000 then
+                -- Farm materials at Cake Island
+                for _, target in pairs(materialTargets) do
+                    -- Teleport to material location
+                    character.HumanoidRootPart.CFrame = target.location
+                    task.wait(0.5)
+                    
+                    -- Try to collect material
+                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                    task.wait(0.1)
+                    game:GetService("VirtualUser"):Button1Up(Vector2.new(1280, 672))
+                    
+                    -- Check for proximity prompts
+                    for _, obj in pairs(game.Workspace:GetDescendants()) do
+                        if obj:IsA("ProximityPrompt") and obj.Enabled then
+                            local distance = (character.HumanoidRootPart.Position - obj.Parent.Position).Magnitude
+                            if distance < 20 then
+                                fireproximityprompt(obj)
+                                task.wait(0.5)
+                            end
+                        end
+                    end
+                end
+            else
+                -- Try to find and farm materials in current area
+                for _, obj in pairs(game.Workspace:GetChildren()) do
+                    if obj.Name:find("Material") or obj.Name:find("Scrap") or obj.Name:find("Leather") or obj.Name:find("Angel") then
+                        if obj:IsA("Model") and obj:FindFirstChild("Handle") then
+                            local distance = (character.HumanoidRootPart.Position - obj.Handle.Position).Magnitude
+                            if distance < 500 then
+                                -- Teleport to material
+                                character.HumanoidRootPart.CFrame = obj.Handle.CFrame
+                                task.wait(0.5)
+                                
+                                -- Try to collect
+                                game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                                task.wait(0.1)
+                                game:GetService("VirtualUser"):Button1Up(Vector2.new(1280, 672))
+                                
+                                -- Check for proximity prompt
+                                local prompt = obj:FindFirstChildOfClass("ProximityPrompt")
+                                if prompt then
+                                    fireproximityprompt(prompt)
+                                end
+                                break
+                            end
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end
+
+function autoNewWorldLoop()
+    while _G.AutoNewWorld and task.wait() do
+        pcall(function()
+            local player = game.Players.LocalPlayer
+            local character = player.Character
+            if not character or not character:FindFirstChild("HumanoidRootPart") then return end
+            
+            local currentLevel = player.Data.Level.Value
+            local myLevel = player.Data.Level.Value
+            
+            -- Check world requirements and travel accordingly
+            if VexonWorld.First then -- First Sea
+                if myLevel >= 700 then
+                    -- Go to Second Sea
+                    character.HumanoidRootPart.CFrame = CFrame.new(4849.3, 5.7, -698.4)
+                    task.wait(2)
+                    
+                    -- Talk to NPC
+                    for _, npc in pairs(game.Workspace.NPCs:GetChildren()) do
+                        if npc.Name:find("Legendary") or npc.Name:find("Sword") then
+                            character.HumanoidRootPart.CFrame = npc.HumanoidRootPart.CFrame
+                            task.wait(1)
+                            fireproximityprompt(npc:FindFirstChildOfClass("ProximityPrompt"))
+                            break
+                        end
+                    end
+                end
+                
+            elseif VexonWorld.Second then -- Second Sea
+                if myLevel >= 1500 then
+                    -- Go to Third Sea
+                    character.HumanoidRootPart.CFrame = CFrame.new(-6500, 400, -600)
+                    task.wait(2)
+                    
+                    -- Find and interact with travel NPC
+                    for _, npc in pairs(game.Workspace.NPCs:GetChildren()) do
+                        if npc.Name:find("Travel") or npc.Name:find("Captain") then
+                            character.HumanoidRootPart.CFrame = npc.HumanoidRootPart.CFrame
+                            task.wait(1)
+                            fireproximityprompt(npc:FindFirstChildOfClass("ProximityPrompt"))
+                            break
+                        end
+                    end
+                end
+                
+            elseif VexonWorld.Third then -- Third Sea
+                -- Already in Third Sea, no further travel needed
+                -- Could add other automation here
+            end
+            
+            -- Auto accept quests for current world
+            if not QuestChecker:hasActiveQuest() then
+                -- Find nearest quest giver
+                for _, npc in pairs(game.Workspace.NPCs:GetChildren()) do
+                    if npc:FindFirstChild("HumanoidRootPart") and npc:FindFirstChildOfClass("ProximityPrompt") then
+                        local distance = (character.HumanoidRootPart.Position - npc.HumanoidRootPart.Position).Magnitude
+                        if distance < 200 then
+                            character.HumanoidRootPart.CFrame = npc.HumanoidRootPart.CFrame
+                            task.wait(1)
+                            fireproximityprompt(npc:FindFirstChildOfClass("ProximityPrompt"))
+                            break
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end
+
+-- Advanced ESP Functions
+function UpdatePlayerChams()
+    pcall(function()
+        for _, player in pairs(game:GetService("Players"):GetChildren()) do
+            if player ~= game.Players.LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                local humanoid = player.Character:FindFirstChild("Humanoid")
+                if humanoid then
+                    -- Remove existing ESP
+                    for _, v in pairs(player.Character:GetChildren()) do
+                        if v:IsA("Highlight") and v.Name == "VexonPlayerESP" then
+                            v:Destroy()
+                        end
+                    end
+                    if player.Character:FindFirstChild("Head") and player.Character.Head:FindFirstChild("NameEsp") then
+                        player.Character.Head:FindFirstChild("NameEsp"):Destroy()
+                    end
+                    
+                    if ESPPlayer then
+                        -- Create highlight
+                        local highlight = Instance.new("Highlight")
+                        highlight.Name = "VexonPlayerESP"
+                        highlight.Adornee = player.Character
+                        highlight.FillColor = player.Team ~= game.Players.LocalPlayer.Team and Color3.new(1, 0, 0) or Color3.new(0, 1, 0)
+                        highlight.OutlineColor = Color3.new(1, 1, 1)
+                        highlight.FillTransparency = 0.3
+                        highlight.OutlineTransparency = 0
+                        highlight.Parent = player.Character
+                        
+                        -- Create enhanced name tag with distance
+                        local billboard = Instance.new("BillboardGui")
+                        billboard.Name = "NameEsp"
+                        billboard.ExtentsOffset = Vector3.new(0, 1, 0)
+                        billboard.Size = UDim2.new(1, 200, 1, 30)
+                        billboard.Adornee = player.Character.Head
+                        billboard.AlwaysOnTop = true
+                        billboard.Parent = player.Character.Head
+                        
+                        local label = Instance.new("TextLabel")
+                        label.Size = UDim2.new(1, 0, 1, 0)
+                        label.BackgroundTransparency = 1
+                        label.TextStrokeTransparency = 0.5
+                        label.TextColor3 = player.Team ~= game.Players.LocalPlayer.Team and Color3.new(255, 0, 0) or Color3.new(0, 255, 0)
+                        label.TextSize = 14
+                        label.Font = Enum.Font.GothamSemibold
+                        label.TextWrapped = true
+                        label.TextYAlignment = "Top"
+                        
+                        -- Calculate distance like Redz Hub
+                        local distance = math.floor((game.Players.LocalPlayer.Character.Head.Position - player.Character.Head.Position).Magnitude / 3)
+                        local healthPercent = math.floor(humanoid.Health * 100 / humanoid.MaxHealth)
+                        
+                        label.Text = player.Name .. " | " .. distance .. " Distance\nHealth : " .. healthPercent .. "%"
+                        label.Parent = billboard
+                    end
+                end
+            end
+        end
+    end)
+end
+
+function UpdateDevilChams()
+    pcall(function()
+        for _, fruit in pairs(game.Workspace:GetChildren()) do
+            if fruit:IsA("Model") and fruit:FindFirstChild("Handle") and fruit.Name:find("Fruit") then
+                -- Remove existing highlights
+                for _, v in pairs(fruit:GetChildren()) do
+                    if v:IsA("Highlight") and v.Name == "VexonFruitESP" then
+                        v:Destroy()
+                    end
+                end
+                
+                if DevilFruitESP then
+                    local highlight = Instance.new("Highlight")
+                    highlight.Name = "VexonFruitESP"
+                    highlight.Adornee = fruit
+                    highlight.FillColor = Color3.new(0.5, 0, 1)
+                    highlight.OutlineColor = Color3.new(1, 0, 1)
+                    highlight.FillTransparency = 0.2
+                    highlight.OutlineTransparency = 0
+                    highlight.Parent = fruit
+                    
+                    -- Create fruit name tag
+                    local billboard = Instance.new("BillboardGui")
+                    billboard.Name = "VexonFruitTag"
+                    billboard.Size = UDim2.new(0, 100, 0, 30)
+                    billboard.StudsOffset = Vector3.new(0, 2, 0)
+                    billboard.AlwaysOnTop = true
+                    billboard.Parent = fruit:FindFirstChild("Handle")
+                    
+                    local label = Instance.new("TextLabel")
+                    label.Size = UDim2.new(1, 0, 1, 0)
+                    label.BackgroundTransparency = 1
+                    label.Text = fruit.Name
+                    label.TextColor3 = Color3.new(1, 0, 1)
+                    label.TextStrokeTransparency = 0
+                    label.TextSize = 12
+                    label.Font = Enum.Font.SourceSansBold
+                    label.Parent = billboard
+                end
+            end
+        end
+    end)
+end
+
+function UpdateFlowerChams()
+    pcall(function()
+        for _, flower in pairs(game.Workspace:GetChildren()) do
+            if flower:IsA("Model") and (flower.Name:find("Flower") or flower.Name:find("Flower")) then
+                -- Remove existing highlights
+                for _, v in pairs(flower:GetChildren()) do
+                    if v:IsA("Highlight") and v.Name == "VexonFlowerESP" then
+                        v:Destroy()
+                    end
+                end
+                
+                if FlowerESP then
+                    local highlight = Instance.new("Highlight")
+                    highlight.Name = "VexonFlowerESP"
+                    highlight.Adornee = flower
+                    highlight.FillColor = Color3.new(1, 0, 1)
+                    highlight.OutlineColor = Color3.new(1, 0.5, 1)
+                    highlight.FillTransparency = 0.2
+                    highlight.OutlineTransparency = 0
+                    highlight.Parent = flower
+                end
+            end
+        end
+    end)
+end
+
+function UpdateBerriesESP()
+    pcall(function()
+        for _, bush in pairs(game:GetService("CollectionService"):GetTagged("BerryBush")) do
+            if bush.Parent and bush.Parent:IsA("Model") then
+                local bushModel = bush.Parent
+                -- Remove existing highlights
+                for _, v in pairs(bushModel:GetChildren()) do
+                    if v:IsA("Highlight") and v.Name == "VexonBerryESP" then
+                        v:Destroy()
+                    end
+                end
+                
+                if BerryESP then
+                    local highlight = Instance.new("Highlight")
+                    highlight.Name = "VexonBerryESP"
+                    highlight.Adornee = bushModel
+                    highlight.FillColor = Color3.new(0, 1, 0)
+                    highlight.OutlineColor = Color3.new(0.5, 1, 0.5)
+                    highlight.FillTransparency = 0.3
+                    highlight.OutlineTransparency = 0
+                    highlight.Parent = bushModel
+                end
+            end
+        end
+    end)
+end
+
+function autoFactoryLoop()
+    while _G.VexonFactoryRaid and task.wait() do
+        pcall(function()
+            if game.Workspace.Enemies:FindFirstChild("Core") then
+                for _, enemy in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if enemy.Name == "Core" and enemy.Humanoid.Health > 0 then
+                        repeat task.wait()
+                            VexonAutoHaki()
+                            VexonEquipWeapon(_G.VexonWeaponSelect)
+                            VexonTeleport(enemy.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                            enemy.HumanoidRootPart.CanCollide = false
+                            enemy.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                            game:GetService("VirtualUser"):CaptureController()
+                            game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                        until enemy.Humanoid.Health <= 0 or not _G.VexonFactoryRaid
+                    end
+                end
+            else
+                VexonTeleport(CFrame.new(448.46756, 199.356781, -441.389252))
+                task.wait(1)
+            end
+        end)
+    end
+end
+
+-- Auto Pirate Raid Function (FIXED)
+function autoPirateRaidLoop()
+    while _G.VexonPirateRaid and task.wait() do
+        pcall(function()
+            local raidPos = CFrame.new(-5496.17432, 313.768921, -2841.53027)
+            local checkPos = CFrame.new(-5539.3115234375, 313.800537109375, -2972.372314453125)
+            
+            if (checkPos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 500 then
+                VexonTeleport(raidPos)
+            else
+                for _, enemy in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if enemy:FindFirstChild("HumanoidRootPart") and enemy:FindFirstChild("Humanoid") and enemy.Humanoid.Health > 0 then
+                        if (enemy.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 2000 then
+                            repeat task.wait()
+                                VexonAutoHaki()
+                                VexonEquipWeapon(_G.VexonWeaponSelect)
+                                VexonTeleport(enemy.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                enemy.HumanoidRootPart.CanCollide = false
+                                enemy.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                            until enemy.Humanoid.Health <= 0 or not _G.VexonPirateRaid
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end
+
+-- Auto Saber Function (FIXED)
+function autoSaberLoop()
+    while _G.VexonSaberQuest and task.wait() do
+        pcall(function()
+            if game.Players.LocalPlayer.Data.Level.Value >= 200 then
+                if game.Workspace.Map.Jungle.Final.Part.Transparency == 0 then
+                    if game.Workspace.Map.Jungle.QuestPlates.Door.Transparency ~= 0 then
+                        VexonTeleport(CFrame.new(-1605.89648, 37.9698677, 154.200745))
+                    else
+                        for _, plate in pairs(game.Workspace.Map.Jungle.QuestPlates:GetChildren()) do
+                            if plate:IsA("Part") and plate.BrickColor ~= BrickColor.new("Bright yellow") then
+                                VexonTeleport(plate.CFrame)
+                                task.wait(0.5)
+                                firetouchinterest(plate, game.Players.LocalPlayer.Character.HumanoidRootPart, 0)
+                            end
+                        end
+                    end
+                else
+                    for _, enemy in pairs(game.Workspace.Enemies:GetChildren()) do
+                        if enemy.Name == "Mob Leader [Lv. 120] [Boss]" and enemy.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                VexonAutoHaki()
+                                VexonEquipWeapon(_G.VexonWeaponSelect)
+                                VexonTeleport(enemy.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                enemy.HumanoidRootPart.CanCollide = false
+                                enemy.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                game:GetService("VirtualUser"):CaptureController()
+                                game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                            until enemy.Humanoid.Health <= 0 or not _G.VexonSaberQuest
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end
+
+-- Auto Bartilo Function (FIXED)
+function autoBartiloLoop()
+    while _G.VexonBartiloQuest and task.wait() do
+        pcall(function()
+            if game.Players.LocalPlayer.Data.Level.Value >= 800 then
+                local questProgress = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BartiloQuestProgress", "Bartilo")
+                if questProgress == 0 then
+                    VexonTeleport(CFrame.new(-456.28952, 73.0449066, 295.855682))
+                elseif questProgress == 1 then
+                    for _, enemy in pairs(game.Workspace.Enemies:GetChildren()) do
+                        if enemy.Name == "Jeremy [Lv. 850] [Boss]" and enemy.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                VexonAutoHaki()
+                                VexonEquipWeapon(_G.VexonWeaponSelect)
+                                VexonTeleport(enemy.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                enemy.HumanoidRootPart.CanCollide = false
+                                enemy.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                game:GetService("VirtualUser"):CaptureController()
+                                game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                            until enemy.Humanoid.Health <= 0 or not _G.VexonBartiloQuest
+                        end
+                    end
+                elseif questProgress == 2 then
+                    VexonTeleport(CFrame.new(-1850.49329, 13.1789551, 1750.89685))
+                    task.wait(1)
+                    VexonTeleport(CFrame.new(-1858.87305, 19.3777466, 1712.01807))
+                    task.wait(1)
+                    VexonTeleport(CFrame.new(-1803.94324, 16.5789185, 1750.89685))
+                    task.wait(1)
+                    VexonTeleport(CFrame.new(-1858.55835, 16.8604317, 1724.79541))
+                    task.wait(1)
+                    VexonTeleport(CFrame.new(-1869.54224, 15.987854, 1681.00659))
+                    task.wait(1)
+                    VexonTeleport(CFrame.new(-1620.47656, 16.4827156, 1576.03918))
+                end
+            end
+        end)
+    end
+end
+
+-- Auto Rengoku Function (FIXED)
+function autoRengokuLoop()
+    while _G.VexonRengokuQuest and task.wait() do
+        pcall(function()
+            if game.Players.LocalPlayer.Data.Level.Value >= 1525 then
+                local questProgress = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EngageQuest", "RengokuQuest")
+                if questProgress == 0 then
+                    VexonTeleport(CFrame.new(-16184.1104, 16.8776131, 698.841431))
+                elseif questProgress == 1 then
+                    for _, enemy in pairs(game.Workspace.Enemies:GetChildren()) do
+                        if enemy.Name == "Snow Lurker [Lv. 1375] [Boss]" and enemy.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                VexonAutoHaki()
+                                VexonEquipWeapon(_G.VexonWeaponSelect)
+                                VexonTeleport(enemy.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                enemy.HumanoidRootPart.CanCollide = false
+                                enemy.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                game:GetService("VirtualUser"):CaptureController()
+                                game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                            until enemy.Humanoid.Health <= 0 or not _G.VexonRengokuQuest
+                        end
+                    end
+                elseif questProgress == 2 then
+                    VexonTeleport(CFrame.new(-16169.624, 16.8776131, 698.841431))
+                end
+            end
+        end)
+    end
+end
+
+-- Auto Raid Function (FIXED)
+function autoRaidLoop()
+    while _G.VexonRaidMode and task.wait() do
+        pcall(function()
+            if _G.VexonRaidSelect and _G.VexonRaidSelect ~= "" then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyChip", _G.VexonRaidSelect)
+                task.wait(0.5)
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ActivateRaid")
+                
+                -- Auto farm raid islands
+                for _, enemy in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if enemy:FindFirstChild("HumanoidRootPart") and enemy.Humanoid.Health > 0 then
+                        if (enemy.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 1000 then
+                            repeat task.wait()
+                                VexonAutoHaki()
+                                VexonEquipWeapon(_G.VexonWeaponSelect)
+                                VexonTeleport(enemy.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                enemy.HumanoidRootPart.CanCollide = false
+                                enemy.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                game:GetService("VirtualUser"):CaptureController()
+                                game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                            until enemy.Humanoid.Health <= 0 or not _G.VexonRaidMode
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end
+
+-- Auto Awakening Function (FIXED)
+function autoAwakenLoop()
+    while _G.VexonAwakening and task.wait() do
+        pcall(function()
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Awakener", "Awaken")
+        end)
+    end
+end
+
+-- Auto Stats Function (FIXED)
+function autoStatsLoop()
+    while _G.VexonStatsUpgrade and task.wait() do
+        pcall(function()
+            VexonAutoStats()
+        end)
+    end
+end
+
+-- Anti AFK
+local VirtualUser = game:GetService('VirtualUser')
+game:GetService('Players').LocalPlayer.Idled:Connect(function()
+    VirtualUser:CaptureController()
+    VirtualUser:ClickButton2(Vector2.new())
+end)
+
+-- Load notification
+task.wait(2)
+sendNotification("VexonHub", "VexonHub Loaded Successfully!\nToggle UI: Right Control", 5, "check-circle")
+
+print("VexonHub - Complete Blox Fruits Script Loaded!")
+
+-- MAIN VEXON LOOPS - COMPLETE AUTOMATION
+
+-- Infinite Ability Loop
+spawn(function()
+    while task.wait() do
+        if _G.VexonInfiniteAbility then
+            VexonInfiniteAbility()
+        end
+    end
+end)
+
+-- No Clip Loop
+spawn(function()
+    while task.wait() do
+        if _G.VexonNoClipMode then
+            VexonNoClip()
+        end
+    end
+end)
+
+-- Fly Loop
+spawn(function()
+    while task.wait() do
+        if _G.VexonFlyMode then
+            VexonFly()
+        end
+    end
+end)
+
+-- Speed Boost Loop
+spawn(function()
+    while task.wait() do
+        if _G.VexonSpeedBoost then
+            VexonSpeedBoost()
+        end
+    end
+end)
+
+-- Auto Legendary Sword Loop
+spawn(function()
+    while task.wait(2) do
+        if _G.VexonAutoLegendarySword then
+            VexonAutoLegendarySword()
+        end
+    end
+end)
+
+-- Auto Haki Color Loop
+spawn(function()
+    while task.wait(2) do
+        if _G.VexonAutoHakiColor then
+            VexonAutoHakiColor()
+        end
+    end
+end)
+
+-- Auto Ken Loop
+spawn(function()
+    while task.wait(2) do
+        if _G.VexonAutoKen then
+            VexonAutoKen()
+        end
+    end
+end)
+
+-- Auto Observation Loop
+spawn(function()
+    while task.wait(2) do
+        if _G.VexonAutoObservation then
+            VexonAutoObservation()
+        end
+    end
+end)
+
+-- Auto Store Fruit Loop
+spawn(function()
+    while task.wait(1) do
+        if _G.VexonFruitStorage then
+            VexonAutoStoreFruit()
+        end
+    end
+end)
+
+-- Auto Buy Fruit Money Loop
+spawn(function()
+    while task.wait(5) do
+        if _G.VexonFruitBuyMoney then
+            VexonAutoBuyFruitMoney()
+        end
+    end
+end)
+
+-- Auto Eat Fruit Loop
+spawn(function()
+    while task.wait(2) do
+        if _G.VexonFruitConsumption then
+            VexonAutoEatFruit()
+        end
+    end
+end)
+
+-- Auto Stats Loop
+spawn(function()
+    while task.wait(2) do
+        if _G.VexonStatsUpgrade then
+            VexonAutoStats()
+        end
+    end
+end)
+
+-- Auto Redeem Loop
+spawn(function()
+    while task.wait(3) do
+        if _G.VexonCodeRedemption then
+            VexonAutoRedeem()
+        end
+    end
+end)
+
+-- Auto Click Loop
+spawn(function()
+    while task.wait(_G.VexonClickInterval or 0.1) do
+        if _G.VexonAutoClick then
+            VexonAutoClick()
+        end
+    end
+end)
+
+-- Superhuman Click Loop
+spawn(function()
+    while task.wait(0.5) do
+        if _G.VexonSuperhumanMode then
+            VexonSuperhumanClick()
+        end
+    end
+end)
+
+-- Enhanced Notification System
+function sendNotification(title, content, duration, icon)
+    if uiLoaded and WindUI and WindUI.Notify then
+        pcall(function()
+            WindUI:Notify({
+                Title = " VexonHub 🔥",
+                Content = content,
+                Duration = duration,
+                Icon = icon or "star"
+            })
+        end)
+    else
+        print("[VexonHub]", title .. ": " .. content)
+    end
+end
+
+-- Enhanced Teleport System
+function VexonTeleport(target)
+    pcall(function()
+        local player = game.Players.LocalPlayer
+        local character = player.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+            local distance = (target.Position - character.HumanoidRootPart.Position).Magnitude
+            local speed = 350
+            local tweenInfo = TweenInfo.new(distance / speed, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
+            local tween = game:GetService("TweenService"):Create(character.HumanoidRootPart, tweenInfo, {CFrame = target})
+            tween:Play()
+            tween.Completed:Wait()
+        end
+    end)
+end
+
+-- Enhanced Weapon System
+function VexonEquipWeapon(weaponName)
+    pcall(function()
+        local player = game.Players.LocalPlayer
+        local backpack = player.Backpack
+        local character = player.Character
+        
+        if character:FindFirstChild(weaponName) then
+            local tool = character:FindFirstChild(weaponName)
+            if tool and tool:IsA("Tool") then
+                character.Humanoid:EquipTool(tool)
+            end
+        elseif backpack:FindFirstChild(weaponName) then
+            local tool = backpack:FindFirstChild(weaponName)
+            if tool and tool:IsA("Tool") then
+                character.Humanoid:EquipTool(tool)
+            end
+        end
+    end)
+end
+
+-- Enhanced Haki System
+function VexonAutoHaki()
+    pcall(function()
+        local player = game.Players.LocalPlayer
+        local character = player.Character
+        if character and not character:FindFirstChild("HasBuso") then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+        end
+    end)
+end
+
+-- VEXON SAFETY SYSTEMS
+local VexonSafety = {
+    AntiAFK = true,
+    AntiKick = true,
+    AutoReconnect = true
+}
+
+-- Anti-AFK Enhancement
+game:GetService('Players').LocalPlayer.Idled:Connect(function()
+    if VexonSafety.AntiAFK then
+        local VirtualUser = game:GetService('VirtualUser')
+        VirtualUser:CaptureController()
+        VirtualUser:ClickButton2(Vector2.new())
+    end
+end)
+
+-- Emergency Stop System
+game:GetService("UserInputService").InputBegan:Connect(function(input)
+    if input.KeyCode == getgenv().VexonConfig.KeySystem.EmergencyStop then
+        -- Stop all features
+        for key, _ in pairs(_G) do
+            if key:find("Vexon") then
+                _G[key] = false
+            end
+        end
+        sendNotification("VexonHub", " EMERGENCY STOP ACTIVATED", 3, "shield")
+    end
+end)
+
+-- Performance Monitor
+spawn(function()
+    while task.wait(5) do
+        if getgenv().VexonConfig.PerformanceMode then
+            collectgarbage("collect")
+        end
+    end
+end)
+
+function UpdateIslandESP()
+    pcall(function()
+        for _, location in pairs(game:GetService("Workspace")["_WorldOrigin"].Locations:GetChildren()) do
+            pcall(function()
+                if VexonIslandESP then
+                    local bill = location:FindFirstChild("BillboardGui")
+                    if not bill then
+                        bill = Instance.new("BillboardGui")
+                        bill.Name = "BillboardGui"
+                        bill.ExtentsOffset = Vector3.new(0, 1, 0)
+                        bill.Size = UDim2.new(1, 200, 1, 30)
+                        bill.Adornee = location
+                        bill.AlwaysOnTop = true
+                        local name = Instance.new("TextLabel")
+                        name.Font = "GothamBold"
+                        name.FontSize = "Size14"
+                        name.TextWrapped = true
+                        name.Size = UDim2.new(1, 0, 1, 0)
+                        name.TextYAlignment = 'Top'
+                        name.BackgroundTransparency = 1
+                        name.TextStrokeTransparency = 0.5
+                        name.TextColor3 = Color3.fromRGB(255, 255, 255)
+                        name.Text = location.Name
+                        name.ZIndex = 10
+                        name.Parent = bill
+                    end
+                else
+                    if bill then
+                        bill.Text = location.Name
+                    end
+                end
+            end)
+        end
+    end)
+end
+
+spawn(function()
+    while task.wait() do
+        if VexonIslandESP then
+            UpdateIslandESP()
+            task.wait(1)
+        end
+    end
+end)
+
+spawn(function()
+    while task.wait() do
+        if VexonMirageESP then
+            UpdateIslandMirageESP()
+            task.wait(1)
+        end
+    end
+end)
+
+spawn(function()
+    while task.wait() do
+        if VexonPrehistoricESP then
+            UpdatePrehistoricIslandESP()
+            task.wait(1)
+        end
+    end
+end)
+
+spawn(function()
+    while task.wait() do
+        if VexonKitsuneESP then
+            UpdateIslandKisuneESP()
+            task.wait(1)
+        end
+    end
+end)
+
+print(" VEXON HUB ")
+print(":D ")
+print("Emergency stop key:", getgenv().VexonConfig.KeySystem.EmergencyStop.Name)
+
+
+task.wait(2)
+sendNotification("VexonHub", " VEXON HUB - LOADED \nToggle UI: Right Control\nEmergency Stop: " .. getgenv().VexonConfig.KeySystem.EmergencyStop.Name, 5, "check-circle")
