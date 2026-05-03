@@ -1,0 +1,1 @@
+# birşey söylememe gerek varmı 🥹👍
